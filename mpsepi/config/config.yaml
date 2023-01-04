@@ -1,0 +1,29 @@
+input:
+  metadata: /path/to/sample_metadata_file
+
+  qiime2:
+    otuqzafile: /path/to/otu.qza
+    taxaqzafile: /path/to/taxa.qza
+
+  dada2:
+    seqtabfile: /path/to/seqtabfile
+    taxafile: /path/to/taxafile
+
+  metaphlan:
+    profile: /path/to/metaphlan_profile # all level or species level
+
+
+params:
+  import_from: "qiime2" # choose from ["qiime2", "dada2", "metaphlan"]
+
+
+output:
+  import: "results/00.import"
+  composition: "results/01.composition"
+  diversity_alpha: "results/02.diversity_alpha"
+  diversity_beta: "results/03.diversity_beta"
+  diff: "results/04.diff"
+
+
+envs:
+  mpse: "envs/mpse.yaml"
