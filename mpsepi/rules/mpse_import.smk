@@ -11,7 +11,7 @@ rule mpse_import_dada2:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../MPSE_import.R dada2 \
+        Rscript ../mpse_import.R dada2 \
         {input.metadatafile} \
         {input.seqtabfile} \
         {input.taxafile} \
@@ -32,7 +32,7 @@ rule mpse_import_dada2:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../MPSE_import.R qiime2 \
+        Rscript ../mpse_import.R qiime2 \
         {input.metadatafile} \
         {input.otuqzafile} \
         {input.taxaqzafile} \
@@ -52,7 +52,7 @@ rule mpse_import_metaphlan:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../MPSE_import.R metaphlan \
+        Rscript ../mpse_import.R metaphlan \
         {input.metadatafile} \
         {input.profile} \
         {output}

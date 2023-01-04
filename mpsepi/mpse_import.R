@@ -1,13 +1,13 @@
 #!/usr/bin/env Rscript
 
-'MPSE import script
+'mpse import script
 
 Usage:
-  MPSE_import.R dada2 <metadatafile> <seqtabfile> <taxafile> <mpse_output>
-  MPSE_import.R qiime2 <metadatafile> <otuqzafile> <taxaqzafile> <mpse_output>
-  MPSE_import.R metaphlan <metadatafile> <profile> <mpse_output>
-  MPSE_import.R (-h | --help)
-  MPSE_import.R --version
+  mpse_import.R dada2 <metadatafile> <seqtabfile> <taxafile> <mpse_output>
+  mpse_import.R qiime2 <metadatafile> <otuqzafile> <taxaqzafile> <mpse_output>
+  mpse_import.R metaphlan <metadatafile> <profile> <mpse_output>
+  mpse_import.R (-h | --help)
+  mpse_import.R --version
 
 Options:
   -h --help     Show this screen.
@@ -29,7 +29,7 @@ Options:
 library(magrittr)
 
 
-args <- docopt::docopt(doc, version = 'MPSE import 0.1')
+args <- docopt::docopt(doc, version = 'mpse import 0.1')
 
 output <- FALSE
 
@@ -60,7 +60,7 @@ else if(args$metaphlan) {
 }
 
 else {
-  stop("MPSE_import.R only support dada2, qiime2 and metaphlan as input")
+  stop("mpse_import.R only support dada2, qiime2 and metaphlan as input")
   output = FALSE
 }
 
