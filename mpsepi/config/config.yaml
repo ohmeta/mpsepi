@@ -1,16 +1,16 @@
 input:
-  metadata: /path/to/sample_metadata_file
+  metadata: /path/to/sample_metadata.tsv
+
+  dada2:
+    seqtabfile: /path/to/seqtab.rds
+    taxafile: /path/to/taxa.rds
 
   qiime2:
     otuqzafile: /path/to/otu.qza
     taxaqzafile: /path/to/taxa.qza
 
-  dada2:
-    seqtabfile: /path/to/seqtabfile
-    taxafile: /path/to/taxafile
-
   metaphlan:
-    profile: /path/to/metaphlan_profile # all level or species level
+    profile: /path/to/metaphlan_profile.tsv # all level or species level
 
 
 params:

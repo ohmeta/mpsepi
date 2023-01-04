@@ -4,3 +4,4 @@ channels:
   - defaults
 dependencies:
   - bioconductor-microbiotaprocess=1.10.0
+  - r-docopt=0.7.1
