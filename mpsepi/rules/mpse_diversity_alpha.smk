@@ -16,7 +16,7 @@ rule mpse_diversity_alpha:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../mpse_diversity_alpha.R {params.method} \
+        Rscript ../wrappers/mpse_diversity_alpha.R {params.method} \
         {input} \
         {params.group} \
         {output.alpha_tsv} \

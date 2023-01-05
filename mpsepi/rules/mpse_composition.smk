@@ -35,7 +35,7 @@ rule mpse_composition:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../mpse_composition.R {params.method} \
+        Rscript ../wrappers/mpse_composition.R {params.method} \
         {input} \
         {params.group} \
         {params.abun_plot_prefix} \

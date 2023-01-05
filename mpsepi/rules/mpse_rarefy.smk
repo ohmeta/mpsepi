@@ -13,7 +13,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../mpse_rarefy.R rarefy \
+            Rscript ../wrappers/mpse_rarefy.R rarefy \
             {input} \
             {params.chunks} \ 
             {output} 
@@ -37,7 +37,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../mpse_rarefy.R plot \
+            Rscript ../wrappers/mpse_rarefy.R plot \
             {input} \
             {params.group} \
             {output[0]} {output[1]} {output[2]} \

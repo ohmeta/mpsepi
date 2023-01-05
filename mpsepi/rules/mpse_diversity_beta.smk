@@ -28,7 +28,7 @@ rule mpse_diversity_beta:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../mpse_diversity_beta.R {params.method} \
+        Rscript ../wrappers/mpse_diversity_beta.R {params.method} \
         {params.distmethod} \
         {input} \
         {params.group} \

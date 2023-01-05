@@ -28,7 +28,7 @@ rule mpse_diff:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../mpse_diff.R {params.method} \
+        Rscript ../wrappers/mpse_diff.R {params.method} \
         {input} \
         {params.group} \
         {params.first_test_alpha} \

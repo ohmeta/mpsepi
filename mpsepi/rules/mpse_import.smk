@@ -13,7 +13,7 @@ if config["params"]["import_from"] == "dada2":
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../mpse_import.R dada2 \
+            Rscript ../wrappers/mpse_import.R dada2 \
             {input.metadatafile} \
             {input.seqtabfile} \
             {input.taxafile} \
@@ -36,7 +36,7 @@ elif config["params"]["import_from"] == "qiime2":
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../mpse_import.R qiime2 \
+            Rscript ../wrappers/mpse_import.R qiime2 \
             {input.metadatafile} \
             {input.otuqzafile} \
             {input.taxaqzafile} \
@@ -58,7 +58,7 @@ elif config["params"]["import_from"] == "metaphlan":
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../mpse_import.R metaphlan \
+            Rscript ../wrappers/mpse_import.R metaphlan \
             {input.metadatafile} \
             {input.profile} \
             {output}
