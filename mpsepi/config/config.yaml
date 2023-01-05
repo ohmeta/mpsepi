@@ -29,6 +29,9 @@ params:
       width: 10
       height: 10
 
+  diversity_beta:
+    distmethod: "bray"
+
 
 output:
   import: "results/00.import"
