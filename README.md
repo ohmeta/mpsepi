@@ -174,22 +174,25 @@ envs:
 ```bash
 ➤ python /path/to/run_mpsepi.py all --dry-run
 
-
 Job stats:
 job                     count    min threads    max threads
 --------------------  -------  -------------  -------------
+all                         1              1              1
 mpse_composition            1              1              1
-mpse_composition_all        1              1              1
+mpse_diff                   1              1              1
+mpse_diversity_alpha        1              1              1
+mpse_diversity_beta         1              1              1
 mpse_import_qiime2          1              1              1
 mpse_rarefy                 1              1              1
-total                       4              1              1
+mpse_rarefy_plot            1              1              1
+total                       8              1              1
 
 Reasons:
     (check individual jobs above for details)
     input files updated by another job:
-        mpse_composition, mpse_composition_all, mpse_rarefy
+        all, mpse_composition, mpse_diff, mpse_diversity_alpha, mpse_diversity_beta, mpse_rarefy, mpse_rarefy_plot
     missing output files:
-        mpse_composition, mpse_import_qiime2, mpse_rarefy
+        mpse_composition, mpse_diff, mpse_diversity_alpha, mpse_diversity_beta, mpse_import_qiime2, mpse_rarefy, mpse_rarefy_plot
 
 This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
