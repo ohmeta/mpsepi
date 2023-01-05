@@ -32,6 +32,10 @@ params:
   diversity_beta:
     distmethod: "bray"
 
+  diff:
+    first_test_alpha: "0.01"
+
+
 
 output:
   import: "results/00.import"
