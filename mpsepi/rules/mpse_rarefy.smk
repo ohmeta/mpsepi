@@ -38,6 +38,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
         shell:
             '''
             Rscript ../mpse_rarefy.R plot \
+            {input} \
             {params.group} \
             {output[0]} {output[1]} {output[2]} \
             {params.width} {params.height}
