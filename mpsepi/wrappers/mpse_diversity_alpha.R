@@ -34,9 +34,9 @@ if (args$method %in% c("qiime2", "dada2")) {
   f2 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
       .alpha = c(Observe, Chao1, ACE, Shannon, Simpson, Pielou)
-}
 
-else if (args$method == "metaphlan") {
+} else if (args$method == "metaphlan") {
+
   mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = Abundance)
 
   f1 <- mpse %>%

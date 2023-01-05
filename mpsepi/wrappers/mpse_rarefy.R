@@ -31,12 +31,11 @@ if (args$rarefy) {
       .abundance = RareAbundance, 
       chunks = chunks,
       action = "add")
- 
+
   saveRDS(mpse, args$mpse_rarefied)
-}
 
+} else if (args$plot) {
 
-else if (args$plot) {
   readRDS(args$mpse_rarefied)
 
   p1 <- mpse %>%

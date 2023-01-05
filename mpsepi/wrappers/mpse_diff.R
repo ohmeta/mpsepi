@@ -34,9 +34,7 @@ if (args$method %in% c("dada2", "qiime2")) {
       .group = args$group,
       first.test.alpha = args$first_test_alpha
   )
-} 
-
-else if (args$method == "metaphlan") {
+} else if (args$method == "metaphlan") {
   mpse %<>%
     MicrobiotaProcess::mp_diff_analysis(
       .abundance = Abundance,

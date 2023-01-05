@@ -40,30 +40,29 @@ if (args$dada2) {
     sampleda = args$metadatafile)
 
   output <- TRUE
-}
 
-else if (args$qiime2) {
+} else if (args$qiime2) {
+
   mpse <- MicrobiotaProcess::mp_import_qiime2(
     otuqza = args$otuqzafile,
     taxaqza = args$taxaqzafile,
     mapfilename = args$metadatafile)
 
   output <- TRUE
-} 
 
-else if(args$metaphlan) {
+} else if(args$metaphlan) {
+
   mpse <- MicrobiotaProcess::mp_import_metaphlan(
     profile = args$profile, 
     mapfilename = args$metadatafile)
 
   output <- TRUE
-}
 
-else {
+} else {
+
   stop("mpse_import.R only support dada2, qiime2 and metaphlan as input")
   output <- FALSE
 }
-
 
 if (output) {
   saveRDS(mpse, args$mpse_output)

@@ -233,9 +233,9 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.hclust = 'average'
   )
   h_s <- h1_s / h2_s
-}
 
-else if (args$method == "metaphlan") {
+} else if (args$method == "metaphlan") {
+
   mpse %<>%
     MicrobiotaProcess::mp_cal_abundance( # for each samples
       .abundance = Abundance
