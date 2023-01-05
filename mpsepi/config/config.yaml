@@ -24,8 +24,10 @@ params:
       width: 10
       height: 10
 
-
-
+  diversity_alpha:
+    plot:
+      width: 10
+      height: 10
 
 
 output:
