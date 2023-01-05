@@ -3,11 +3,11 @@ rule mpse_diversity_beta:
         mpse_input
     output:
         dist_tsv = os.path.join(config["output"]["diversity_beta"], "mpse/dist.tsv"),
-        dist_plot = expand(os.path.join(
+        dist_samples_plot = expand(os.path.join(
             config["output"]["diversity_beta"], "dist_plot/dist_samples.{format}",
             format=["pdf", "svg", "png"])),
-        compare_plot = expand(os.path.join(
-            config["output"]["diversity_beta"], "dist_plot/dist_compare.{format}",
+        dist_groups_plot = expand(os.path.join(
+            config["output"]["diversity_beta"], "dist_plot/dist_groups.{format}",
             format=["pdf", "svg", "png"])),
         pcoa_plot = expand(os.path.join(
             config["output"]["diversity_beta"], "pcoa_plot/pcoa.{format}",
@@ -16,8 +16,8 @@ rule mpse_diversity_beta:
     params:
         group = config["params"]["group"],
         distmethod = config["params"]["diversity_beta"]["distmethod"],
-        dist_plot_prefix = config["output"]["diversity_beta"], "dist_plot/dist_samples",
-        compare_plot_prefix = config["output"]["diversity_beta"], "dist_plot/dist_compare",
+        dist_samples_plot_prefix = config["output"]["diversity_beta"], "dist_plot/dist_samples",
+        dist_groups_plot_prefix = config["output"]["diversity_beta"], "dist_plot/dist_groups",
         pcoa_plot_prefix = config["output"]["diversity_beta"], "pcoa_plot/pcoa"
     conda:
         config["envs"]["mpse"]
@@ -28,8 +28,8 @@ rule mpse_diversity_beta:
         {input} \
         {params.group} \
         {output.dist_tsv} \
-        {params.dist_plot_prefix} \
-        {params.compare_plot_prefix} \
+        {params.dist_samples_plot_prefix} \
+        {params.dist_groups_plot_prefix} \
         {params.pcoa_plot_prefix} \
         {output.image}
         '''

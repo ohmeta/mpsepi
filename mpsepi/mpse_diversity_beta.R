@@ -3,7 +3,7 @@
 'mpse diversity beta script
 
 Usage:
-  mpse_diversity_beta.R <distmethod> <mpse> <group> <dist_tsv> <dist_plot_prefix> <compare_plot_prefix> <pcoa_plot_prefix> <image>
+  mpse_diversity_beta.R <distmethod> <mpse> <group> <dist_tsv> <dist_samples_plot_prefix> <dist_groups_plot_prefix> <pcoa_plot_prefix> <image>
   mpse_import.R (-h | --help)
   mpse_import.R --version
 
@@ -72,18 +72,18 @@ pcoa_p2 <- mpse %>%
 
 pcoa_p <- pcoa_p1 + pcoa_p2
 
-d_prefix <- args$dist_plot_prefix
-c_prefix <- args$compare_plot_prefix
+s_prefix <- args$dist_samples_plot_prefix
+g_prefix <- args$dist_groups_plot_prefix
 p_prefix <- args$pcoa_plot_prefix
 
 
-ggsave(stringr::str_c(d_prefix, ".pdf"), p1)
-ggsave(stringr::str_c(d_prefix, ".svg"), p1)
-ggsave(stringr::str_c(d_prefix, ".png"), p1)
+ggsave(stringr::str_c(s_prefix, ".pdf"), p1)
+ggsave(stringr::str_c(s_prefix, ".svg"), p1)
+ggsave(stringr::str_c(s_prefix, ".png"), p1)
 
-ggsave(stringr::str_c(c_prefix, ".pdf"), p1)
-ggsave(stringr::str_c(c_prefix, ".svg"), p2)
-ggsave(stringr::str_c(c_prefix, ".png"), p2)
+ggsave(stringr::str_c(g_prefix, ".pdf"), p1)
+ggsave(stringr::str_c(g_prefix, ".svg"), p2)
+ggsave(stringr::str_c(g_prefix, ".png"), p2)
 
 ggsave(stringr::str_c(p_prefix, ".pdf"), pcoa_p)
 ggsave(stringr::str_c(p_prefix, ".svg"), pcoa_p)
