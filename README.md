@@ -3,8 +3,8 @@
 ### Installation
 
 ```bash
-git clone https://github.com/ohmeta/mpsepi
-echo "PYTHONPATH=/path/to/mpsepi:$PYTHONPATH" >> ~/.bashrc
+➤ git clone https://github.com/ohmeta/mpsepi
+➤ echo "PYTHONPATH=/path/to/mpsepi:$PYTHONPATH" >> ~/.bashrc
 # relogin
 ```
 
@@ -65,11 +65,11 @@ available subcommands:
 #### Prepare data
 
 ```bash
-mkdir -p pd-mice
-cd pd-misc
-wget -c https://data.qiime2.org/2022.11/tutorials/pd-mice/sample_metadata.tsv
-wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/dada2_table.qza
-wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/taxonomy.qza
+➤ mkdir -p pd-mice
+➤ cd pd-misc
+➤ wget -c https://data.qiime2.org/2022.11/tutorials/pd-mice/sample_metadata.tsv
+➤ wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/dada2_table.qza
+➤ wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/taxonomy.qza
 ```
 
 #### Init project
@@ -116,7 +116,7 @@ wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/taxonomy.qza
 Please update input::metadata to /path/to/sample_metadata.tsv, update input::qiime2::otuqzafile to /path/to/dada2_table.qza, and update input::qiime2::taxaqzafile to /path/to/taxonomy.qza.
 
 ```bash
-cat config.yaml
+➤ cat config.yaml
 
 input:
   metadata: /path/to/sample_metadata.tsv # updated
@@ -167,20 +167,37 @@ output:
 
 envs:
   mpse: /path/to/envs/mpse.yaml
-
-
 ```
 
 #### Dry run mpse_wf
 
 ```bash
-python /path/to/run_mpsepi.py all --dry-run
+➤ python /path/to/run_mpsepi.py all --dry-run
+
+
+Job stats:
+job                     count    min threads    max threads
+--------------------  -------  -------------  -------------
+mpse_composition            1              1              1
+mpse_composition_all        1              1              1
+mpse_import_qiime2          1              1              1
+mpse_rarefy                 1              1              1
+total                       4              1              1
+
+Reasons:
+    (check individual jobs above for details)
+    input files updated by another job:
+        mpse_composition, mpse_composition_all, mpse_rarefy
+    missing output files:
+        mpse_composition, mpse_import_qiime2, mpse_rarefy
+
+This was a dry-run (flag -n). The order of jobs does not reflect the order of execution.
 ```
 
 #### Run mpse_wf
 
 ```bash
-python /path/to/run_mpsepi.py all \
+➤ python /path/to/run_mpsepi.py all \
   --use-conda \
   --run-local \
   --cores 10 \

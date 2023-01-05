@@ -1,5 +1,7 @@
 if config["params"]["import_from"] in ["dada2", "qiime2"]:
 
+    print("Doing rarefy")
+
     rule mpse_rarefy:
         input:
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
@@ -31,8 +33,8 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_plot_benchmark.txt")
         params:
             group = config["params"]["group"],
-            width = config["params"]["rarefy"]["width"],
-            height = config["params"]["rarefy"]["height"]
+            width = config["params"]["rarefy"]["plot"]["width"],
+            height = config["params"]["rarefy"]["plot"]["height"]
         conda:
             config["envs"]["mpse"]
         shell:

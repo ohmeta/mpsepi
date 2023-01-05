@@ -1,6 +1,6 @@
 rule mpse_diff:
     input:
-        lambda wildcards: mpse_input()
+        mpse_input()
     output:
         lda_tsv = os.path.join(config["output"]["diff"], "mpse/lda.tsv"),
         tree_plot = expand(os.path.join(

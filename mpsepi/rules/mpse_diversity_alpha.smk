@@ -1,6 +1,6 @@
 rule mpse_diversity_alpha:
     input:
-        lambda wildcards: mpse_input()
+        mpse_input()
     output:
         alpha_tsv = os.path.join(config["output"]["diversity_alpha"], "mpse/diversity_alpha.tsv"),
         plot = expand(os.path.join(

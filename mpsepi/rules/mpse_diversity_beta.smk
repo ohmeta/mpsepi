@@ -1,6 +1,6 @@
 rule mpse_diversity_beta:
     input:
-        lambda wildcards: mpse_input()
+        mpse_input()
     output:
         dist_tsv = os.path.join(config["output"]["diversity_beta"], "mpse/dist.tsv"),
         dist_samples_plot = expand(os.path.join(

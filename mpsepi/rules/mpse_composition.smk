@@ -1,6 +1,4 @@
 def mpse_input():
-    print(config["params"]["import_from"])
-
     if config["params"]["import_from"] in ["qiime2", "dada2"]:
         return os.path.join(config["output"]["rarefied"], "mpse/mpse_rarefied.rds")
     elif config["params"]["import_from"] == "metaphlan":
@@ -12,7 +10,7 @@ def mpse_input():
 
 rule mpse_composition:
     input:
-        lambda wildcards: mpse_input()
+        mpse_input()
     output:
         abun_plot = expand(os.path.join(
             config["output"]["composition"], "abun_plot/composition_{level}.{outformat}"),
