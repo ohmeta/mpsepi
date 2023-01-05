@@ -1,0 +1,14 @@
+include *.md *.txt
+include LICENSE
+
+recursive-include mpsepi/ *
+recursive-include mpsepi/wrappers *
+recursive-include mpsepi/rules *
+recursive-include mpsepi/snakefiles *
+recursive-include mpsepi/envs *
+recursive-include mpsepi/config *
+
+global-exclude mpsepi/ *.pyc
+global-exclude mpsepi/__pycache__ *.pyc
+global-exclude mpsepi/wrappers/ *.pyc
+global-exclude mpsepi/wrappers/__pycache__ *.pyc

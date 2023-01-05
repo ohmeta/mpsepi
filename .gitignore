@@ -1,0 +1,21 @@
+# vscode
+.vscode
+
+# pycharm
+.idea
+
+.snakemake
+
+mpsepi/__pycache__/
+mpsepi/*.pyc 
+
+# pipenv
+build/
+dist/
+mpsepi.egg-info/
+release
+
+conda/*.gz
+
+notebooks/
+notebook

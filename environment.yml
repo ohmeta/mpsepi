@@ -1,0 +1,9 @@
+name: mpsepi
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - setuptools
+  - ruamel.yaml
+  - snakemake >=7.0
