@@ -21,7 +21,7 @@ library(patchwork)
 
 args <- docopt::docopt(doc, version = 'mpse composition v0.1')
 
-readRDS(args$mpse)
+mpse <- readRDS(args$mpse)
 
 p_prefix <- args$abun_plot_prefix
 f_prefix <- args$group_plot_prefix
@@ -354,7 +354,19 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.hclust = 'average')
 }
 
+if (!dir.exists(dirname(p_prefix)) {
+  dir.create(dirname(p_prefix), recursive = TRUE)
+}
 
+if (!dir.exists(dirname(f_prefix)) {
+  dir.create(dirname(f_prefix), recursive = TRUE)
+}
+
+if (!dir.exists(dirname(h_prefix)) {
+  dir.create(dirname(h_prefix), recursive = TRUE)
+}
+ 
+ 
 ## abun plot
 ggsave(stringr::str_c(p_prefix, "phylum.pdf"), p_p)
 ggsave(stringr::str_c(p_prefix, "phylum.svg"), p_p)
@@ -397,4 +409,7 @@ ggsave(stringr::str_c(h_prefix, "species.svg"), h_s)
 ggsave(stringr::str_c(h_prefix, "species.png"), h_s)
 
 
+if (!dir.exists(dirname(args$image)) {
+  dir.create(dirname(args$image), recursive = TRUE)
+}
 save.image(args$image)

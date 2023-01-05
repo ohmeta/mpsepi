@@ -21,7 +21,7 @@ library(patchwork)
 
 args <- docopt::docopt(doc, version = 'mpse diversity alpha v0.1')
 
-readRDS(args$mpse)
+mpse <- readRDS(args$mpse)
 
 if (args$method %in% c("qiime2", "dada2")) {
   mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = RareAbundance)
@@ -50,14 +50,34 @@ if (args$method %in% c("qiime2", "dada2")) {
 }
 
 alpha_df <- mpse %>% MicrobiotaProcess::mp_extract_sample()
+
+
+if (!dir.exists(dirname(args$alpha_tsv)) {
+  dir.create(dirname(args$alpha_tsv), recursive = TRUE)
+}
 readr::write_tsv(alpha_df, args$alpha_tsv)
 
 
 f <- f1 / f2
+
+if (!dir.exists(dirname(args$plot_pdf))) {
+  dir.create(dirname(args$plot_pdf), recursive = TRUE)
+}
+
+if (!dir.exists(dirname(args$plot_svg))) {
+  dir.create(dirname(args$plot_svg), recursive = TRUE)
+}
+
+if (!dir.exists(dirname(args$plot_png)) {
+  dir.create(dirname(args$plot_png), recursive = TRUE)
+}
 
 ggsave(args$plot_pdf, f, width = args$width, height = args$height)
 ggsave(args$plot_svg, f, width = args$width, height = args$height)
 ggsave(args$plot_png, f, width = args$width, height = args$height)
 
 
+if (!dir.exists(dirname(args$image)) {
+  dir.create(dirname(args$image), recursive = TRUE)
+}
 save.image(args$image)

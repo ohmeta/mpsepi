@@ -22,21 +22,25 @@ library(ggplot2)
 
 args <- docopt::docopt(doc, version = 'mpse rarefy v0.1')
 
+
 if (args$rarefy) {
-  readRDS(args$mpse)
+  mpse <- readRDS(args$mpse)
 
   mpse %<>%
-    MicrobiotaProcess:mp_rrarefy() %>% 
-    MicrobiotaProcess:mp_cal_rarecurve(
+    MicrobiotaProcess::mp_rrarefy() %>% 
+    MicrobiotaProcess::mp_cal_rarecurve(
       .abundance = RareAbundance, 
-      chunks = chunks,
+      chunks = as.integer(args$chunks),
       action = "add")
 
+  if (!dir.exists(dirname(args$mpse_rarefied))) {
+    dir.create(dirname(args$mpse_rarefied), recursive = TRUE)
+  }
   saveRDS(mpse, args$mpse_rarefied)
 
 } else if (args$plot) {
 
-  readRDS(args$mpse_rarefied)
+  mpse <- readRDS(args$mpse_rarefied)
 
   p1 <- mpse %>%
     MicrobiotaProcess::mp_plot_rarecurve(
@@ -59,6 +63,19 @@ if (args$rarefy) {
 
   p <- p1 + p2 + p3
 
+
+  if (!dir.exists(dirname(args$plot_pdf))) {
+    dir.create(dirname(args$plot_pdf), recursive = TRUE)
+  }
+
+  if (!dir.exists(dirname(args$plot_svg))) {
+    dir.create(dirname(args$plot_svg), recursive = TRUE)
+  }
+ 
+  if (!dir.exists(dirname(args$plot_png)) {
+    dir.create(dirname(args$plot_png), recursive = TRUE)
+  }
+ 
   ggsave(args$plot_pdf, p, width = args$width, height = args$height)  
   ggsave(args$plot_svg, p, width = args$width, height = args$height)  
   ggsave(args$plot_png, p, width = args$width, height = args$height)  
