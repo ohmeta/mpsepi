@@ -19,3 +19,5 @@ conda/*.gz
 
 notebooks/
 notebook
+
+test
