@@ -1,13 +1,3 @@
-def mpse_input():
-    if config["params"]["import_from"] in ["qiime2", "dada2"]:
-        return os.path.join(config["output"]["rarefied"], "mpse/mpse_rarefied.rds")
-    elif config["params"]["import_from"] == "metaphlan":
-        return os.path.join(config["output"]["import"], "mpse/mpse.rds")
-    else:
-        print("No import method for %s" % config["params"]["import_from"])
-        sys.exit(1)
-
-
 rule mpse_diversity_alpha:
     input:
         mpse_input
