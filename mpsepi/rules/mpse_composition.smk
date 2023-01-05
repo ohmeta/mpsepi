@@ -13,7 +13,8 @@ rule mpse_composition:
         heatmap_plot = expand(os.path.join(
             config["output"]["composition"], "heatmap_plot/composition_{level}.{format}"),
             level=["phylum", "genus", "species"],
-            format=["pdf", "svg", "png"])
+            format=["pdf", "svg", "png"]),
+        image = os.path.join(config["output"]["composition"], "image/composition.RData")
     params:
         method = config["params"]["import_from"],
         group = config["params"]["group"],
@@ -29,5 +30,6 @@ rule mpse_composition:
         {params.group} \
         {params.abun_plot_prefix} \
         {params.group_plot_prefix} \
-        {params.heatmap_plot_prefix}
+        {params.heatmap_plot_prefix} \
+        {output.image}
         '''

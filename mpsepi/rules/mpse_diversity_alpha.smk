@@ -12,10 +12,11 @@ rule mpse_diversity_alpha:
     input:
         mpse_input
     output:
-        alpha_tsv = os.path.join(config["output"]["diversity_alpha"], "mpse/diversity_alpha.tsv")
+        alpha_tsv = os.path.join(config["output"]["diversity_alpha"], "mpse/diversity_alpha.tsv"),
         plot = expand(os.path.join(
             config["output"]["diversity_alpha"], "plot/diversity_alpha.{format}",
-            format=["pdf", "svg", "png"]))
+            format=["pdf", "svg", "png"])),
+        image = os.path.join(config["output"]["diversity_alpha"], "image/diversity_alpha.RData")
     params:
         method = config["params"]["import_from"],
         group = config["params"]["group"],
@@ -33,5 +34,6 @@ rule mpse_diversity_alpha:
         {output.plot[1]} \
         {output.plot[2]} \
         {params.width} \
-        {params.height}
+        {params.height} \
+        {output.image}
         '''

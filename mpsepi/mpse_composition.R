@@ -3,7 +3,7 @@
 'mpse composition script
 
 Usage:
-  mpse_composition.R <method> <mpse> <group> <abun_plot_prefix> <group_plot_prefix> <heatmap_plot_prefix>
+  mpse_composition.R <method> <mpse> <group> <abun_plot_prefix> <group_plot_prefix> <heatmap_plot_prefix> <image>
   mpse_composition.R (-h | --help)
   mpse_composition.R --version
 
@@ -395,3 +395,6 @@ ggsave(stringr::str_c(h_prefix, "genus.png"), h_g)
 ggsave(stringr::str_c(h_prefix, "species.pdf"), h_s)
 ggsave(stringr::str_c(h_prefix, "species.svg"), h_s)
 ggsave(stringr::str_c(h_prefix, "species.png"), h_s)
+
+
+save.image(args$image)

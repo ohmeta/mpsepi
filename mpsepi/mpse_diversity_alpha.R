@@ -3,7 +3,7 @@
 'mpse diversity alpha script
 
 Usage:
-  mpse_diversity_alpha.R <method> <mpse> <group> <alpha_tsv> <plot_pdf> <plot_svg> <plot_png> <width> <height>
+  mpse_diversity_alpha.R <method> <mpse> <group> <alpha_tsv> <plot_pdf> <plot_svg> <plot_png> <width> <height> <image>
   mpse_diversity_alpha.R (-h | --help)
   mpse_diversity_alpha.R --version
 
@@ -58,3 +58,6 @@ f <- f1 / f2
 ggsave(args$plot_pdf, f, width = args$width, height = args$height)
 ggsave(args$plot_svg, f, width = args$width, height = args$height)
 ggsave(args$plot_png, f, width = args$width, height = args$height)
+
+
+save.image(args$image)
