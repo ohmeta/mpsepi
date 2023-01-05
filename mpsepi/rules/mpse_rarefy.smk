@@ -10,12 +10,13 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
         benchmark:
             os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_benchmark.txt")
         params:
+            mpse_rarefy = os.path.join(WRAPPERS_DIR, "mpse_rarefy.R"),
             chunks = config["params"]["rarefy"]["chunks"]
         conda:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../wrappers/mpse_rarefy.R rarefy \
+            Rscript {params.mpse_rarefy} rarefy \
             {input} \
             {params.chunks} \ 
             {output} 
@@ -32,6 +33,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
         benchmark:
             os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_plot_benchmark.txt")
         params:
+            mpse_rarefy = os.path.join(WRAPPERS_DIR, "mpse_rarefy.R"),
             group = config["params"]["group"],
             width = config["params"]["rarefy"]["plot"]["width"],
             height = config["params"]["rarefy"]["plot"]["height"]
@@ -39,7 +41,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../wrappers/mpse_rarefy.R plot \
+            Rscript {params.mpse_rarefy} plot \
             {input} \
             {params.group} \
             {output[0]} {output[1]} {output[2]} \

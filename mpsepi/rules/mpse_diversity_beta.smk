@@ -17,6 +17,7 @@ rule mpse_diversity_beta:
             outformat=["pdf", "svg", "png"]),
         image = os.path.join(config["output"]["diversity_beta"], "image/diversity_beta.RData")
     params:
+        mpse_diversity_beta = os.path.join(WRAPPERS_DIR, "mpse_diversity_beta.R"),
         group = config["params"]["group"],
         method = config["params"]["import_from"],
         distmethod = config["params"]["diversity_beta"]["distmethod"],
@@ -28,7 +29,7 @@ rule mpse_diversity_beta:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../wrappers/mpse_diversity_beta.R {params.method} \
+        Rscript {params.mpse_diversity_beta} {params.method} \
         {params.distmethod} \
         {input} \
         {params.group} \

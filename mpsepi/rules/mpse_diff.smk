@@ -17,6 +17,7 @@ rule mpse_diff:
             outformat=["pdf", "svg", "png"]),
         image = os.path.join(config["output"]["diff"], "image/diff.RData")
     params:
+        mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
         group = config["params"]["group"],
         method = config["params"]["import_from"],
         first_test_alpha = config["params"]["diff"]["first_test_alpha"],
@@ -28,7 +29,7 @@ rule mpse_diff:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../wrappers/mpse_diff.R {params.method} \
+        Rscript {params.mpse_diff} {params.method} \
         {input} \
         {params.group} \
         {params.first_test_alpha} \

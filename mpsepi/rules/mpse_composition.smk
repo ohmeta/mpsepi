@@ -26,6 +26,7 @@ rule mpse_composition:
             outformat=["pdf", "svg", "png"]),
         image = os.path.join(config["output"]["composition"], "image/composition.RData")
     params:
+        mpse_composition = os.path.join(WRAPPERS_DIR, "mpse_composition.R"),
         method = config["params"]["import_from"],
         group = config["params"]["group"],
         abun_plot_prefix = os.path.join(config["output"]["composition"], "abun_plot/composition_"),
@@ -35,7 +36,7 @@ rule mpse_composition:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../wrappers/mpse_composition.R {params.method} \
+        Rscript {params.mpse_composition} {params.method} \
         {input} \
         {params.group} \
         {params.abun_plot_prefix} \

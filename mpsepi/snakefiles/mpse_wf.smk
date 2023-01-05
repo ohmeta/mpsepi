@@ -10,6 +10,8 @@ shell.executable("bash")
 
 MPSEPI_dir = mpsepi.__path__[0]
 
+WRAPPERS_DIR = os.path.join(MPSEPI_dir, "wrappers")
+
 
 include: "../rules/mpse_import.smk"
 include: "../rules/mpse_rarefy.smk"

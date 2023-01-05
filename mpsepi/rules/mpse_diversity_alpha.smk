@@ -8,6 +8,7 @@ rule mpse_diversity_alpha:
             outformat=["pdf", "svg", "png"]),
         image = os.path.join(config["output"]["diversity_alpha"], "image/diversity_alpha.RData")
     params:
+        mpse_diversity_alpha = os.path.join(WRAPPERS_DIR, "mpse_diversity_alpha.R"),
         method = config["params"]["import_from"],
         group = config["params"]["group"],
         width = config["params"]["diversity_alpha"]["plot"]["width"],
@@ -16,7 +17,7 @@ rule mpse_diversity_alpha:
         config["envs"]["mpse"]
     shell:
         '''
-        Rscript ../wrappers/mpse_diversity_alpha.R {params.method} \
+        Rscript {params.mpse_diversity_alpha} {params.method} \
         {input} \
         {params.group} \
         {output.alpha_tsv} \

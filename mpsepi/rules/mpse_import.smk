@@ -9,11 +9,13 @@ if config["params"]["import_from"] == "dada2":
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         benchmark:
             os.path.join(config["output"]["import"], "benchmark/mpse_import_dada2_benchmark.txt")
+        params:
+            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R")
         conda:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../wrappers/mpse_import.R dada2 \
+            Rscript {params.mpse_import} dada2 \
             {input.metadatafile} \
             {input.seqtabfile} \
             {input.taxafile} \
@@ -32,11 +34,13 @@ elif config["params"]["import_from"] == "qiime2":
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         benchmark:
             os.path.join(config["output"]["import"], "benchmark/mpse_import_qiime2_benchmark.txt")
+        params:
+            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R")
         conda:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../wrappers/mpse_import.R qiime2 \
+            Rscript {params.mpse_import} qiime2 \
             {input.metadatafile} \
             {input.otuqzafile} \
             {input.taxaqzafile} \
@@ -54,11 +58,13 @@ elif config["params"]["import_from"] == "metaphlan":
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         benchmark:
             os.path.join(config["output"]["import"], "benchmark/mpse_import_metaphlan_benchmark.txt")
+        params:
+            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R")
         conda:
             config["envs"]["mpse"]
         shell:
             '''
-            Rscript ../wrappers/mpse_import.R metaphlan \
+            Rscript {params.mpse_import} metaphlan \
             {input.metadatafile} \
             {input.profile} \
             {output}
