@@ -16,9 +16,21 @@ input:
 params:
   import_from: "qiime2" # choose from ["qiime2", "dada2", "metaphlan"]
 
+  group: "Time" # update it based on the metadata information
+
+  rarefy:
+    chunks: 500
+    plot:
+      width: 10
+      height: 10
+
+
+
+
 
 output:
   import: "results/00.import"
+  rarefied: "results/00.rarefied"
   composition: "results/01.composition"
   diversity_alpha: "results/02.diversity_alpha"
   diversity_beta: "results/03.diversity_beta"

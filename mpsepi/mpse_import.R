@@ -29,7 +29,7 @@ Options:
 library(magrittr)
 
 
-args <- docopt::docopt(doc, version = 'mpse import 0.1')
+args <- docopt::docopt(doc, version = 'mpse import v0.1')
 
 output <- FALSE
 
@@ -56,12 +56,19 @@ else if(args$metaphlan) {
     profile = args$profile, 
     mapfilename = args$metadatafile)
 
-  output = TRUE
+  mpse %<>%
+    MicrobiotaProcess::mp_cal_abundance(
+      .abundance = Abundance,
+      action = "add",
+      force = TRUE,
+      relative = TRUE)
+
+  output <- TRUE
 }
 
 else {
   stop("mpse_import.R only support dada2, qiime2 and metaphlan as input")
-  output = FALSE
+  output <- FALSE
 }
 
 
