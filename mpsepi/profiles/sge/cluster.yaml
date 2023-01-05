@@ -1,0 +1,17 @@
+__resources__:
+  gpu: 
+    - "gpu"
+    - "nvidia_gpu"
+
+__options__:
+  jc:
+    - "jc"
+    - "jclass"
+    - "job_class"
+
+__default__:
+  queue: "st.q"
+  project: "st_m"
+  workdir: "./"
+  mem: "1G"
+  threads: 1
