@@ -15,10 +15,11 @@ Options:
 
 
 library(magrittr)
+library(ggplot2)
+library(patchwork)
 
 
 args <- docopt::docopt(doc, version = 'mpse diversity alpha v0.1')
-
 
 readRDS(args$mpse)
 
@@ -53,6 +54,7 @@ readr::write_tsv(alpha_df, args$alpha_tsv)
 
 
 f <- f1 / f2
+
 ggsave(args$plot_pdf, f, width = args$width, height = args$height)
 ggsave(args$plot_svg, f, width = args$width, height = args$height)
 ggsave(args$plot_png, f, width = args$width, height = args$height)

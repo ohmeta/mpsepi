@@ -56,13 +56,6 @@ else if(args$metaphlan) {
     profile = args$profile, 
     mapfilename = args$metadatafile)
 
-  mpse %<>%
-    MicrobiotaProcess::mp_cal_abundance(
-      .abundance = Abundance,
-      action = "add",
-      force = TRUE,
-      relative = TRUE)
-
   output <- TRUE
 }
 
