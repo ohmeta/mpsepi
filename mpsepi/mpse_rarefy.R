@@ -60,7 +60,7 @@ else if (args$plot) {
 
   p <- p1 + p2 + p3
 
-  ggsave(args$pdf, p, width = args$width, height = args$height)  
-  ggsave(args$svg, p, width = args$width, height = args$height)  
-  ggsave(args$png, p, width = args$width, height = args$height)  
+  ggsave(args$plot_pdf, p, width = args$width, height = args$height)  
+  ggsave(args$plot_svg, p, width = args$width, height = args$height)  
+  ggsave(args$plot_png, p, width = args$width, height = args$height)  
 }
