@@ -81,7 +81,7 @@ def run_snakemake(args, unknown, snakefile, workflow):
 
 def init(args, unknown):
     if args.workdir:
-        project = mpsepi.mpsepiconfig(args.workdir)
+        project = mpsepi.mpseconfig(args.workdir)
         print(project.__str__())
         project.create_dirs()
         conf = project.get_config()
