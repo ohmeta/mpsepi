@@ -6,7 +6,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
         output:
             os.path.join(config["output"]["rarefied"], "mpse/mpse_rarefied.rds")
         benchmark:
-            os.path.join(config["output"]["import"], "benchmark/mpse_rarefy_benchmark.txt")
+            os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_benchmark.txt")
         params:
             chunks = config["params"]["rarefy"]["chunks"]
         conda:
@@ -25,10 +25,10 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             os.path.join(config["output"]["rarefied"], "mpse/mpse_rarefied.rds")
         output:
             expand(os.path.join(
-                config["output"]["rarefied"], "plot/mpse_rarefied.{format}"),
-                format=["pdf", "svg", "png"])
+                config["output"]["rarefied"], "plot/mpse_rarefied.{outformat}"),
+                outformat=["pdf", "svg", "png"])
         benchmark:
-            os.path.join(config["output"]["import"], "benchmark/mpse_rarefy_plot_benchmark.txt")
+            os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_plot_benchmark.txt")
         params:
             group = config["params"]["group"],
             width = config["params"]["rarefy"]["width"],
@@ -43,3 +43,16 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             {output[0]} {output[1]} {output[2]} \
             {params.width} {params.height}
             '''
+
+
+    rule mpse_rarefy_all:
+        input:
+            os.path.join(config["output"]["rarefied"], "mpse/mpse_rarefied.rds"),
+            expand(os.path.join(
+                config["output"]["rarefied"], "plot/mpse_rarefied.{outformat}"),
+                outformat=["pdf", "svg", "png"])
+
+else:
+    rule mpse_rarefy_all:
+        input:
+

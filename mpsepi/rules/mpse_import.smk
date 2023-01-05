@@ -3,8 +3,8 @@ if config["params"]["import_from"] == "dada2":
     rule mpse_import_dada2:
         input:
             metadatafile = config["input"]["metadata"],
-            seqtabfile = config["input"]["seqtabfile"],
-            taxafile = config["input"]["taxafile"]
+            seqtabfile = config["input"]["dada2"]["seqtabfile"],
+            taxafile = config["input"]["dada2"]["taxafile"]
         output:
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         benchmark:
@@ -26,8 +26,8 @@ elif config["params"]["import_from"] == "qiime2":
     rule mpse_import_qiime2:
         input:
             metadatafile = config["input"]["metadata"],
-            otuqzafile = config["input"]["otuqzafile"],
-            taxaqzafile = config["input"]["taxaqzafile"]
+            otuqzafile = config["input"]["qiime2"]["otuqzafile"],
+            taxaqzafile = config["input"]["qiime2"]["taxaqzafile"]
         output:
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         benchmark:
@@ -49,7 +49,7 @@ elif config["params"]["import_from"] == "metaphlan":
     rule mpse_import_metaphlan:
         input:
             metadatafile = config["input"]["metadata"],
-            profile = config["input"]["profile"],
+            profile = config["input"]["metaphlan2"]["profile"],
         output:
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         benchmark:
@@ -63,3 +63,9 @@ elif config["params"]["import_from"] == "metaphlan":
             {input.profile} \
             {output}
             '''
+
+
+rule mpse_import_all:
+    input:
+        os.path.join(config["output"]["import"], "mpse/mpse.rds")
+

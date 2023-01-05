@@ -25,10 +25,6 @@ MPSE_WF = [
 def run_snakemake(args, unknown, snakefile, workflow):
     conf = mpsepi.parse_yaml(args.config)
 
-    if not os.path.exists(conf["params"]["samples"]):
-        print("Please specific samples list on init step or change config.yaml manualy")
-        sys.exit(1)
-
     cmd = [
         "snakemake",
         "--snakefile",
