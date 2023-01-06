@@ -33,7 +33,7 @@ if (args$method %in% c("qiime2", "dada2")) {
 
   f2 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
-      .alpha = c(Observe, Chao1, ACE, Shannon, Simpson, Pielou)
+      .alpha = c(Observe, Chao1, ACE, Shannon, Simpson, Pielou))
 
 } else if (args$method == "metaphlan") {
 
@@ -46,7 +46,7 @@ if (args$method %in% c("qiime2", "dada2")) {
 
   f2 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
-      .alpha = c(Observe, Shannon, Simpson)
+      .alpha = c(Observe, Shannon, Simpson))
 }
 
 alpha_df <- mpse %>% MicrobiotaProcess::mp_extract_sample()
