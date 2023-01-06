@@ -51,6 +51,7 @@ mpse %<>% MicrobiotaProcess::mp_cal_dist(.abundance = hellinger, distmethod = ar
 
 mpse_dist <- as.matrix(mpse %>% MicrobiotaProcess::mp_extract_dist(distmethod = args$distmethod))
 mpse_dist[lower.tri(mpse_dist, diag=TRUE)] <- NA
+#print(mpse_dist)
 
 mpse_dist <-
   mpse_dist %>%
@@ -70,13 +71,13 @@ readr::write_tsv(mpse_dist, args$dist_tsv)
 # samples distance
 p1 <- mpse %>%
   MicrobiotaProcess::mp_plot_dist(
-    .distmethod = args$distmethod,
+    .distmethod = !!rlang::sym(args$distmethod),
     .group = !!rlang::sym(args$group))
 
 # groups distance
 p2 <- mpse %>%
   MicrobiotaProcess::mp_plot_dist(
-    .distmethod = args$distmethod,
+    .distmethod = !!rlang::sym(args$distmethod),
     .group = !!rlang::sym(args$group),
     group.test = TRUE,
     textsize = 2)
@@ -112,7 +113,7 @@ ggsave(stringr::str_c(s_prefix, ".pdf"), p1)
 ggsave(stringr::str_c(s_prefix, ".svg"), p1)
 ggsave(stringr::str_c(s_prefix, ".png"), p1)
 
-ggsave(stringr::str_c(g_prefix, ".pdf"), p1)
+ggsave(stringr::str_c(g_prefix, ".pdf"), p2)
 ggsave(stringr::str_c(g_prefix, ".svg"), p2)
 ggsave(stringr::str_c(g_prefix, ".png"), p2)
 

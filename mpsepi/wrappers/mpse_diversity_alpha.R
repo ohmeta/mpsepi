@@ -72,9 +72,13 @@ if (!dir.exists(dirname(args$plot_png))) {
   dir.create(dirname(args$plot_png), recursive = TRUE)
 }
 
-ggsave(args$plot_pdf, f, width = args$width, height = args$height)
-ggsave(args$plot_svg, f, width = args$width, height = args$height)
-ggsave(args$plot_png, f, width = args$width, height = args$height)
+
+width <- as.numeric(args$width)
+height <- as.numeric(args$height)
+
+ggsave(args$plot_pdf, f, width = width, height = height)
+ggsave(args$plot_svg, f, width = width, height = height)
+ggsave(args$plot_png, f, width = width, height = height)
 
 
 if (!dir.exists(dirname(args$image))) {
