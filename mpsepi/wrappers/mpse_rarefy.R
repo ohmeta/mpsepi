@@ -3,7 +3,7 @@
 'mpse rarefy script
 
 Usage:
-  mpse_rarefy.R rarefy <mpse> <chunks> <mpse_rarefied> [-f samples]
+  mpse_rarefy.R rarefy <mpse> <chunks> <mpse_rarefied> [-f samples...]
   mpse_rarefy.R plot <mpse_rarefied> <group> <plot_pdf> <plot_svg> <plot_png> <width> <height>
   mpse_rarefy.R (-h | --help)
   mpse_rarefy.R --version
