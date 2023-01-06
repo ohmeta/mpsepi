@@ -68,19 +68,25 @@ if (!dir.exists(dirname(args$dist_tsv))) {
 readr::write_tsv(mpse_dist, args$dist_tsv)
 
 # samples distance
-p1 <- mpse %>% MicrobiotaProcess::mp_plot_dist(.distmethod = args$distmethod, .group = args$group)
-
+p1 <- mpse %>%
+  MicrobiotaProcess::mp_plot_dist(
+    .distmethod = args$distmethod,
+    .group = !!rlang::sym(args$group))
 
 # groups distance
-p2 <- mpse %>% MicrobiotaProcess::mp_plot_dist(.distmethod = args$distmethod, .group = args$group, group.test = TRUE, textsize = 2)
-
+p2 <- mpse %>%
+  MicrobiotaProcess::mp_plot_dist(
+    .distmethod = args$distmethod,
+    .group = !!rlang::sym(args$group),
+    group.test = TRUE,
+    textsize = 2)
 
 # pcoa
 pcoa_p1 <- mpse %>%
   MicrobiotaProcess::mp_plot_ord(
     .ord = pcoa, 
-    .group = args$group, 
-    .color = args$group, 
+    .group = !!rlang::sym(args$group), 
+    .color = !!rlang::sym(args$group), 
     .size = 1.2,
     .alpha = 1,
     ellipse = TRUE,
@@ -90,8 +96,8 @@ pcoa_p1 <- mpse %>%
 pcoa_p2 <- mpse %>%
   MicrobiotaProcess::mp_plot_ord(
     .ord = pcoa, 
-    .group = args$group, 
-    .color = args$group, 
+    .group = !!rlang::sym(args$group), 
+    .color = !!rlang::sym(args$group), 
     .size = Observe, 
     .alpha = Shannon,
     ellipse = TRUE,

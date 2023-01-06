@@ -28,7 +28,7 @@ if (args$method %in% c("qiime2", "dada2")) {
 
   f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       .alpha = c(Observe, Chao1, ACE, Shannon, Simpson, Pielou))
 
   f2 <- mpse %>%
@@ -41,7 +41,7 @@ if (args$method %in% c("qiime2", "dada2")) {
 
   f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       .alpha = c(Observe, Shannon, Simpson))
 
   f2 <- mpse %>%

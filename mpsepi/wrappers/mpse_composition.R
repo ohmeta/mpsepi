@@ -34,13 +34,13 @@ if (args$method %in% c("dada2", "qiime2")) {
     ) %>%
     MicrobiotaProcess::mp_cal_abundance(
       .abundance = RareAbundance,
-      .group = args$group
+      .group = !!rlang::sym(args$group)
     )
 
   p1_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = Phylum, 
       topn = 20,
       relative = TRUE
@@ -48,7 +48,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p2_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       topn = 20,
       relative = FALSE
@@ -58,7 +58,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p1_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = Genus, 
       topn = 20,
       relative = TRUE
@@ -66,7 +66,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p2_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Genus,
       topn = 20,
       relative = FALSE
@@ -76,7 +76,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p1_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = OTU, 
       topn = 20,
       relative = TRUE
@@ -84,7 +84,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p2_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = OTU,
       topn = 20,
       relative = FALSE
@@ -95,7 +95,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f1_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance, 
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       topn = 20,
       plot.group = TRUE
@@ -103,7 +103,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f2_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       topn = 20,
       relative = FALSE,
@@ -114,7 +114,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f1_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance, 
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Genus,
       topn = 20,
       plot.group = TRUE
@@ -122,7 +122,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f2_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Genus,
       topn = 20,
       relative = FALSE,
@@ -133,7 +133,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f1_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance, 
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = OTU,
       topn = 20,
       plot.group = TRUE
@@ -141,7 +141,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f2_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = OTU,
       topn = 20,
       relative = FALSE,
@@ -153,7 +153,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h1_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       relative = TRUE,
       topn = 20,
@@ -166,7 +166,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h2_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       relative = FALSE,
       topn = 20,
@@ -176,12 +176,13 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.dist = 'bray',
       sample.hclust = 'average'
   )
-  h_p <- h1_p / h2_p
+  #h_p <- h1_p / h2_p
+  h_p <- aplot::plot_list(gglist=list(h1_p, h2_p), tag_levels="A")
 
   h1_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Genus,
       relative = TRUE,
       topn = 20,
@@ -194,7 +195,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h2_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Genus,
       relative = FALSE,
       topn = 20,
@@ -204,12 +205,13 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.dist = 'bray',
       sample.hclust = 'average'
   )
-  h_g <- h1_g / h2_g
+  #h_g <- h1_g / h2_g
+  h_g <- aplot::plot_list(gglist=list(h1_g, h2_g), tag_levels="A")
 
   h1_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = OTU,
       relative = TRUE,
       topn = 20,
@@ -222,7 +224,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h2_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = OTU,
       relative = FALSE,
       topn = 20,
@@ -232,7 +234,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.dist = 'bray',
       sample.hclust = 'average'
   )
-  h_s <- h1_s / h2_s
+  #h_s <- h1_s / h2_s
+  h_s <- aplot::plot_list(gglist=list(h1_s, h2_s), tag_levels="A")
 
 } else if (args$method == "metaphlan") {
 
@@ -242,13 +245,13 @@ if (args$method %in% c("dada2", "qiime2")) {
     ) %>%
     MicrobiotaProcess::mp_cal_abundance( # for each groups 
       .abundance = Abundance,
-      .group = args$group
+      .group = !!rlang::sym(args$group)
     )
 
   p_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = Phylum, 
       topn = 20,
       relative = TRUE,
@@ -258,7 +261,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = Genus, 
       topn = 20,
       relative = TRUE,
@@ -268,7 +271,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   p_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = OTU, 
       topn = 20,
       relative = TRUE,
@@ -279,7 +282,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = Phylum, 
       topn = 20,
       relative = TRUE,
@@ -290,7 +293,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = Genus, 
       topn = 20,
       relative = TRUE,
@@ -301,7 +304,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   f_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group, 
+      .group = !!rlang::sym(args$group), 
       taxa.class = OTU, 
       topn = 20,
       relative = TRUE,
@@ -313,7 +316,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       relative = TRUE,
       force = TRUE,
@@ -328,7 +331,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h_g <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = Genus,
       relative = TRUE,
       force = TRUE,
@@ -342,7 +345,7 @@ if (args$method %in% c("dada2", "qiime2")) {
   h_s <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       taxa.class = OTU,
       relative = TRUE,
       force = TRUE,

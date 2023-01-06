@@ -31,14 +31,14 @@ if (args$method %in% c("dada2", "qiime2")) {
   mpse %<>%
     MicrobiotaProcess::mp_diff_analysis(
       .abundance = RelRareAbundanceBySample,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       first.test.alpha = args$first_test_alpha
   )
 } else if (args$method == "metaphlan") {
   mpse %<>%
     MicrobiotaProcess::mp_diff_analysis(
       .abundance = Abundance,
-      .group = args$group,
+      .group = !!rlang::sym(args$group),
       first.test.alpha = args$first_test_alpha,
       force = TRUE
   )
@@ -104,7 +104,7 @@ f_box_bar <- f_box + f_bar
 
 f_mahattan <- mpse %>%
   mp_plot_diff_manhattan(
-    .group = sign_group,
+    .group = !!rlang::sym(sign_group),
     .y = fdr,
     .size = 2.4,
     taxa.class = c('OTU', 'Genus'),

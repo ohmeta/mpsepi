@@ -64,19 +64,21 @@ if (args$rarefy) {
   p1 <- mpse %>%
     MicrobiotaProcess::mp_plot_rarecurve(
       .rare = RareAbundanceRarecurve, 
-      .alpha = Observe)
+      .alpha = Observe
+  )
 
   p2 <- mpse %>%
     MicrobiotaProcess::mp_plot_rarecurve(
       .rare = RareAbundanceRarecurve, 
       .alpha = Observe, 
-      .group = args$group)
+      .group = !!rlang::sym(args$group)
+  )
 
   p3 <- mpse %>% 
     MicrobiotaProcess::mp_plot_rarecurve(
       .rare = RareAbundanceRarecurve, 
-      .alpha = "Observe", 
-      .group = args$group, 
+      .alpha = Observe, 
+      .group = !!rlang::sym(args$group),
       plot.group = TRUE
   )
 
@@ -94,8 +96,11 @@ if (args$rarefy) {
   if (!dir.exists(dirname(args$plot_png))) {
     dir.create(dirname(args$plot_png), recursive = TRUE)
   }
- 
-  ggsave(args$plot_pdf, p, width = args$width, height = args$height)  
-  ggsave(args$plot_svg, p, width = args$width, height = args$height)  
-  ggsave(args$plot_png, p, width = args$width, height = args$height)  
+
+  width <- as.numeric(args$width)
+  height <- as.numeric(args$height)
+
+  ggsave(args$plot_pdf, p, width = width, height = height)  
+  ggsave(args$plot_svg, p, width = width, height = height)  
+  ggsave(args$plot_png, p, width = width, height = height)  
 }
