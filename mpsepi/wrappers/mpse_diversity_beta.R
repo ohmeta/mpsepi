@@ -28,16 +28,16 @@ g_prefix <- args$dist_groups_plot_prefix
 p_prefix <- args$pcoa_plot_prefix
 c_prefix <- args$clust_plot_prefix
 
-if (!dir.exists(dirname(s_prefix)) {
+if (!dir.exists(dirname(s_prefix))) {
   dir.create(dirname(s_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(g_prefix)) {
+if (!dir.exists(dirname(g_prefix))) {
   dir.create(dirname(g_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(p_prefix)) {
+if (!dir.exists(dirname(p_prefix))) {
   dir.create(dirname(p_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(c_prefix)) {
+if (!dir.exists(dirname(c_prefix))) {
   dir.create(dirname(c_prefix), recursive = TRUE)
 }
 
@@ -62,7 +62,7 @@ mpse_dist <-
     values_to = "distance") %>%
   dplyr::filter(!is.na(distance))
 
-if (!dir.exists(dirname(args$dist_tsv)) {
+if (!dir.exists(dirname(args$dist_tsv))) {
   dir.create(dirname(args$dist_tsv), recursive = TRUE)
 }
 readr::write_tsv(mpse_dist, args$dist_tsv)
@@ -182,7 +182,7 @@ ggsave(stringr::str_c(c_prefix, ".svg"), f)
 ggsave(stringr::str_c(c_prefix, ".png"), f)
 
 
-if (!dir.exists(dirname(args$image)) {
+if (!dir.exists(dirname(args$image))) {
   dir.create(dirname(args$image), recursive = TRUE)
 }
 save.image(args$image)

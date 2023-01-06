@@ -57,7 +57,7 @@ taxa_tree_lda %>%
   dplyr::filter(!is.na(LDAmean))
 
 
-if (!dir.exists(dirname(args$lda_tsv)) {
+if (!dir.exists(dirname(args$lda_tsv))) {
   dir.create(dirname(args$lda_tsv), recursive = TRUE)
 }
 readr::write_tsv(taxa_tree_lda, args$lda_tsv)
@@ -118,16 +118,16 @@ c_prefix <- args$cladogram_plot_prefix
 b_prefix <- args$box_bar_plot_prefix
 m_prefix <- args$mahattan_plot_prefix
 
-if (!dir.exists(dirname(t_prefix)) {
+if (!dir.exists(dirname(t_prefix))) {
   dir.create(dirname(t_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(c_prefix)) {
+if (!dir.exists(dirname(c_prefix))) {
   dir.create(dirname(c_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(b_prefix)) {
+if (!dir.exists(dirname(b_prefix))) {
   dir.create(dirname(b_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(m_prefix)) {
+if (!dir.exists(dirname(m_prefix))) {
   dir.create(dirname(m_prefix), recursive = TRUE)
 }
 
@@ -149,7 +149,7 @@ ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan)
 ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan)
 
 
-if (!dir.exists(dirname(args$image)) {
+if (!dir.exists(dirname(args$image))) {
   dir.create(dirname(args$image), recursive = TRUE)
 }
 save.image(args$image)

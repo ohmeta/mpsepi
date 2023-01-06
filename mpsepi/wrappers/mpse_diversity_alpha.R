@@ -52,7 +52,7 @@ if (args$method %in% c("qiime2", "dada2")) {
 alpha_df <- mpse %>% MicrobiotaProcess::mp_extract_sample()
 
 
-if (!dir.exists(dirname(args$alpha_tsv)) {
+if (!dir.exists(dirname(args$alpha_tsv))) {
   dir.create(dirname(args$alpha_tsv), recursive = TRUE)
 }
 readr::write_tsv(alpha_df, args$alpha_tsv)
@@ -68,7 +68,7 @@ if (!dir.exists(dirname(args$plot_svg))) {
   dir.create(dirname(args$plot_svg), recursive = TRUE)
 }
 
-if (!dir.exists(dirname(args$plot_png)) {
+if (!dir.exists(dirname(args$plot_png))) {
   dir.create(dirname(args$plot_png), recursive = TRUE)
 }
 
@@ -77,7 +77,7 @@ ggsave(args$plot_svg, f, width = args$width, height = args$height)
 ggsave(args$plot_png, f, width = args$width, height = args$height)
 
 
-if (!dir.exists(dirname(args$image)) {
+if (!dir.exists(dirname(args$image))) {
   dir.create(dirname(args$image), recursive = TRUE)
 }
 save.image(args$image)

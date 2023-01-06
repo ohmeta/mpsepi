@@ -354,15 +354,15 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.hclust = 'average')
 }
 
-if (!dir.exists(dirname(p_prefix)) {
+if (!dir.exists(dirname(p_prefix))) {
   dir.create(dirname(p_prefix), recursive = TRUE)
 }
 
-if (!dir.exists(dirname(f_prefix)) {
+if (!dir.exists(dirname(f_prefix))) {
   dir.create(dirname(f_prefix), recursive = TRUE)
 }
 
-if (!dir.exists(dirname(h_prefix)) {
+if (!dir.exists(dirname(h_prefix))) {
   dir.create(dirname(h_prefix), recursive = TRUE)
 }
  
@@ -409,7 +409,7 @@ ggsave(stringr::str_c(h_prefix, "species.svg"), h_s)
 ggsave(stringr::str_c(h_prefix, "species.png"), h_s)
 
 
-if (!dir.exists(dirname(args$image)) {
+if (!dir.exists(dirname(args$image))) {
   dir.create(dirname(args$image), recursive = TRUE)
 }
 save.image(args$image)
