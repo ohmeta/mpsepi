@@ -46,9 +46,10 @@ mpse <- readRDS(args$mpse)
 
 mpse %<>% MicrobiotaProcess::mp_decostand(.abundance = Abundance)
 
+# cal dist
 mpse %<>% MicrobiotaProcess::mp_cal_dist(.abundance = hellinger, distmethod = args$distmethod)
 
-
+# extract distance
 mpse_dist <- as.matrix(mpse %>% MicrobiotaProcess::mp_extract_dist(distmethod = args$distmethod))
 mpse_dist[lower.tri(mpse_dist, diag=TRUE)] <- NA
 #print(mpse_dist)
@@ -68,6 +69,7 @@ if (!dir.exists(dirname(args$dist_tsv))) {
 }
 readr::write_tsv(mpse_dist, args$dist_tsv)
 
+# plot dist
 # samples distance
 p1 <- mpse %>%
   MicrobiotaProcess::mp_plot_dist(
@@ -82,7 +84,11 @@ p2 <- mpse %>%
     group.test = TRUE,
     textsize = 2)
 
-# pcoa
+
+# cal pcoa
+mpse %<>% MicrobiotaProcess::mp_cal_pcoa(.abundance = hellinger, distmethod = args$distmethod)
+
+# plot pcoa
 pcoa_p1 <- mpse %>%
   MicrobiotaProcess::mp_plot_ord(
     .ord = pcoa, 
@@ -93,6 +99,7 @@ pcoa_p1 <- mpse %>%
     ellipse = TRUE,
     show.legend = FALSE
 )
+print("pcoa_p1 ok")
 
 pcoa_p2 <- mpse %>%
   MicrobiotaProcess::mp_plot_ord(
@@ -104,7 +111,7 @@ pcoa_p2 <- mpse %>%
     ellipse = TRUE,
     show.legend = FALSE
 )
-
+print("pcoa_p2 ok")
 pcoa_p <- pcoa_p1 + pcoa_p2
 
 
@@ -134,15 +141,18 @@ mpse %<>%
 samples_clust <- mpse %>% MicrobiotaProcess::mp_extract_internal_attr(name='SampleClust')
 
 f <- ggtree(sample_clust) + 
-  geom_tippoint(aes(color = args$group)) +
+  geom_tippoint(aes(color = !!rlang::sym(args$group))) +
   geom_tiplab(as_ylab = TRUE) +
   ggplot2::scale_x_continuous(expand = c(0, 0.01))
 
 phyla_tb <- mpse %>% MicrobiotaProcess::mp_extract_abundance(taxa.class = Phylum, topn = 30)
+print(phyla_tb)
 
 if (args$method %in% c("dada2", "qiime2")) {
 
   phyla_tb %<>% tidyr::unnest(cols = RareAbundanceBySample) %>% dplyr::rename(Phyla = "label")
+  print(phyla_tb)
+
   f <- f +
     geom_fruit(
       data = phyla_tb,

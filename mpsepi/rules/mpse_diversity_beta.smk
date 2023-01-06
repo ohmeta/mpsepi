@@ -1,6 +1,6 @@
 rule mpse_diversity_beta:
     input:
-        mpse_input()
+        os.path.join(config["output"]["diversity_alpha"], "mpse/mpse.rds")
     output:
         dist_tsv = os.path.join(config["output"]["diversity_beta"], "mpse/dist.tsv"),
         dist_samples_plot = expand(os.path.join(

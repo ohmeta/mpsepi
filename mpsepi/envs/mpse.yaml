@@ -19,6 +19,7 @@ dependencies:
   - r-gghalves
   - r-svglite
   - r-aplot
+  - r-ggside
   - bioconductor-ggtree
   - bioconductor-microbiotaprocess=1.10.0
   - bioconductor-ggtree

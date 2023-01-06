@@ -2,6 +2,7 @@ rule mpse_diversity_alpha:
     input:
         mpse_input()
     output:
+        mpse = os.path.join(config["output"]["diversity_alpha"], "mpse/mpse.rds"),
         alpha_tsv = os.path.join(config["output"]["diversity_alpha"], "mpse/diversity_alpha.tsv"),
         plot = expand(os.path.join(
             config["output"]["diversity_alpha"], "plot/diversity_alpha.{outformat}"),
@@ -18,7 +19,7 @@ rule mpse_diversity_alpha:
     shell:
         '''
         Rscript {params.mpse_diversity_alpha} {params.method} \
-        {input} \
+        {input} {output.mpse} \
         {params.group} \
         {output.alpha_tsv} \
         {output.plot[0]} \

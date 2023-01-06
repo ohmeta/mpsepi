@@ -3,7 +3,7 @@
 'mpse diversity alpha script
 
 Usage:
-  mpse_diversity_alpha.R <method> <mpse> <group> <alpha_tsv> <plot_pdf> <plot_svg> <plot_png> <width> <height> <image>
+  mpse_diversity_alpha.R <method> <mpse> <mpse_output> <group> <alpha_tsv> <plot_pdf> <plot_svg> <plot_png> <width> <height> <image>
   mpse_diversity_alpha.R (-h | --help)
   mpse_diversity_alpha.R --version
 
@@ -24,7 +24,7 @@ args <- docopt::docopt(doc, version = 'mpse diversity alpha v0.1')
 mpse <- readRDS(args$mpse)
 
 if (args$method %in% c("qiime2", "dada2")) {
-  mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = RareAbundance)
+  mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = RareAbundance, add = TRUE)
 
   f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
@@ -37,7 +37,7 @@ if (args$method %in% c("qiime2", "dada2")) {
 
 } else if (args$method == "metaphlan") {
 
-  mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = Abundance)
+  mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = Abundance, add = TRUE)
 
   f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
@@ -51,11 +51,15 @@ if (args$method %in% c("qiime2", "dada2")) {
 
 alpha_df <- mpse %>% MicrobiotaProcess::mp_extract_sample()
 
-
 if (!dir.exists(dirname(args$alpha_tsv))) {
   dir.create(dirname(args$alpha_tsv), recursive = TRUE)
 }
 readr::write_tsv(alpha_df, args$alpha_tsv)
+
+if (!dir.exists(dirname(args$mpse_output))) {
+  dir.create(dirname(args$mpse_output), recursive = TRUE)
+}
+saveRDS(mpse, args$mpse_output)
 
 
 f <- f1 / f2

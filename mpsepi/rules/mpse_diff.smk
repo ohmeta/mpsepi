@@ -1,6 +1,6 @@
 rule mpse_diff:
     input:
-        mpse_input()
+        os.path.join(config["output"]["diversity_alpha"], "mpse/mpse.rds")
     output:
         lda_tsv = os.path.join(config["output"]["diff"], "mpse/lda.tsv"),
         tree_plot = expand(os.path.join(
