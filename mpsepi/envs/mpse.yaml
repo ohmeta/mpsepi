@@ -16,6 +16,7 @@ dependencies:
   - r-corrr
   - r-yaml
   - r-ggh4x
+  - r-svglite
   - bioconductor-ggtree
   - bioconductor-microbiotaprocess=1.10.0
   - bioconductor-ggtree
