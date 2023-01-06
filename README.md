@@ -208,3 +208,106 @@ This was a dry-run (flag -n). The order of jobs does not reflect the order of ex
 ```
 
 #### Understand output
+
+```bash
+tree results
+
+results/
+├── 00.import
+│   ├── benchmark
+│   │   └── mpse_import_qiime2_benchmark.txt
+│   └── mpse
+│       └── mpse.rds
+├── 00.rarefied
+│   ├── benchmark
+│   │   ├── mpse_rarefy_benchmark.txt
+│   │   └── mpse_rarefy_plot_benchmark.txt
+│   ├── mpse
+│   │   └── mpse_rarefied.rds
+│   └── plot
+│       ├── mpse_rarefied.pdf
+│       ├── mpse_rarefied.png
+│       └── mpse_rarefied.svg
+├── 01.composition
+│   ├── abun_plot
+│   │   ├── composition_genus.pdf
+│   │   ├── composition_genus.png
+│   │   ├── composition_genus.svg
+│   │   ├── composition_phylum.pdf
+│   │   ├── composition_phylum.png
+│   │   ├── composition_phylum.svg
+│   │   ├── composition_species.pdf
+│   │   ├── composition_species.png
+│   │   └── composition_species.svg
+│   ├── group_plot
+│   │   ├── composition_genus.pdf
+│   │   ├── composition_genus.png
+│   │   ├── composition_genus.svg
+│   │   ├── composition_phylum.pdf
+│   │   ├── composition_phylum.png
+│   │   ├── composition_phylum.svg
+│   │   ├── composition_species.pdf
+│   │   ├── composition_species.png
+│   │   └── composition_species.svg
+│   ├── heatmap_plot
+│   │   ├── composition_genus.pdf
+│   │   ├── composition_genus.png
+│   │   ├── composition_genus.svg
+│   │   ├── composition_phylum.pdf
+│   │   ├── composition_phylum.png
+│   │   ├── composition_phylum.svg
+│   │   ├── composition_species.pdf
+│   │   ├── composition_species.png
+│   │   └── composition_species.svg
+│   ├── image
+│   │   └── composition.RData
+│   └── mpse
+│       └── mpse.rds
+├── 02.diversity_alpha
+│   ├── image
+│   │   └── diversity_alpha.RData
+│   ├── mpse
+│   │   ├── diversity_alpha.tsv
+│   │   └── mpse.rds
+│   └── plot
+│       ├── diversity_alpha.pdf
+│       ├── diversity_alpha.png
+│       └── diversity_alpha.svg
+├── 03.diversity_beta
+│   ├── clust_plot
+│   │   ├── clust.pdf
+│   │   ├── clust.png
+│   │   └── clust.svg
+│   ├── dist_plot
+│   │   ├── dist_groups.pdf
+│   │   ├── dist_groups.png
+│   │   ├── dist_groups.svg
+│   │   ├── dist_samples.pdf
+│   │   ├── dist_samples.png
+│   │   └── dist_samples.svg
+│   ├── image
+│   │   └── diversity_beta.RData
+│   ├── mpse
+│   │   └── dist.tsv
+│   └── pcoa_plot
+│       ├── pcoa.pdf
+│       ├── pcoa.png
+│       └── pcoa.svg
+└── 04.diff
+    ├── box_bar_plot
+    │   ├── diff_box_bar.pdf
+    │   ├── diff_box_bar.png
+    │   └── diff_box_bar.svg
+    ├── cladogram_plot
+    │   ├── diff_cladogram.pdf
+    │   ├── diff_cladogram.png
+    │   └── diff_cladogram.svg
+    ├── image
+    │   └── diff.RData
+    ├── mpse
+    │   └── lda.tsv
+    └── tree_plot
+        ├── diff_tree.pdf
+        ├── diff_tree.png
+        └── diff_tree.svg
+```
