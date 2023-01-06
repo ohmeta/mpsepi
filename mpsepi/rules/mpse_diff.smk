@@ -12,9 +12,9 @@ rule mpse_diff:
         box_bar_plot = expand(os.path.join(
             config["output"]["diff"], "box_bar_plot/diff_box_bar.{outformat}"),
             outformat=["pdf", "svg", "png"]),
-        mahattan_plot = expand(os.path.join(
-            config["output"]["diff"], "mahattan_plot/diff_mahattan.{outformat}"),
-            outformat=["pdf", "svg", "png"]),
+        #mahattan_plot = expand(os.path.join(
+        #    config["output"]["diff"], "mahattan_plot/diff_mahattan.{outformat}"),
+        #    outformat=["pdf", "svg", "png"]),
         image = os.path.join(config["output"]["diff"], "image/diff.RData")
     params:
         mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
@@ -23,8 +23,8 @@ rule mpse_diff:
         first_test_alpha = config["params"]["diff"]["first_test_alpha"],
         tree_plot_prefix = os.path.join(config["output"]["diff"], "tree_plot/diff_tree"),
         cladogram_plot_prefix = os.path.join(config["output"]["diff"], "cladogram_plot/diff_cladogram"),
-        box_bar_plot_prefix = os.path.join(config["output"]["diff"], "box_bar_plot/diff_box_bar"),
-        mahattan_plot_prefix = os.path.join(config["output"]["diff"], "mahattan_plot/diff_mahattan")
+        box_bar_plot_prefix = os.path.join(config["output"]["diff"], "box_bar_plot/diff_box_bar")#,
+        #mahattan_plot_prefix = os.path.join(config["output"]["diff"], "mahattan_plot/diff_mahattan")
     conda:
         config["envs"]["mpse"]
     shell:
@@ -37,7 +37,6 @@ rule mpse_diff:
         {params.tree_plot_prefix} \
         {params.cladogram_plot_prefix} \
         {params.box_bar_plot_prefix} \
-        {params.mahattan_plot_prefix} \
         {output.image}
         '''
 

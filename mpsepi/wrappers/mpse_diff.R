@@ -3,7 +3,7 @@
 'mpse diff script
 
 Usage:
-  mpse_diff.R <method> <mpse> <group> <first_test_alpha> <lda_tsv> <tree_plot_prefix> <cladogram_plot_prefix> <box_bar_plot_prefix> <mahattan_plot_prefix> <image>
+  mpse_diff.R <method> <mpse> <group> <first_test_alpha> <lda_tsv> <tree_plot_prefix> <cladogram_plot_prefix> <box_bar_plot_prefix> <image>
   mpse_diff.R (-h | --help)
   mpse_diff.R --version
 
@@ -29,14 +29,14 @@ mpse <- readRDS(args$mpse)
 
 if (args$method %in% c("dada2", "qiime2")) {
   mpse %<>%
-    MicrobiotaProcess::mp_diff_analysis(
+    mp_diff_analysis(
       .abundance = RelRareAbundanceBySample,
       .group = !!rlang::sym(args$group),
       first.test.alpha = args$first_test_alpha
   )
 } else if (args$method == "metaphlan") {
   mpse %<>%
-    MicrobiotaProcess::mp_diff_analysis(
+    mp_diff_analysis(
       .abundance = Abundance,
       .group = !!rlang::sym(args$group),
       first.test.alpha = args$first_test_alpha,
@@ -50,9 +50,9 @@ taxa_tree <- mpse %>%
   mp_extract_tree(type = "taxatree")
 
 sign_group <- stringr::str_c("Sign_", args$group)
-taxa_tree_lda %>%
+taxa_tree_lda <- 
   taxa_tree %>%
-  dplyr::select(label, nodeClass, LDAupper, LDAmean, LDAlower, sign_group, pvalue, fdr) %>%
+  dplyr::select(label, nodeClass, LDAupper, LDAmean, LDAlower, !!rlang::sym(sign_group), pvalue, fdr) %>%
   dplyr::filter(!is.na(fdr)) %>%
   dplyr::filter(!is.na(LDAmean))
 
@@ -84,7 +84,7 @@ f <- mpse %>%
 
 
 f_box <- mpse %>%
-  mp_plot_diff_boxplot(.group = args$group) %>%
+  mp_plot_diff_boxplot(.group = !!rlang::sym(args$group)) %>%
   set_diff_boxplot_color(
     values = c("deepskyblue", "orange"),
     guide = guide_legend(title = NULL)
@@ -99,24 +99,25 @@ f_bar <- mpse %>%
     values = c("deepskyblue", "orange"),
     guide = guide_legend(title = NULL)
   )
-f_box_bar <- f_box + f_bar
+#f_box_bar <- f_box + f_bar
+f_box_bar <- aplot::plot_list(f_box, f_bar)
 
 
-f_mahattan <- mpse %>%
-  mp_plot_diff_manhattan(
-    .group = !!rlang::sym(sign_group),
-    .y = fdr,
-    .size = 2.4,
-    taxa.class = c('OTU', 'Genus'),
-    anno.taxa.class = Phylum
-)
+#f_mahattan <- mpse %>%
+#  mp_plot_diff_manhattan(
+#    .group = !!rlang::sym(sign_group),
+#    .y = fdr,
+#    .size = 2.4,
+#    taxa.class = c('OTU', 'Genus'),
+#    anno.taxa.class = Phylum
+#)
 
 
 # save plot
 t_prefix <- args$tree_plot_prefix
 c_prefix <- args$cladogram_plot_prefix
 b_prefix <- args$box_bar_plot_prefix
-m_prefix <- args$mahattan_plot_prefix
+#m_prefix <- args$mahattan_plot_prefix
 
 if (!dir.exists(dirname(t_prefix))) {
   dir.create(dirname(t_prefix), recursive = TRUE)
@@ -127,9 +128,9 @@ if (!dir.exists(dirname(c_prefix))) {
 if (!dir.exists(dirname(b_prefix))) {
   dir.create(dirname(b_prefix), recursive = TRUE)
 }
-if (!dir.exists(dirname(m_prefix))) {
-  dir.create(dirname(m_prefix), recursive = TRUE)
-}
+#if (!dir.exists(dirname(m_prefix))) {
+#  dir.create(dirname(m_prefix), recursive = TRUE)
+#}
 
 
 ggsave(stringr::str_c(t_prefix, ".pdf"), p)
@@ -144,9 +145,9 @@ ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar)
 ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar)
 ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar)
 
-ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan)
-ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan)
-ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan)
+#ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan)
+#ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan)
+#ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan)
 
 
 if (!dir.exists(dirname(args$image))) {

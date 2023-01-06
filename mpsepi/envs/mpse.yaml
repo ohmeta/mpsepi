@@ -20,6 +20,7 @@ dependencies:
   - r-svglite
   - r-aplot
   - r-ggside
+  - r-shadowtext
   - bioconductor-ggtree
   - bioconductor-microbiotaprocess=1.10.0
   - bioconductor-ggtree
