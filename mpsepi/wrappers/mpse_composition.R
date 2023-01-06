@@ -3,7 +3,7 @@
 'mpse composition script
 
 Usage:
-  mpse_composition.R <method> <mpse> <group> <abun_plot_prefix> <group_plot_prefix> <heatmap_plot_prefix> <image>
+  mpse_composition.R <method> <mpse> <mpse_output> <group> <abun_plot_prefix> <group_plot_prefix> <heatmap_plot_prefix> <image>
   mpse_composition.R (-h | --help)
   mpse_composition.R --version
 
@@ -30,11 +30,13 @@ h_prefix <- args$heatmap_plot_prefix
 if (args$method %in% c("dada2", "qiime2")) {
   mpse %<>%
     MicrobiotaProcess::mp_cal_abundance(
-      .abundance = RareAbundance
+      .abundance = RareAbundance,
+      add = TRUE
     ) %>%
     MicrobiotaProcess::mp_cal_abundance(
       .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group)
+      .group = !!rlang::sym(args$group),
+      add = TRUE
     )
 
   p1_p <- mpse %>%
@@ -158,8 +160,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       relative = TRUE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
     ) 
@@ -171,8 +173,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       relative = FALSE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
   )
@@ -187,8 +189,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       relative = TRUE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
     ) 
@@ -200,8 +202,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       relative = FALSE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
   )
@@ -216,8 +218,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       relative = TRUE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
     ) 
@@ -229,8 +231,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       relative = FALSE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
   )
@@ -241,11 +243,13 @@ if (args$method %in% c("dada2", "qiime2")) {
 
   mpse %<>%
     MicrobiotaProcess::mp_cal_abundance( # for each samples
-      .abundance = Abundance
+      .abundance = Abundance,
+      add = TRUE
     ) %>%
     MicrobiotaProcess::mp_cal_abundance( # for each groups 
       .abundance = Abundance,
-      .group = !!rlang::sym(args$group)
+      .group = !!rlang::sym(args$group),
+      add = TRUE
     )
 
   p_p <- mpse %>%
@@ -322,8 +326,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       force = TRUE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
     ) 
@@ -337,8 +341,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       force = TRUE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average')
 
@@ -351,8 +355,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       force = TRUE,
       topn = 20,
       geom = 'heatmap',
-      features.dist = 'euclidean',
-      features.hclust = 'average',
+      #features.dist = 'euclidean',
+      #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average')
 }
@@ -410,6 +414,12 @@ ggsave(stringr::str_c(h_prefix, "genus.png"), h_g)
 ggsave(stringr::str_c(h_prefix, "species.pdf"), h_s)
 ggsave(stringr::str_c(h_prefix, "species.svg"), h_s)
 ggsave(stringr::str_c(h_prefix, "species.png"), h_s)
+
+
+if (!dir.exists(dirname(args$mpse_output))) {
+  dir.create(dirname(args$mpse_output), recursive = TRUE)
+}
+saveRDS(mpse, args$mpse_output)
 
 
 if (!dir.exists(dirname(args$image))) {

@@ -12,6 +12,7 @@ rule mpse_composition:
     input:
         mpse_input()
     output:
+        mpse = os.path.join(config["output"]["composition"], "mpse/mpse.rds"),
         abun_plot = expand(os.path.join(
             config["output"]["composition"], "abun_plot/composition_{level}.{outformat}"),
             level=["phylum", "genus", "species"],
@@ -37,7 +38,7 @@ rule mpse_composition:
     shell:
         '''
         Rscript {params.mpse_composition} {params.method} \
-        {input} \
+        {input} {output.mpse} \
         {params.group} \
         {params.abun_plot_prefix} \
         {params.group_plot_prefix} \

@@ -140,18 +140,16 @@ mpse %<>%
 
 samples_clust <- mpse %>% MicrobiotaProcess::mp_extract_internal_attr(name='SampleClust')
 
-f <- ggtree(sample_clust) + 
+f <- ggtree(samples_clust) + 
   geom_tippoint(aes(color = !!rlang::sym(args$group))) +
   geom_tiplab(as_ylab = TRUE) +
   ggplot2::scale_x_continuous(expand = c(0, 0.01))
 
 phyla_tb <- mpse %>% MicrobiotaProcess::mp_extract_abundance(taxa.class = Phylum, topn = 30)
-print(phyla_tb)
 
 if (args$method %in% c("dada2", "qiime2")) {
 
   phyla_tb %<>% tidyr::unnest(cols = RareAbundanceBySample) %>% dplyr::rename(Phyla = "label")
-  print(phyla_tb)
 
   f <- f +
     geom_fruit(
