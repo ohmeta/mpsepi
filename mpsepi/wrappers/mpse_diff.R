@@ -3,7 +3,7 @@
 'mpse diff script
 
 Usage:
-  mpse_diff.R diff <method> <mpse> <group> <first_test_alpha> <lda_tsv> <tree_plot_prefix> <cladogram_plot_prefix> <box_bar_plot_prefix> <mahattan_plot_prefix> <image>
+  mpse_diff.R <method> <mpse> <group> <first_test_alpha> <lda_tsv> <tree_plot_prefix> <cladogram_plot_prefix> <box_bar_plot_prefix> <mahattan_plot_prefix> <image>
   mpse_diff.R (-h | --help)
   mpse_diff.R --version
 

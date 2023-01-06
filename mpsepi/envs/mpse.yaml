@@ -3,5 +3,21 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - bioconductor-microbiotaprocess=1.10.0
+  - r-tidyverse
+  - r-ggpubr
+  - r-ggplotify
+  - r-ggalluvial
+  - r-ggstar
+  - r-forcats
+  - r-tidytree
+  - r-readxl
+  - r-writexl
   - r-docopt=0.7.1
+  - r-corrr
+  - r-yaml
+  - r-ggh4x
+  - bioconductor-ggtree
+  - bioconductor-microbiotaprocess=1.10.0
+  - bioconductor-ggtree
+  - bioconductor-ggtreeextra
+  - bioconductor-biomformat
