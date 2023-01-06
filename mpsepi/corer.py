@@ -21,7 +21,6 @@ MPSE_WF = [
     "all"
 ]
 
-
 def run_snakemake(args, unknown, snakefile, workflow):
     conf = mpsepi.parse_yaml(args.config)
 
@@ -218,7 +217,7 @@ def main():
     )
     run_parser.add_argument(
         "--dry-run",
-        default=True,
+        default=False,
         dest="dry_run",
         action="store_true",
         help="dry run pipeline",
