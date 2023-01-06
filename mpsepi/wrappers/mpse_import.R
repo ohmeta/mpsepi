@@ -65,7 +65,7 @@ if (args$dada2) {
 }
 
 if (output) {
-  if (!dir.exists(dirname(args$mpse_output)) {
+  if (!dir.exists(dirname(args$mpse_output))) {
     dir.create(dirname(args$mpse_output), recursive = TRUE)
   }
   saveRDS(mpse, args$mpse_output)

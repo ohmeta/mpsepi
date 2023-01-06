@@ -11,15 +11,17 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_benchmark.txt")
         params:
             mpse_rarefy = os.path.join(WRAPPERS_DIR, "mpse_rarefy.R"),
-            chunks = config["params"]["rarefy"]["chunks"]
+            chunks = config["params"]["rarefy"]["chunks"],
+            filtered_samples = "-f " + " -f ".join(config["params"]["rarefy"]["filtered_samples"])
         conda:
             config["envs"]["mpse"]
         shell:
             '''
             Rscript {params.mpse_rarefy} rarefy \
             {input} \
-            {params.chunks} \ 
-            {output} 
+            {params.chunks} \
+            {output} \
+            {params.filtered_samples}
             '''
 
 

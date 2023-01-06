@@ -19,6 +19,7 @@ params:
   group: "Time" # update it based on the metadata information
 
   rarefy:
+    filtered_samples: ["sample_id1", "sample_id2"]
     chunks: 500
     plot:
       width: 10
