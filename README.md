@@ -1,5 +1,9 @@
 ## Microbiota Process and Visualization Pipeline based on the MicrobiotaProcess R Package
 
+### Overview
+
+<div align=center><img width="800" height="300" src="docs/workflows.svg"/>
+
 ### Installation
 
 ```bash
@@ -311,3 +315,45 @@ results/
         ├── diff_tree.png
         └── diff_tree.svg
 ```
+
+### Visualization
+
+#### Rarefication curve
+<div align=center><img width="800" height="200" src="docs/plot/00.rarefied/plot/mpse_rarefied.svg"/>
+
+
+
+
+#### Composition
+
+##### Phylum
+
+<div align=center><img width="1000" height="700" src="docs/plot/01.composition/plot/Phylum/abun.svg"/>
+
+##### Phylum group
+
+<div align=center><img width="1000" height="700" src="docs/plot/01.composition/plot/Phylum/abun_group.svg"/>
+
+
+#### Alpha Diversity
+
+<div align=center><img width="1000" height="500" src="docs/plot/02.diversity_alpha/plot/diversity_alpha.svg"/>
+
+#### Beta Diversity
+
+##### Distance Samples
+
+<div align=center><img width="1200" height="600" src="docs/plot/03.diversity_beta/plot/dist_samples.svg"/>
+
+##### Distance Groups
+
+<div align=center><img width="1100" height="700" src="docs/plot/03.diversity_beta/plot/dist_groups.svg"/>
+
+
+##### Pcoa
+
+<div align=center><img width="800" height="300" src="docs/plot/03.diversity_beta/plot/pcoa.svg"/>
+
+##### Clust
+
+<div align=center><img width="1200" height="600" src="docs/plot/03.diversity_beta/plot/clust.svg"/>

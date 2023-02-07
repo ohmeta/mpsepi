@@ -1,7 +1,4 @@
 if config["params"]["import_from"] in ["dada2", "qiime2"]:
-
-    print("Doing rarefy")
-
     rule mpse_rarefy:
         input:
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
