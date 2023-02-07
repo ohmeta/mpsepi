@@ -84,12 +84,6 @@ if (!dir.exists(dirname(args$alpha_tsv))) {
 }
 readr::write_tsv(alpha_df, args$alpha_tsv)
 
-if (!dir.exists(dirname(args$mpse_output))) {
-  dir.create(dirname(args$mpse_output), recursive = TRUE)
-}
-saveRDS(mpse, args$mpse_output)
-
-
 f <- f1 / f2
 
 if (!dir.exists(dirname(args$plot_pdf))) {
@@ -111,6 +105,12 @@ height <- as.numeric(args$height)
 ggsave(args$plot_pdf, f, width = width, height = height, limitsize = FALSE)
 ggsave(args$plot_svg, f, width = width, height = height, limitsize = FALSE)
 ggsave(args$plot_png, f, width = width, height = height, limitsize = FALSE)
+
+
+if (!dir.exists(dirname(args$mpse_output))) {
+  dir.create(dirname(args$mpse_output), recursive = TRUE)
+}
+saveRDS(mpse, args$mpse_output)
 
 
 if (!dir.exists(dirname(args$image))) {

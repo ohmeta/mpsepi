@@ -45,8 +45,8 @@ params:
           width: 10
           height: 10
         OTU:
-          width: 10
-          height: 10
+          width: 15
+          height: 15
       abundance_group:
         Phylum:
           width: 10
@@ -64,29 +64,28 @@ params:
           width: 10
           height: 10
         OTU:
-          width: 10
-          height: 10
+          width: 15
+          height: 15
       heatmap:
         Phylum:
-          width: 10
+          width: 30
           height: 10
         Class:
-          width: 10
+          width: 30
           height: 10
         Order:
-          width: 10
+          width: 30
           height: 10
         Family:
-          width: 10
+          width: 30
           height: 10
         Genus:
-          width: 10
+          width: 30
           height: 10
         OTU:
-          width: 10
+          width: 30
           height: 10
  
-  
   diversity_alpha:
     plot:
       width: 10

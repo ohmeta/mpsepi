@@ -156,12 +156,12 @@ if (!dir.exists(args$outdir)) {
 }
 
 
-h1 <- as.integer(args$h1)
-w1 <- as.integer(args$w1)
-h2 <- as.integer(args$h2)
-w2 <- as.integer(args$w2)
-h3 <- as.integer(args$h3)
-w3 <- as.integer(args$w3)
+h1 <- as.numeric(args$h1)
+w1 <- as.numeric(args$w1)
+h2 <- as.numeric(args$h2)
+w2 <- as.numeric(args$w2)
+h3 <- as.numeric(args$h3)
+w3 <- as.numeric(args$w3)
  
 ## abun plot
 ggsave(stringr::str_c(args$outdir, "abun.pdf"), p_p, height=h1, width=w1, limitsize = FALSE)

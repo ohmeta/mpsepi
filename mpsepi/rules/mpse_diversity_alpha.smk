@@ -7,7 +7,7 @@ rule mpse_diversity_alpha:
         plot = expand(os.path.join(
             config["output"]["diversity_alpha"], "plot/diversity_alpha.{outformat}"),
             outformat=["pdf", "svg", "png"]),
-        image = os.path.join(config["output"]["diversity_alpha"], "image/diversity_alpha.RData")
+        image = os.path.join(config["output"]["diversity_alpha"], "mpse/diversity_alpha.RData")
     params:
         mpse_diversity_alpha = os.path.join(WRAPPERS_DIR, "mpse_diversity_alpha.R"),
         method = config["params"]["import_from"],
