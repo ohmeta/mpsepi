@@ -2,7 +2,7 @@
 
 ### Overview
 
-<div align=center><img width="800" height="300" src="docs/workflows.svg"/>
+<div align=center><img width="800" height="300" src="docs/workflows.svg"/></div>
 
 ### Installation
 
@@ -319,41 +319,38 @@ results/
 ### Visualization
 
 #### Rarefication curve
-<div align=center><img width="800" height="200" src="docs/plot/00.rarefied/plot/mpse_rarefied.svg"/>
-
-
-
+<div align=center><img width="800" height="200" src="docs/plot/00.rarefied/plot/mpse_rarefied.svg"/></div>
 
 #### Composition
 
 ##### Phylum
 
-<div align=center><img width="1000" height="700" src="docs/plot/01.composition/plot/Phylum/abun.svg"/>
+<div align=center><img width="1000" height="700" src="docs/plot/01.composition/plot/Phylum/abun.svg"/></div>
 
 ##### Phylum group
 
-<div align=center><img width="1000" height="700" src="docs/plot/01.composition/plot/Phylum/abun_group.svg"/>
+<div align=center><img width="1000" height="700" src="docs/plot/01.composition/plot/Phylum/abun_group.svg"/></div>
 
 
 #### Alpha Diversity
 
-<div align=center><img width="1000" height="500" src="docs/plot/02.diversity_alpha/plot/diversity_alpha.svg"/>
+<div align=center><img width="1000" height="500" src="docs/plot/02.diversity_alpha/plot/diversity_alpha.svg"/></div>
 
 #### Beta Diversity
 
 ##### Distance Samples
 
-<div align=center><img width="1200" height="600" src="docs/plot/03.diversity_beta/plot/dist_samples.svg"/>
+<div align=center><img width="1200" height="600" src="docs/plot/03.diversity_beta/plot/dist_samples.svg"/></div>
 
 ##### Distance Groups
 
-<div align=center><img width="1100" height="700" src="docs/plot/03.diversity_beta/plot/dist_groups.svg"/>
+<div align=center><img width="1100" height="700" src="docs/plot/03.diversity_beta/plot/dist_groups.svg"/></div>
 
 
 ##### Pcoa
 
-<div align=center><img width="800" height="300" src="docs/plot/03.diversity_beta/plot/pcoa.svg"/>
+<div align=center><img width="800" height="300" src="docs/plot/03.diversity_beta/plot/pcoa.svg"/></div>
 
 ##### Clust
 
-<div align=center><img width="1200" height="600" src="docs/plot/03.diversity_beta/plot/clust.svg"/>
+<div align=center><img width="1200" height="600" src="docs/plot/03.diversity_beta/plot/clust.svg"/></div>
