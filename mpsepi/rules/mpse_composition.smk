@@ -30,9 +30,7 @@ rule mpse_composition:
         mpse_composition = os.path.join(WRAPPERS_DIR, "mpse_composition.R"),
         method = config["params"]["import_from"],
         group = config["params"]["group"],
-        abun_plot_prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
-        group_plot_prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
-        heatmap_plot_prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
+        prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
         h1 = lambda wc: get_composition_plot_size(wc, "abundance", "height"),
         w1 = lambda wc: get_composition_plot_size(wc, "abundance", "width"),
         h2 = lambda wc: get_composition_plot_size(wc, "abundance_group", "height"),
@@ -47,9 +45,10 @@ rule mpse_composition:
         {params.taxa} \
         {input} \
         {params.group} \
-        {params.abun_plot_prefix} {params.h1} {params.w1} \
-        {params.group_plot_prefix} {params.h2} {params.w2} \
-        {params.heatmap_plot_prefix} {params.h3} {params.w3}
+        {params.prefix} \
+        {params.h1} {params.w1} \
+        {params.h2} {params.w2} \
+        {params.h3} {params.w3}
         '''
 
 

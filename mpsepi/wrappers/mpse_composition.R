@@ -3,7 +3,7 @@
 'mpse composition script
 
 Usage:
-  mpse_composition.R <method> <taxa> <mpse> <group> <abun_plot_prefix> <h1> <w1> <group_plot_prefix> <h2> <w2> <heatmap_plot_prefix> <h3> <w3>
+  mpse_composition.R <method> <taxa> <mpse> <group> <prefix> <h1> <w1> <h2> <w2> <h3> <w3>
   mpse_composition.R (-h | --help)
   mpse_composition.R --version
 
@@ -22,10 +22,6 @@ library(patchwork)
 args <- docopt::docopt(doc, version = 'mpse composition v0.1')
 
 mpse <- readRDS(args$mpse)
-
-p_prefix <- args$abun_plot_prefix
-f_prefix <- args$group_plot_prefix
-h_prefix <- args$heatmap_plot_prefix
 
 if (args$method %in% c("dada2", "qiime2")) {
   mpse %<>%
@@ -154,30 +150,29 @@ if (args$method %in% c("dada2", "qiime2")) {
     ) 
 
 
-if (!dir.exists(dirname(p_prefix))) {
-  dir.create(dirname(p_prefix), recursive = TRUE)
+if (!dir.exists(dirname(args$prefix))) {
+  dir.create(dirname(args$prefix), recursive = TRUE)
 }
 
-if (!dir.exists(dirname(f_prefix))) {
-  dir.create(dirname(f_prefix), recursive = TRUE)
-}
 
-if (!dir.exists(dirname(h_prefix))) {
-  dir.create(dirname(h_prefix), recursive = TRUE)
-}
- 
+h1 <- as.integer(args$h1)
+w1 <- as.integer(args$w1)
+h2 <- as.integer(args$h2)
+w2 <- as.integer(args$w2)
+h3 <- as.integer(args$h3)
+w3 <- as.integer(args$w3)
  
 ## abun plot
-ggsave(stringr::str_c(p_prefix, "abun.pdf"), p_p, height=args$h1, width=args$w1, limitsize = FALSE)
-ggsave(stringr::str_c(p_prefix, "abun.svg"), p_p, height=args$h1, width=args$w1, limitsize = FALSE)
-ggsave(stringr::str_c(p_prefix, "abun.png"), p_p, heigth=args$h1, width=args$w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "abun.pdf"), p_p, height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "abun.svg"), p_p, height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "abun.png"), p_p, heigth=h1, width=w1, limitsize = FALSE)
 
 ## group plot
-ggsave(stringr::str_c(f_prefix, "abun_group.pdf"), f_p, height=args$h2, width=args$w2, limitsize = FALSE)
-ggsave(stringr::str_c(f_prefix, "abun_group.svg"), f_p, height=args$h2, width=args$w2, limitsize = FALSE)
-ggsave(stringr::str_c(f_prefix, "abun_group.png"), f_p, height=args$h2, width=args$w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "abun_group.pdf"), f_p, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "abun_group.svg"), f_p, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "abun_group.png"), f_p, height=h2, width=w2, limitsize = FALSE)
 
 ## heatmap plot
-ggsave(stringr::str_c(h_prefix, "heatmap.pdf"), h_p, height=args$h3, width=args$w3, limitsize = FALSE)
-ggsave(stringr::str_c(h_prefix, "heatmap.svg"), h_p, height=args$h3, width=args$w3, limitsize = FALSE)
-ggsave(stringr::str_c(h_prefix, "heatmap.png"), h_p, height=args$h3, width=args$w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "heatmap.pdf"), h_p, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "heatmap.svg"), h_p, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$prefix, "heatmap.png"), h_p, height=h3, width=w3, limitsize = FALSE)
