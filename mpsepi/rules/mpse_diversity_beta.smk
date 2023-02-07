@@ -4,27 +4,32 @@ rule mpse_diversity_beta:
     output:
         dist_tsv = os.path.join(config["output"]["diversity_beta"], "mpse/dist.tsv"),
         dist_samples_plot = expand(os.path.join(
-            config["output"]["diversity_beta"], "dist_plot/dist_samples.{outformat}"),
+            config["output"]["diversity_beta"], "plot/dist_samples.{outformat}"),
             outformat=["pdf", "svg", "png"]),
         dist_groups_plot = expand(os.path.join(
-            config["output"]["diversity_beta"], "dist_plot/dist_groups.{outformat}"),
+            config["output"]["diversity_beta"], "plot/dist_groups.{outformat}"),
             outformat=["pdf", "svg", "png"]),
         pcoa_plot = expand(os.path.join(
-            config["output"]["diversity_beta"], "pcoa_plot/pcoa.{outformat}"),
+            config["output"]["diversity_beta"], "plot/pcoa.{outformat}"),
             outformat=["pdf", "svg", "png"]),
         clust_plot = expand(os.path.join(
-            config["output"]["diversity_beta"], "clust_plot/clust.{outformat}"),
+            config["output"]["diversity_beta"], "plot/clust.{outformat}"),
             outformat=["pdf", "svg", "png"]),
-        image = os.path.join(config["output"]["diversity_beta"], "image/diversity_beta.RData")
+        image = os.path.join(config["output"]["diversity_beta"], "mpse/diversity_beta.RData")
     params:
         mpse_diversity_beta = os.path.join(WRAPPERS_DIR, "mpse_diversity_beta.R"),
         group = config["params"]["group"],
         method = config["params"]["import_from"],
         distmethod = config["params"]["diversity_beta"]["distmethod"],
-        dist_samples_plot_prefix = os.path.join(config["output"]["diversity_beta"], "dist_plot/dist_samples"),
-        dist_groups_plot_prefix = os.path.join(config["output"]["diversity_beta"], "dist_plot/dist_groups"),
-        pcoa_plot_prefix = os.path.join(config["output"]["diversity_beta"], "pcoa_plot/pcoa"),
-        clust_plot_prefix = os.path.join(config["output"]["diversity_beta"], "clust_plot/clust")
+        plot_outdir = os.path.join(config["output"]["diversity_beta"], "plot/"),
+        h1 = config["params"]["diversity_beta"]["plot"]["dist_samples"]["height"],
+        w1 = config["params"]["diversity_beta"]["plot"]["dist_samples"]["width"],
+        h2 = config["params"]["diversity_beta"]["plot"]["dist_groups"]["height"],
+        w2 = config["params"]["diversity_beta"]["plot"]["dist_groups"]["width"],
+        h3 = config["params"]["diversity_beta"]["plot"]["pcoa"]["height"],
+        w3 = config["params"]["diversity_beta"]["plot"]["pcoa"]["width"],
+        h4 = config["params"]["diversity_beta"]["plot"]["clust"]["height"],
+        w4 = config["params"]["diversity_beta"]["plot"]["clust"]["width"]
     conda:
         config["envs"]["mpse"]
     shell:
@@ -34,11 +39,12 @@ rule mpse_diversity_beta:
         {input} \
         {params.group} \
         {output.dist_tsv} \
-        {params.dist_samples_plot_prefix} \
-        {params.dist_groups_plot_prefix} \
-        {params.pcoa_plot_prefix} \
-        {params.clust_plot_prefix} \
-        {output.image}
+        {params.plot_outdir} \
+        {output.image} \
+        {params.h1} {params.w1} \
+        {params.h2} {params.w2} \
+        {params.h3} {params.w3} \
+        {params.h4} {params.w4}
         '''
 
 

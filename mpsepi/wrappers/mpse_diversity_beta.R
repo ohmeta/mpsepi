@@ -3,7 +3,7 @@
 'mpse diversity beta script
 
 Usage:
-  mpse_diversity_beta.R <method> <distmethod> <mpse> <group> <dist_tsv> <dist_samples_plot_prefix> <dist_groups_plot_prefix> <pcoa_plot_prefix> <clust_plot_prefix> <image>
+  mpse_diversity_beta.R <method> <distmethod> <mpse> <group> <dist_tsv> <plot_outdir> <image> <h1> <w1> <h2> <w2> <h3> <w3> <h4> <w4>
   mpse_import.R (-h | --help)
   mpse_import.R --version
 
@@ -23,31 +23,22 @@ library(ggtreeExtra)
 
 args <- docopt::docopt(doc, version = 'mpse diversity beta v0.1')
 
-s_prefix <- args$dist_samples_plot_prefix
-g_prefix <- args$dist_groups_plot_prefix
-p_prefix <- args$pcoa_plot_prefix
-c_prefix <- args$clust_plot_prefix
 
-if (!dir.exists(dirname(s_prefix))) {
-  dir.create(dirname(s_prefix), recursive = TRUE)
+if (!dir.exists(args$plot_outdir)) {
+  dir.create(args$plot_outdir, recursive = TRUE)
 }
-if (!dir.exists(dirname(g_prefix))) {
-  dir.create(dirname(g_prefix), recursive = TRUE)
-}
-if (!dir.exists(dirname(p_prefix))) {
-  dir.create(dirname(p_prefix), recursive = TRUE)
-}
-if (!dir.exists(dirname(c_prefix))) {
-  dir.create(dirname(c_prefix), recursive = TRUE)
-}
-
 
 mpse <- readRDS(args$mpse)
 
-mpse %<>% MicrobiotaProcess::mp_decostand(.abundance = Abundance)
+mpse %<>% 
+  MicrobiotaProcess::mp_decostand(
+    .abundance = Abundance)
 
 # cal dist
-mpse %<>% MicrobiotaProcess::mp_cal_dist(.abundance = hellinger, distmethod = args$distmethod)
+mpse %<>%
+  MicrobiotaProcess::mp_cal_dist(
+    .abundance = hellinger,
+    distmethod = args$distmethod)
 
 # extract distance
 mpse_dist <- as.matrix(mpse %>% MicrobiotaProcess::mp_extract_dist(distmethod = args$distmethod))
@@ -86,7 +77,9 @@ p2 <- mpse %>%
 
 
 # cal pcoa
-mpse %<>% MicrobiotaProcess::mp_cal_pcoa(.abundance = hellinger, distmethod = args$distmethod)
+mpse %<>% 
+  MicrobiotaProcess::mp_cal_pcoa(
+    .abundance = hellinger, distmethod = args$distmethod)
 
 # plot pcoa
 pcoa_p1 <- mpse %>%
@@ -99,7 +92,6 @@ pcoa_p1 <- mpse %>%
     ellipse = TRUE,
     show.legend = FALSE
 )
-print("pcoa_p1 ok")
 
 pcoa_p2 <- mpse %>%
   MicrobiotaProcess::mp_plot_ord(
@@ -111,22 +103,41 @@ pcoa_p2 <- mpse %>%
     ellipse = TRUE,
     show.legend = FALSE
 )
-print("pcoa_p2 ok")
+
 pcoa_p <- pcoa_p1 + pcoa_p2
 
 
+h1 <- as.numeric(args$h1)
+w1 <- as.numeric(args$w1)
+h2 <- as.numeric(args$h2)
+w2 <- as.numeric(args$w2)
+h3 <- as.numeric(args$h3)
+w3 <- as.numeric(args$w3)
+h4 <- as.numeric(args$h4)
+w4 <- as.numeric(args$w4)
+
+
 # save plot
-ggsave(stringr::str_c(s_prefix, ".pdf"), p1, limitsize = FALSE)
-ggsave(stringr::str_c(s_prefix, ".svg"), p1, limitsize = FALSE)
-ggsave(stringr::str_c(s_prefix, ".png"), p1, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "dist_samples.pdf"), p1, 
+  height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "dist_samples.svg"), p1,
+  height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "dist_samples.png"), p1,
+  height=h1, width=w1, limitsize = FALSE)
 
-ggsave(stringr::str_c(g_prefix, ".pdf"), p2, limitsize = FALSE)
-ggsave(stringr::str_c(g_prefix, ".svg"), p2, limitsize = FALSE)
-ggsave(stringr::str_c(g_prefix, ".png"), p2, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "dist_groups.pdf"), p2,
+  height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "dist_groups.svg"), p2,
+  height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "dist_groups.png"), p2,
+  height=h2, width=w2, limitsize = FALSE)
 
-ggsave(stringr::str_c(p_prefix, ".pdf"), pcoa_p, limitsize = FALSE)
-ggsave(stringr::str_c(p_prefix, ".svg"), pcoa_p, limitsize = FALSE)
-ggsave(stringr::str_c(p_prefix, ".png"), pcoa_p, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "pcoa.pdf"), pcoa_p,
+  height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "pcoa.svg"), pcoa_p,
+  height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "pcoa.png"), pcoa_p,
+  height=h3, width=w3, limitsize = FALSE)
 
 
 # clust
@@ -192,9 +203,12 @@ if (args$method %in% c("dada2", "qiime2")) {
     )
 }
 
-ggsave(stringr::str_c(c_prefix, ".pdf"), f, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".svg"), f, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".png"), f, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "clust.pdf"), f,
+  height=h4, width=w4, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "clust.svg"), f,
+  height=h4, width=w4, limitsize = FALSE)
+ggsave(stringr::str_c(args$plot_outdir, "clust.png"), f,
+  height=h4, width=w4, limitsize = FALSE)
 
 
 if (!dir.exists(dirname(args$image))) {
