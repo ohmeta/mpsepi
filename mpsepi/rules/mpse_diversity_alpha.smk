@@ -1,6 +1,6 @@
 rule mpse_diversity_alpha:
     input:
-        os.path.join(config["output"]["composition"], "mpse/mpse.rds")
+        mpse_input()
     output:
         mpse = os.path.join(config["output"]["diversity_alpha"], "mpse/mpse.rds"),
         alpha_tsv = os.path.join(config["output"]["diversity_alpha"], "mpse/diversity_alpha.tsv"),

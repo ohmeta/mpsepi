@@ -8,46 +8,59 @@ def mpse_input():
         sys.exit(1)
 
 
+def get_composition_plot_size(wildcards, plot, hw):
+    return config["params"]["composition"]["plot"][plot][str(wildcards.level)][hw]
+
+
 rule mpse_composition:
     input:
         mpse_input()
     output:
-        mpse = os.path.join(config["output"]["composition"], "mpse/mpse.rds"),
         abun_plot = expand(os.path.join(
-            config["output"]["composition"], "abun_plot/composition_{level}.{outformat}"),
-            level=["phylum", "genus", "species"],
+            config["output"]["composition"], "plot/{{level}}/abun.{outformat}"),
             outformat=["pdf", "svg", "png"]),
         group_plot = expand(os.path.join(
-            config["output"]["composition"], "group_plot/composition_{level}.{outformat}"),
-            level=["phylum", "genus", "species"],
+            config["output"]["composition"], "plot/{{level}}/abun_group.{outformat}"),
             outformat=["pdf", "svg", "png"]),
         heatmap_plot = expand(os.path.join(
-            config["output"]["composition"], "heatmap_plot/composition_{level}.{outformat}"),
-            level=["phylum", "genus", "species"],
-            outformat=["pdf", "svg", "png"]),
-        image = os.path.join(config["output"]["composition"], "image/composition.RData")
+            config["output"]["composition"], "plot/{{level}}/heatmap.{outformat}"),
+            outformat=["pdf", "svg", "png"])
     params:
+        taxa = "{level}",
         mpse_composition = os.path.join(WRAPPERS_DIR, "mpse_composition.R"),
         method = config["params"]["import_from"],
         group = config["params"]["group"],
-        abun_plot_prefix = os.path.join(config["output"]["composition"], "abun_plot/composition_"),
-        group_plot_prefix = os.path.join(config["output"]["composition"], "group_plot/composition_"),
-        heatmap_plot_prefix = os.path.join(config["output"]["composition"], "heatmap_plot/composition_")
+        abun_plot_prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
+        group_plot_prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
+        heatmap_plot_prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
+        h1 = lambda wc: get_composition_plot_size(wc, "abundance", "height"),
+        w1 = lambda wc: get_composition_plot_size(wc, "abundance", "width"),
+        h2 = lambda wc: get_composition_plot_size(wc, "abundance_group", "height"),
+        w2 = lambda wc: get_composition_plot_size(wc, "abundance_group", "width"),
+        h3 = lambda wc: get_composition_plot_size(wc, "heatmap", "height"),
+        w3 = lambda wc: get_composition_plot_size(wc, "heatmap", "width")
     conda:
         config["envs"]["mpse"]
     shell:
         '''
         Rscript {params.mpse_composition} {params.method} \
-        {input} {output.mpse} \
+        {params.taxa} \
+        {input} \
         {params.group} \
-        {params.abun_plot_prefix} \
-        {params.group_plot_prefix} \
-        {params.heatmap_plot_prefix} \
-        {output.image}
+        {params.abun_plot_prefix} {params.h1} {params.w1} \
+        {params.group_plot_prefix} {params.h2} {params.w2} \
+        {params.heatmap_plot_prefix} {params.h3} {params.w3}
         '''
 
 
 rule mpse_composition_all:
     input:
-        rules.mpse_composition.output
-
+        expand([
+            os.path.join(
+                config["output"]["composition"], "plot/{level}/abun.{outformat}"),
+            os.path.join(
+                config["output"]["composition"], "plot/{level}/abun_group.{outformat}"),
+            os.path.join(
+                config["output"]["composition"], "plot/{level}/heatmap.{outformat}")],
+                level=config["params"]["composition"]["level"],
+                outformat=["pdf", "svg", "png"])

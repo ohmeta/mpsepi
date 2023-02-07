@@ -100,7 +100,7 @@ if (args$rarefy) {
   width <- as.numeric(args$width)
   height <- as.numeric(args$height)
 
-  ggsave(args$plot_pdf, p, width = width, height = height)  
-  ggsave(args$plot_svg, p, width = width, height = height)  
-  ggsave(args$plot_png, p, width = width, height = height)  
+  ggsave(args$plot_pdf, p, width = width, height = height, limitsize = FALSE)  
+  ggsave(args$plot_svg, p, width = width, height = height, limitsize = FALSE)  
+  ggsave(args$plot_png, p, width = width, height = height, limitsize = FALSE)  
 }

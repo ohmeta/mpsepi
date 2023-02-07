@@ -3,7 +3,7 @@
 'mpse composition script
 
 Usage:
-  mpse_composition.R <method> <mpse> <mpse_output> <group> <abun_plot_prefix> <group_plot_prefix> <heatmap_plot_prefix> <image>
+  mpse_composition.R <method> <taxa> <mpse> <group> <abun_plot_prefix> <h1> <w1> <group_plot_prefix> <h2> <w2> <heatmap_plot_prefix> <h3> <w3>
   mpse_composition.R (-h | --help)
   mpse_composition.R --version
 
@@ -39,205 +39,70 @@ if (args$method %in% c("dada2", "qiime2")) {
       add = TRUE
     )
 
-  p1_p <- mpse %>%
+  p1 <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
       .group = !!rlang::sym(args$group), 
-      taxa.class = Phylum, 
+      taxa.class = !!rlang::sym(args$taxa), 
       topn = 20,
-      relative = TRUE
-    )
-  p2_p <- mpse %>%
+      relative = TRUE)
+
+  p2 <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
       .group = !!rlang::sym(args$group),
       taxa.class = Phylum,
       topn = 20,
-      relative = FALSE
-    )
-  p_p <- p1_p / p2_p
+      relative = FALSE)
 
-  p1_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group), 
-      taxa.class = Genus, 
-      topn = 20,
-      relative = TRUE
-    )
-  p2_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = Genus,
-      topn = 20,
-      relative = FALSE
-    )
-  p_g <- p1_g / p2_g
+  p_p <- p1 / p2
 
-  p1_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group), 
-      taxa.class = OTU, 
-      topn = 20,
-      relative = TRUE
-    )
-  p2_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = OTU,
-      topn = 20,
-      relative = FALSE
-    )
-  p_s <- p1_s / p2_s
-
-
-  f1_p <- mpse %>%
+  f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance, 
       .group = !!rlang::sym(args$group),
-      taxa.class = Phylum,
+      taxa.class = !!rlang::sym(args$taxa), 
       topn = 20,
-      plot.group = TRUE
-    )
-  f2_p <- mpse %>%
+      plot.group = TRUE)
+
+  f2 <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
       .group = !!rlang::sym(args$group),
-      taxa.class = Phylum,
+      taxa.class = !!rlang::sym(args$taxa), 
       topn = 20,
       relative = FALSE,
-      plot.group = TRUE
-    )
-  f_p <- f1_p / f2_p
+      plot.group = TRUE)
 
-  f1_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance, 
-      .group = !!rlang::sym(args$group),
-      taxa.class = Genus,
-      topn = 20,
-      plot.group = TRUE
-    )
-  f2_g <- mpse %>%
+  f_p <- f1 / f2
+
+  h1 <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
       .group = !!rlang::sym(args$group),
-      taxa.class = Genus,
-      topn = 20,
-      relative = FALSE,
-      plot.group = TRUE
-    )
-  f_g <- f1_g / f2_g
-
-  f1_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance, 
-      .group = !!rlang::sym(args$group),
-      taxa.class = OTU,
-      topn = 20,
-      plot.group = TRUE
-    )
-  f2_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = OTU,
-      topn = 20,
-      relative = FALSE,
-      plot.group = TRUE
-    )
-  f_s <- f1_s / f2_s
-
-
-  h1_p <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = Phylum,
+      taxa.class = !!rlang::sym(args$taxa), 
       relative = TRUE,
       topn = 20,
       geom = 'heatmap',
       #features.dist = 'euclidean',
       #features.hclust = 'average',
       sample.dist = 'bray',
-      sample.hclust = 'average'
-    ) 
-  h2_p <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = Phylum,
-      relative = FALSE,
-      topn = 20,
-      geom = 'heatmap',
-      #features.dist = 'euclidean',
-      #features.hclust = 'average',
-      sample.dist = 'bray',
-      sample.hclust = 'average'
-  )
-  #h_p <- h1_p / h2_p
-  h_p <- aplot::plot_list(gglist=list(h1_p, h2_p), tag_levels="A")
+      sample.hclust = 'average') 
 
-  h1_g <- mpse %>%
+  h2 <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
       .group = !!rlang::sym(args$group),
-      taxa.class = Genus,
-      relative = TRUE,
-      topn = 20,
-      geom = 'heatmap',
-      #features.dist = 'euclidean',
-      #features.hclust = 'average',
-      sample.dist = 'bray',
-      sample.hclust = 'average'
-    ) 
-  h2_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = Genus,
+      taxa.class = !!rlang::sym(args$taxa), 
       relative = FALSE,
       topn = 20,
       geom = 'heatmap',
       #features.dist = 'euclidean',
       #features.hclust = 'average',
       sample.dist = 'bray',
-      sample.hclust = 'average'
-  )
-  #h_g <- h1_g / h2_g
-  h_g <- aplot::plot_list(gglist=list(h1_g, h2_g), tag_levels="A")
+      sample.hclust = 'average')
 
-  h1_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = OTU,
-      relative = TRUE,
-      topn = 20,
-      geom = 'heatmap',
-      #features.dist = 'euclidean',
-      #features.hclust = 'average',
-      sample.dist = 'bray',
-      sample.hclust = 'average'
-    ) 
-  h2_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = RareAbundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = OTU,
-      relative = FALSE,
-      topn = 20,
-      geom = 'heatmap',
-      #features.dist = 'euclidean',
-      #features.hclust = 'average',
-      sample.dist = 'bray',
-      sample.hclust = 'average'
-  )
-  #h_s <- h1_s / h2_s
-  h_s <- aplot::plot_list(gglist=list(h1_s, h2_s), tag_levels="A")
+  h_p <- aplot::plot_list(gglist=list(h1, h2), tag_levels="A")
 
 } else if (args$method == "metaphlan") {
 
@@ -256,72 +121,28 @@ if (args$method %in% c("dada2", "qiime2")) {
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
       .group = !!rlang::sym(args$group), 
-      taxa.class = Phylum, 
+      taxa.class = !!rlang::sym(args$taxa), 
       topn = 20,
       relative = TRUE,
       force = TRUE
     )
-
-  p_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = Abundance,
-      .group = !!rlang::sym(args$group), 
-      taxa.class = Genus, 
-      topn = 20,
-      relative = TRUE,
-      force = TRUE
-    )
-
-  p_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = Abundance,
-      .group = !!rlang::sym(args$group), 
-      taxa.class = OTU, 
-      topn = 20,
-      relative = TRUE,
-      force = TRUE
-    )
-
 
   f_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
       .group = !!rlang::sym(args$group), 
-      taxa.class = Phylum, 
+      taxa.class = !!rlang::sym(args$taxa), 
       topn = 20,
       relative = TRUE,
       force = TRUE,
       plot.group = TRUE
     )
-
-  f_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = Abundance,
-      .group = !!rlang::sym(args$group), 
-      taxa.class = Genus, 
-      topn = 20,
-      relative = TRUE,
-      force = TRUE,
-      plot.group = TRUE
-    )
-
-  f_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = Abundance,
-      .group = !!rlang::sym(args$group), 
-      taxa.class = OTU, 
-      topn = 20,
-      relative = TRUE,
-      force = TRUE,
-      plot.group = TRUE
-    )
-
 
   h_p <- mpse %>%
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = Abundance,
       .group = !!rlang::sym(args$group),
-      taxa.class = Phylum,
+      taxa.class = !!rlang::sym(args$taxa), 
       relative = TRUE,
       force = TRUE,
       topn = 20,
@@ -332,34 +153,6 @@ if (args$method %in% c("dada2", "qiime2")) {
       sample.hclust = 'average'
     ) 
 
-  h_g <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = Abundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = Genus,
-      relative = TRUE,
-      force = TRUE,
-      topn = 20,
-      geom = 'heatmap',
-      #features.dist = 'euclidean',
-      #features.hclust = 'average',
-      sample.dist = 'bray',
-      sample.hclust = 'average')
-
-  h_s <- mpse %>%
-    MicrobiotaProcess::mp_plot_abundance(
-      .abundance = Abundance,
-      .group = !!rlang::sym(args$group),
-      taxa.class = OTU,
-      relative = TRUE,
-      force = TRUE,
-      topn = 20,
-      geom = 'heatmap',
-      #features.dist = 'euclidean',
-      #features.hclust = 'average',
-      sample.dist = 'bray',
-      sample.hclust = 'average')
-}
 
 if (!dir.exists(dirname(p_prefix))) {
   dir.create(dirname(p_prefix), recursive = TRUE)
@@ -375,54 +168,16 @@ if (!dir.exists(dirname(h_prefix))) {
  
  
 ## abun plot
-ggsave(stringr::str_c(p_prefix, "phylum.pdf"), p_p)
-ggsave(stringr::str_c(p_prefix, "phylum.svg"), p_p)
-ggsave(stringr::str_c(p_prefix, "phylum.png"), p_p)
-
-ggsave(stringr::str_c(p_prefix, "genus.pdf"), p_g)
-ggsave(stringr::str_c(p_prefix, "genus.svg"), p_g)
-ggsave(stringr::str_c(p_prefix, "genus.png"), p_g)
-
-ggsave(stringr::str_c(p_prefix, "species.pdf"), p_s)
-ggsave(stringr::str_c(p_prefix, "species.svg"), p_s)
-ggsave(stringr::str_c(p_prefix, "species.png"), p_s)
-
+ggsave(stringr::str_c(p_prefix, "abun.pdf"), p_p, height=args$h1, width=args$w1, limitsize = FALSE)
+ggsave(stringr::str_c(p_prefix, "abun.svg"), p_p, height=args$h1, width=args$w1, limitsize = FALSE)
+ggsave(stringr::str_c(p_prefix, "abun.png"), p_p, heigth=args$h1, width=args$w1, limitsize = FALSE)
 
 ## group plot
-ggsave(stringr::str_c(f_prefix, "phylum.pdf"), f_p)
-ggsave(stringr::str_c(f_prefix, "phylum.svg"), f_p)
-ggsave(stringr::str_c(f_prefix, "phylum.png"), f_p)
-
-ggsave(stringr::str_c(f_prefix, "genus.pdf"), f_g)
-ggsave(stringr::str_c(f_prefix, "genus.svg"), f_g)
-ggsave(stringr::str_c(f_prefix, "genus.png"), f_g)
-
-ggsave(stringr::str_c(f_prefix, "species.pdf"), f_s)
-ggsave(stringr::str_c(f_prefix, "species.svg"), f_s)
-ggsave(stringr::str_c(f_prefix, "species.png"), f_s)
-
+ggsave(stringr::str_c(f_prefix, "abun_group.pdf"), f_p, height=args$h2, width=args$w2, limitsize = FALSE)
+ggsave(stringr::str_c(f_prefix, "abun_group.svg"), f_p, height=args$h2, width=args$w2, limitsize = FALSE)
+ggsave(stringr::str_c(f_prefix, "abun_group.png"), f_p, height=args$h2, width=args$w2, limitsize = FALSE)
 
 ## heatmap plot
-ggsave(stringr::str_c(h_prefix, "phylum.pdf"), h_p)
-ggsave(stringr::str_c(h_prefix, "phylum.svg"), h_p)
-ggsave(stringr::str_c(h_prefix, "phylum.png"), h_p)
-
-ggsave(stringr::str_c(h_prefix, "genus.pdf"), h_g)
-ggsave(stringr::str_c(h_prefix, "genus.svg"), h_g)
-ggsave(stringr::str_c(h_prefix, "genus.png"), h_g)
-
-ggsave(stringr::str_c(h_prefix, "species.pdf"), h_s)
-ggsave(stringr::str_c(h_prefix, "species.svg"), h_s)
-ggsave(stringr::str_c(h_prefix, "species.png"), h_s)
-
-
-if (!dir.exists(dirname(args$mpse_output))) {
-  dir.create(dirname(args$mpse_output), recursive = TRUE)
-}
-saveRDS(mpse, args$mpse_output)
-
-
-if (!dir.exists(dirname(args$image))) {
-  dir.create(dirname(args$image), recursive = TRUE)
-}
-save.image(args$image)
+ggsave(stringr::str_c(h_prefix, "heatmap.pdf"), h_p, height=args$h3, width=args$w3, limitsize = FALSE)
+ggsave(stringr::str_c(h_prefix, "heatmap.svg"), h_p, height=args$h3, width=args$w3, limitsize = FALSE)
+ggsave(stringr::str_c(h_prefix, "heatmap.png"), h_p, height=args$h3, width=args$w3, limitsize = FALSE)

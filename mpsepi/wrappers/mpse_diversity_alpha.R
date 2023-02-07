@@ -24,7 +24,21 @@ args <- docopt::docopt(doc, version = 'mpse diversity alpha v0.1')
 mpse <- readRDS(args$mpse)
 
 if (args$method %in% c("qiime2", "dada2")) {
-  mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = RareAbundance, add = TRUE)
+  mpse %<>%
+    MicrobiotaProcess::mp_cal_abundance(
+      .abundance = RareAbundance,
+      add = TRUE
+    ) %>%
+    MicrobiotaProcess::mp_cal_abundance(
+      .abundance = RareAbundance,
+      .group = !!rlang::sym(args$group),
+      add = TRUE
+    )
+
+  mpse %<>%
+    MicrobiotaProcess::mp_cal_alpha(
+      .abundance = RareAbundance,
+      add = TRUE)
 
   f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
@@ -37,7 +51,21 @@ if (args$method %in% c("qiime2", "dada2")) {
 
 } else if (args$method == "metaphlan") {
 
-  mpse %<>% MicrobiotaProcess::mp_cal_alpha(.abundance = Abundance, add = TRUE)
+  mpse %<>%
+    MicrobiotaProcess::mp_cal_abundance( # for each samples
+      .abundance = Abundance,
+      add = TRUE
+    ) %>%
+    MicrobiotaProcess::mp_cal_abundance( # for each groups 
+      .abundance = Abundance,
+      .group = !!rlang::sym(args$group),
+      add = TRUE
+    )
+
+  mpse %<>%
+    MicrobiotaProcess::mp_cal_alpha(
+      .abundance = Abundance,
+      add = TRUE)
 
   f1 <- mpse %>%
     MicrobiotaProcess::mp_plot_alpha(
@@ -80,9 +108,9 @@ if (!dir.exists(dirname(args$plot_png))) {
 width <- as.numeric(args$width)
 height <- as.numeric(args$height)
 
-ggsave(args$plot_pdf, f, width = width, height = height)
-ggsave(args$plot_svg, f, width = width, height = height)
-ggsave(args$plot_png, f, width = width, height = height)
+ggsave(args$plot_pdf, f, width = width, height = height, limitsize = FALSE)
+ggsave(args$plot_svg, f, width = width, height = height, limitsize = FALSE)
+ggsave(args$plot_png, f, width = width, height = height, limitsize = FALSE)
 
 
 if (!dir.exists(dirname(args$image))) {

@@ -116,17 +116,17 @@ pcoa_p <- pcoa_p1 + pcoa_p2
 
 
 # save plot
-ggsave(stringr::str_c(s_prefix, ".pdf"), p1)
-ggsave(stringr::str_c(s_prefix, ".svg"), p1)
-ggsave(stringr::str_c(s_prefix, ".png"), p1)
+ggsave(stringr::str_c(s_prefix, ".pdf"), p1, limitsize = FALSE)
+ggsave(stringr::str_c(s_prefix, ".svg"), p1, limitsize = FALSE)
+ggsave(stringr::str_c(s_prefix, ".png"), p1, limitsize = FALSE)
 
-ggsave(stringr::str_c(g_prefix, ".pdf"), p2)
-ggsave(stringr::str_c(g_prefix, ".svg"), p2)
-ggsave(stringr::str_c(g_prefix, ".png"), p2)
+ggsave(stringr::str_c(g_prefix, ".pdf"), p2, limitsize = FALSE)
+ggsave(stringr::str_c(g_prefix, ".svg"), p2, limitsize = FALSE)
+ggsave(stringr::str_c(g_prefix, ".png"), p2, limitsize = FALSE)
 
-ggsave(stringr::str_c(p_prefix, ".pdf"), pcoa_p)
-ggsave(stringr::str_c(p_prefix, ".svg"), pcoa_p)
-ggsave(stringr::str_c(p_prefix, ".png"), pcoa_p)
+ggsave(stringr::str_c(p_prefix, ".pdf"), pcoa_p, limitsize = FALSE)
+ggsave(stringr::str_c(p_prefix, ".svg"), pcoa_p, limitsize = FALSE)
+ggsave(stringr::str_c(p_prefix, ".png"), pcoa_p, limitsize = FALSE)
 
 
 # clust
@@ -192,9 +192,9 @@ if (args$method %in% c("dada2", "qiime2")) {
     )
 }
 
-ggsave(stringr::str_c(c_prefix, ".pdf"), f)
-ggsave(stringr::str_c(c_prefix, ".svg"), f)
-ggsave(stringr::str_c(c_prefix, ".png"), f)
+ggsave(stringr::str_c(c_prefix, ".pdf"), f, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".svg"), f, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".png"), f, limitsize = FALSE)
 
 
 if (!dir.exists(dirname(args$image))) {

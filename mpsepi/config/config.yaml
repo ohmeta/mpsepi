@@ -22,9 +22,71 @@ params:
     filtered_samples: ["sample_id1", "sample_id2"]
     chunks: 500
     plot:
-      width: 10
-      height: 10
-
+      width: 20 
+      height: 5
+    
+  composition:
+    level: ["Phylum", "Class", "Order", "Family", "Genus", "OTU"]
+    plot:
+      abundance:
+        Phylum:
+          width: 10
+          height: 10
+        Class: 
+          width: 10
+          height: 10
+        Order:
+          width: 10
+          height: 10
+        Family:
+          width: 10
+          height: 10
+        Genus:
+          width: 10
+          height: 10
+        OTU:
+          width: 10
+          height: 10
+      abundance_group:
+        Phylum:
+          width: 10
+          height: 10
+        Class:
+          width: 10
+          height: 10
+        Order:
+          width: 10
+          height: 10
+        Family:
+          width: 10
+          height: 10
+        Genus:
+          width: 10
+          height: 10
+        OTU:
+          width: 10
+          height: 10
+      heatmap:
+        Phylum:
+          width: 10
+          height: 10
+        Class:
+          width: 10
+          height: 10
+        Order:
+          width: 10
+          height: 10
+        Family:
+          width: 10
+          height: 10
+        Genus:
+          width: 10
+          height: 10
+        OTU:
+          width: 10
+          height: 10
+ 
+  
   diversity_alpha:
     plot:
       width: 10

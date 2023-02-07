@@ -133,21 +133,21 @@ if (!dir.exists(dirname(b_prefix))) {
 #}
 
 
-ggsave(stringr::str_c(t_prefix, ".pdf"), p)
-ggsave(stringr::str_c(t_prefix, ".svg"), p)
-ggsave(stringr::str_c(t_prefix, ".png"), p)
+ggsave(stringr::str_c(t_prefix, ".pdf"), p, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".svg"), p, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".png"), p, limitsize = FALSE)
 
-ggsave(stringr::str_c(c_prefix, ".pdf"), f)
-ggsave(stringr::str_c(c_prefix, ".svg"), f)
-ggsave(stringr::str_c(c_prefix, ".png"), f)
+ggsave(stringr::str_c(c_prefix, ".pdf"), f, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".svg"), f, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".png"), f, limitsize = FALSE)
 
-ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar)
-ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar)
-ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar)
+ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar, limitsize = FALSE)
 
-#ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan)
-#ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan)
-#ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan)
+#ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan, limitsize = FALSE)
+#ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan, limitsize = FALSE)
+#ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan, limitsize = FALSE)
 
 
 if (!dir.exists(dirname(args$image))) {
