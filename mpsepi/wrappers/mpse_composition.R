@@ -147,7 +147,8 @@ if (args$method %in% c("dada2", "qiime2")) {
       #features.hclust = 'average',
       sample.dist = 'bray',
       sample.hclust = 'average'
-    ) 
+    )
+} 
 
 
 if (!dir.exists(dirname(args$prefix))) {
