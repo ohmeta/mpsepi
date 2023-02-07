@@ -30,7 +30,7 @@ rule mpse_composition:
         mpse_composition = os.path.join(WRAPPERS_DIR, "mpse_composition.R"),
         method = config["params"]["import_from"],
         group = config["params"]["group"],
-        prefix = os.path.join(config["output"]["composition"], "plot/{level}/"),
+        outdir = os.path.join(config["output"]["composition"], "plot/{level}/"),
         h1 = lambda wc: get_composition_plot_size(wc, "abundance", "height"),
         w1 = lambda wc: get_composition_plot_size(wc, "abundance", "width"),
         h2 = lambda wc: get_composition_plot_size(wc, "abundance_group", "height"),
@@ -45,7 +45,7 @@ rule mpse_composition:
         {params.taxa} \
         {input} \
         {params.group} \
-        {params.prefix} \
+        {params.outdir} \
         {params.h1} {params.w1} \
         {params.h2} {params.w2} \
         {params.h3} {params.w3}

@@ -3,7 +3,7 @@
 'mpse composition script
 
 Usage:
-  mpse_composition.R <method> <taxa> <mpse> <group> <prefix> <h1> <w1> <h2> <w2> <h3> <w3>
+  mpse_composition.R <method> <taxa> <mpse> <group> <outdir> <h1> <w1> <h2> <w2> <h3> <w3>
   mpse_composition.R (-h | --help)
   mpse_composition.R --version
 
@@ -47,7 +47,7 @@ if (args$method %in% c("dada2", "qiime2")) {
     MicrobiotaProcess::mp_plot_abundance(
       .abundance = RareAbundance,
       .group = !!rlang::sym(args$group),
-      taxa.class = Phylum,
+      taxa.class = !!rlang::sym(args$taxa), 
       topn = 20,
       relative = FALSE)
 
@@ -151,8 +151,8 @@ if (args$method %in% c("dada2", "qiime2")) {
 } 
 
 
-if (!dir.exists(dirname(args$prefix))) {
-  dir.create(dirname(args$prefix), recursive = TRUE)
+if (!dir.exists(args$outdir)) {
+  dir.create(args$outdir, recursive = TRUE)
 }
 
 
@@ -164,16 +164,16 @@ h3 <- as.integer(args$h3)
 w3 <- as.integer(args$w3)
  
 ## abun plot
-ggsave(stringr::str_c(args$prefix, "abun.pdf"), p_p, height=h1, width=w1, limitsize = FALSE)
-ggsave(stringr::str_c(args$prefix, "abun.svg"), p_p, height=h1, width=w1, limitsize = FALSE)
-ggsave(stringr::str_c(args$prefix, "abun.png"), p_p, heigth=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "abun.pdf"), p_p, height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "abun.svg"), p_p, height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "abun.png"), p_p, height=h1, width=w1, limitsize = FALSE)
 
 ## group plot
-ggsave(stringr::str_c(args$prefix, "abun_group.pdf"), f_p, height=h2, width=w2, limitsize = FALSE)
-ggsave(stringr::str_c(args$prefix, "abun_group.svg"), f_p, height=h2, width=w2, limitsize = FALSE)
-ggsave(stringr::str_c(args$prefix, "abun_group.png"), f_p, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "abun_group.pdf"), f_p, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "abun_group.svg"), f_p, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "abun_group.png"), f_p, height=h2, width=w2, limitsize = FALSE)
 
 ## heatmap plot
-ggsave(stringr::str_c(args$prefix, "heatmap.pdf"), h_p, height=h3, width=w3, limitsize = FALSE)
-ggsave(stringr::str_c(args$prefix, "heatmap.svg"), h_p, height=h3, width=w3, limitsize = FALSE)
-ggsave(stringr::str_c(args$prefix, "heatmap.png"), h_p, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "heatmap.pdf"), h_p, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "heatmap.svg"), h_p, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(args$outdir, "heatmap.png"), h_p, height=h3, width=w3, limitsize = FALSE)
