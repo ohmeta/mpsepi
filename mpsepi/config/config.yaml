@@ -109,6 +109,19 @@ params:
 
   diff:
     first_test_alpha: "0.01"
+    plot:
+      tree:
+        width: 20
+        height: 20
+      cladogram:
+        width: 20
+        height: 20
+      box_bar:
+        width: 20
+        height: 20
+      mahattan:
+        width: 20
+        height: 20
 
 
 output:

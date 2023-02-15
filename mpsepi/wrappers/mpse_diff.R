@@ -3,7 +3,7 @@
 'mpse diff script
 
 Usage:
-  mpse_diff.R <method> <mpse> <group> <first_test_alpha> <lda_tsv> <tree_plot_prefix> <cladogram_plot_prefix> <box_bar_plot_prefix> <image>
+  mpse_diff.R <method> <mpse> <group> <first_test_alpha> <lda_tsv> <tree_plot_prefix> <h1> <w1> <cladogram_plot_prefix> <h2> <w2> <box_bar_plot_prefix> <h3> <w3> <image>
   mpse_diff.R (-h | --help)
   mpse_diff.R --version
 
@@ -133,21 +133,21 @@ if (!dir.exists(dirname(b_prefix))) {
 #}
 
 
-ggsave(stringr::str_c(t_prefix, ".pdf"), p, limitsize = FALSE)
-ggsave(stringr::str_c(t_prefix, ".svg"), p, limitsize = FALSE)
-ggsave(stringr::str_c(t_prefix, ".png"), p, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".pdf"), p, height=args$h1, width=args$w1, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".svg"), p, height=args$h1, width=args$w1, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".png"), p, height=args$h1, width=args$w1, limitsize = FALSE)
 
-ggsave(stringr::str_c(c_prefix, ".pdf"), f, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".svg"), f, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".png"), f, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".pdf"), f, height=args$h2, width=args$w2, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".svg"), f, height=args$h2, width=args$w2, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".png"), f, height=args$h2, width=args$w2, limitsize = FALSE)
 
-ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar, limitsize = FALSE)
-ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar, limitsize = FALSE)
-ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar, height=args$h3, width=args$w3, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar, height=args$h3, width=args$w3, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar, height=args$h3, width=args$w3, limitsize = FALSE)
 
-#ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan, limitsize = FALSE)
-#ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan, limitsize = FALSE)
-#ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan, limitsize = FALSE)
+#ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
+#ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
+#ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
 
 
 if (!dir.exists(dirname(args$image))) {
