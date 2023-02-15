@@ -132,18 +132,24 @@ if (!dir.exists(dirname(b_prefix))) {
 #  dir.create(dirname(m_prefix), recursive = TRUE)
 #}
 
+h1 <- as.numeric(args$h1)
+w1 <- as.numeric(args$w1)
+h2 <- as.numeric(args$h2)
+w2 <- as.numeric(args$w2)
+h3 <- as.numeric(args$h3)
+w3 <- as.numeric(args$w3)
 
-ggsave(stringr::str_c(t_prefix, ".pdf"), p, height=args$h1, width=args$w1, limitsize = FALSE)
-ggsave(stringr::str_c(t_prefix, ".svg"), p, height=args$h1, width=args$w1, limitsize = FALSE)
-ggsave(stringr::str_c(t_prefix, ".png"), p, height=args$h1, width=args$w1, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".pdf"), p, height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".svg"), p, height=h1, width=w1, limitsize = FALSE)
+ggsave(stringr::str_c(t_prefix, ".png"), p, height=h1, width=w1, limitsize = FALSE)
 
-ggsave(stringr::str_c(c_prefix, ".pdf"), f, height=args$h2, width=args$w2, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".svg"), f, height=args$h2, width=args$w2, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".png"), f, height=args$h2, width=args$w2, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".pdf"), f, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".svg"), f, height=h2, width=w2, limitsize = FALSE)
+ggsave(stringr::str_c(c_prefix, ".png"), f, height=h2, width=w2, limitsize = FALSE)
 
-ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar, height=args$h3, width=args$w3, limitsize = FALSE)
-ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar, height=args$h3, width=args$w3, limitsize = FALSE)
-ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar, height=args$h3, width=args$w3, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar, height=h3, width=w3, limitsize = FALSE)
+ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar, height=h3, width=w3, limitsize = FALSE)
 
 #ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
 #ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
