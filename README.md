@@ -117,7 +117,7 @@ available subcommands:
 
 #### Update config.yaml
 
-Please update input::metadata to /path/to/sample_metadata.tsv, update input::qiime2::otuqzafile to /path/to/dada2_table.qza, and update input::qiime2::taxaqzafile to /path/to/taxonomy.qza.
+Please update `input::metadata` to `/path/to/sample_metadata.tsv`, update `input::qiime2::otuqzafile` to `/path/to/dada2_table.qza`, and update `input::qiime2::taxaqzafile` to `/path/to/taxonomy.qza`.
 
 ```bash
 ➤ cat config.yaml
