@@ -70,7 +70,7 @@ available subcommands:
 
 ```bash
 ➤ mkdir -p pd-mice
-➤ cd pd-misc
+➤ cd pd-mice
 ➤ wget -c https://data.qiime2.org/2022.11/tutorials/pd-mice/sample_metadata.tsv
 ➤ wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/dada2_table.qza
 ➤ wget -c https://docs.qiime2.org/2022.11/data/tutorials/pd-mice/taxonomy.qza
