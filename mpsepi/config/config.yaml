@@ -85,6 +85,11 @@ params:
         OTU:
           width: 30
           height: 10
+
+  venn:
+    plot:
+      width: 10
+      height: 10
  
   diversity_alpha:
     plot:
@@ -128,6 +133,7 @@ output:
   import: "results/00.import"
   rarefied: "results/00.rarefied"
   composition: "results/01.composition"
+  venn: "results/01.venn"
   diversity_alpha: "results/02.diversity_alpha"
   diversity_beta: "results/03.diversity_beta"
   diff: "results/04.diff"

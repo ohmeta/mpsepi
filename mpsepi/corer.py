@@ -11,10 +11,12 @@ import pandas as pd
 
 import mpsepi
 
+
 MPSE_WF = [
     "mpse_import_all",
     "mpse_rarefy_all",
     "mpse_composition_all",
+    "mpse_venn_all",
     "mpse_diversity_alpha_all",
     "mpse_diversity_beta_all",
     "mpse_diff_all",

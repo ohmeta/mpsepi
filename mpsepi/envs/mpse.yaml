@@ -21,6 +21,9 @@ dependencies:
   - r-aplot
   - r-ggside
   - r-shadowtext
+  - r-ggpp
+  - r-ggvenndiagram
+  - r-ggupset
   - bioconductor-ggtree
   - bioconductor-microbiotaprocess=1.10.0
   - bioconductor-ggtree
