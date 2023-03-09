@@ -98,6 +98,12 @@ params:
       width: 15
       height: 10
 
+  diversity_phylogenetic:
+    do: False
+    plot:
+      width: 15
+      height: 6
+
   diversity_beta:
     distmethod: "bray"
     plot:
@@ -137,6 +143,7 @@ output:
   composition: "results/01.composition"
   venn: "results/01.venn"
   diversity_alpha: "results/02.diversity_alpha"
+  diversity_phylogenetic: "results/02.diversity_phylogenetic"
   diversity_beta: "results/03.diversity_beta"
   diff: "results/04.diff"
 

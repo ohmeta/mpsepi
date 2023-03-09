@@ -18,6 +18,7 @@ MPSE_WF = [
     "mpse_composition_all",
     "mpse_venn_all",
     "mpse_diversity_alpha_all",
+    "mpse_diversity_phylogenetic_all",
     "mpse_diversity_beta_all",
     "mpse_diff_all",
     "all"

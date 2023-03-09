@@ -18,6 +18,7 @@ include: "../rules/mpse_rarefy.smk"
 include: "../rules/mpse_composition.smk"
 include: "../rules/mpse_venn.smk"
 include: "../rules/mpse_diversity_alpha.smk"
+include: "../rules/mpse_diversity_phylogenetic.smk"
 include: "../rules/mpse_diversity_beta.smk"
 include: "../rules/mpse_diff.smk"
 
@@ -29,5 +30,6 @@ rule all:
         rules.mpse_composition_all.input,
         rules.mpse_venn_all.input,
         rules.mpse_diversity_alpha_all.input,
+        rules.mpse_diversity_phylogenetic_all.input,
         rules.mpse_diversity_beta_all.input,
         rules.mpse_diff_all.input
