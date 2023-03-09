@@ -29,10 +29,9 @@ library(ggtreeExtra)
 
 args <- docopt::docopt(doc, version = 'mpse diversity beta v0.1')
 
+mpse <- readRDS(args$mpse)
 
 if (args$cal) {
-  mpse <- readRDS(args$mpse)
-
   mpse %<>% 
     MicrobiotaProcess::mp_decostand(
       .abundance = Abundance)
@@ -102,8 +101,6 @@ if (args$cal) {
 
 
 if (args$plot) {
-  mpse <- readRDS(args$mpse)
-
   if (!dir.exists(args$plot_outdir)) {
     dir.create(args$plot_outdir, recursive = TRUE)
   }
