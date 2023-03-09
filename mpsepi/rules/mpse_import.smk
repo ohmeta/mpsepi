@@ -10,7 +10,8 @@ if config["params"]["import_from"] == "dada2":
         benchmark:
             os.path.join(config["output"]["import"], "benchmark/mpse_import_dada2_benchmark.txt")
         params:
-            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R")
+            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R"),
+            reftreefile = config["input"]["dada2"]["reftreefile"]
         conda:
             config["envs"]["mpse"]
         shell:
@@ -19,6 +20,7 @@ if config["params"]["import_from"] == "dada2":
             {input.metadatafile} \
             {input.seqtabfile} \
             {input.taxafile} \
+            {params.reftreefile} \
             {output}
             '''
 
@@ -35,7 +37,8 @@ elif config["params"]["import_from"] == "qiime2":
         benchmark:
             os.path.join(config["output"]["import"], "benchmark/mpse_import_qiime2_benchmark.txt")
         params:
-            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R")
+            mpse_import = os.path.join(WRAPPERS_DIR, "mpse_import.R"),
+            treeqzafile = config["input"]["qiime2"]["treeqzafile"]
         conda:
             config["envs"]["mpse"]
         shell:
@@ -44,6 +47,7 @@ elif config["params"]["import_from"] == "qiime2":
             {input.metadatafile} \
             {input.otuqzafile} \
             {input.taxaqzafile} \
+            {params.treeqzafile} \
             {output}
             '''
 

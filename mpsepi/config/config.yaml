@@ -4,10 +4,12 @@ input:
   dada2:
     seqtabfile: /path/to/seqtab.rds
     taxafile: /path/to/taxa.rds
+    reftreefile: /path/to/reftree.tree
 
   qiime2:
     otuqzafile: /path/to/otu.qza
     taxaqzafile: /path/to/taxa.qza
+    treeqzafile: /path/to/tree.qza
 
   metaphlan:
     profile: /path/to/metaphlan_profile.tsv # all level or species level

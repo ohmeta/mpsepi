@@ -3,8 +3,8 @@
 'mpse import script
 
 Usage:
-  mpse_import.R dada2 <metadatafile> <seqtabfile> <taxafile> <mpse_output>
-  mpse_import.R qiime2 <metadatafile> <otuqzafile> <taxaqzafile> <mpse_output>
+  mpse_import.R dada2 <metadatafile> <seqtabfile> <taxafile> <reftreefile> <mpse_output>
+  mpse_import.R qiime2 <metadatafile> <otuqzafile> <taxaqzafile> <treeqzafile> <mpse_output>
   mpse_import.R metaphlan <metadatafile> <profile> <mpse_output>
   mpse_import.R (-h | --help)
   mpse_import.R --version
@@ -34,20 +34,39 @@ args <- docopt::docopt(doc, version = 'mpse import v0.1')
 output <- FALSE
 
 if (args$dada2) {
-  mpse <- MicrobiotaProcess::mp_import_dada2(
-    seqtab = readRDS(args$seqtabfile),
-    taxa = readRDS(args$taxafile),
-    sampleda = args$metadatafile)
-
+  if (file.exists(args$reftreefile)) {
+    mpse <- MicrobiotaProcess::mp_import_dada2(
+      seqtab = readRDS(args$seqtabfile),
+      taxa = readRDS(args$taxafile),
+      sampleda = args$metadatafile,
+      reftree = args$reftreefile
+    )
+  }
+  else {
+    mpse <- MicrobiotaProcess::mp_import_dada2(
+      seqtab = readRDS(args$seqtabfile),
+      taxa = readRDS(args$taxafile),
+      sampleda = args$metadatafile
+    )
+  }
   output <- TRUE
 
 } else if (args$qiime2) {
-
-  mpse <- MicrobiotaProcess::mp_import_qiime2(
-    otuqza = args$otuqzafile,
-    taxaqza = args$taxaqzafile,
-    mapfilename = args$metadatafile)
-
+  if (file.exists(args$treeqzafile)) {
+    mpse <- MicrobiotaProcess::mp_import_qiime2(
+      otuqza = args$otuqzafile,
+      taxaqza = args$taxaqzafile,
+      mapfilename = args$metadatafile,
+      treeqza = args$treeqzafile 
+    )
+  }
+  else {
+    mpse <- MicrobiotaProcess::mp_import_qiime2(
+      otuqza = args$otuqzafile,
+      taxaqza = args$taxaqzafile,
+      mapfilename = args$metadatafile
+    )
+  }
   output <- TRUE
 
 } else if(args$metaphlan) {
