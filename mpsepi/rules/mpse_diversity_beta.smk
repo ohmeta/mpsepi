@@ -9,6 +9,9 @@ rule mpse_diversity_beta:
         dist_groups_plot = expand(os.path.join(
             config["output"]["diversity_beta"], "plot/dist_groups.{outformat}"),
             outformat=["pdf", "svg", "png"]),
+        pca_plot = expand(os.path.join(
+            config["output"]["diversity_beta"], "plot/pca.{outformat}"),
+            outformat=["pdf", "svg", "png"]),
         pcoa_plot = expand(os.path.join(
             config["output"]["diversity_beta"], "plot/pcoa.{outformat}"),
             outformat=["pdf", "svg", "png"]),
@@ -26,10 +29,12 @@ rule mpse_diversity_beta:
         w1 = config["params"]["diversity_beta"]["plot"]["dist_samples"]["width"],
         h2 = config["params"]["diversity_beta"]["plot"]["dist_groups"]["height"],
         w2 = config["params"]["diversity_beta"]["plot"]["dist_groups"]["width"],
-        h3 = config["params"]["diversity_beta"]["plot"]["pcoa"]["height"],
-        w3 = config["params"]["diversity_beta"]["plot"]["pcoa"]["width"],
-        h4 = config["params"]["diversity_beta"]["plot"]["clust"]["height"],
-        w4 = config["params"]["diversity_beta"]["plot"]["clust"]["width"]
+        h3 = config["params"]["diversity_beta"]["plot"]["pca"]["height"],
+        w3 = config["params"]["diversity_beta"]["plot"]["pca"]["width"],
+        h4 = config["params"]["diversity_beta"]["plot"]["pcoa"]["height"],
+        w4 = config["params"]["diversity_beta"]["plot"]["pcoa"]["width"],
+        h5 = config["params"]["diversity_beta"]["plot"]["clust"]["height"],
+        w5 = config["params"]["diversity_beta"]["plot"]["clust"]["width"]
     conda:
         config["envs"]["mpse"]
     shell:
@@ -44,7 +49,8 @@ rule mpse_diversity_beta:
         {params.h1} {params.w1} \
         {params.h2} {params.w2} \
         {params.h3} {params.w3} \
-        {params.h4} {params.w4}
+        {params.h4} {params.w4} \
+        {params.h5} {params.w5}
         '''
 
 
