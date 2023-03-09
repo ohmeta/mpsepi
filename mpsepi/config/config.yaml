@@ -17,8 +17,17 @@ input:
 
 params:
   import_from: "qiime2" # choose from ["qiime2", "dada2", "metaphlan"]
-
   group: "Time" # update it based on the metadata information
+
+  filter:
+    min_abun: 1
+    min_prop: 0.1
+    Phylum: ["p__un_k__Bacteria"]
+    Class: [""]
+    Order: [""]
+    Family: [""]
+    Genus: [""]
+    OTU: [""]
 
   rarefy:
     filtered_samples: ["sample_id1", "sample_id2"]
@@ -127,7 +136,16 @@ params:
         height: 10
 
   diff:
-    first_test_alpha: "0.01"
+    first_test_method: "kruskal_test"  # ["kruskal.test", "oneway.test", "lm", "glm", "glm.nb", "kruskal_test", "oneway_test"]
+    first_test_alpha: 0.05
+    filter_p: "pvalue"                 # ["fdr", "pvalue"]
+    strict: True
+    second_test_method: "wilcox_test"  # ["wilcox.test", "wilcox_test", "glm", "glm.nb"]
+    second_test_alpha: 0.05
+    subcl_min: 3
+    subcl_test: TRUE
+    ml_method: "lda"
+    ldascore: 3
     plot:
       tree:
         width: 20

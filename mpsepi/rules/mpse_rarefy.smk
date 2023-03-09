@@ -9,9 +9,7 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
         params:
             mpse_rarefy = os.path.join(WRAPPERS_DIR, "mpse_rarefy.R"),
             chunks = config["params"]["rarefy"]["chunks"],
-            filtered_samples = "-f " + " -f ".join(config["params"]["rarefy"]["filtered_samples"]) \
-            if (len(config["params"]["rarefy"]["filtered_samples"]) >= 1) \
-            else ""
+            filtered_samples = generate_multi_params(config["params"]["rarefy"]["filtered_samples"], "-f")
         conda:
             config["envs"]["mpse"]
         shell:

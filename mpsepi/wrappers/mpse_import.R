@@ -3,9 +3,16 @@
 'mpse import script
 
 Usage:
-  mpse_import.R dada2 <metadatafile> <seqtabfile> <taxafile> <reftreefile> <mpse_output>
-  mpse_import.R qiime2 <metadatafile> <otuqzafile> <taxaqzafile> <treeqzafile> <mpse_output>
-  mpse_import.R metaphlan <metadatafile> <profile> <mpse_output>
+  mpse_import.R dada2 <metadatafile> <seqtabfile> <taxafile> <reftreefile> <mpse_output> <min_abun> <min_prop> [-p phylum...] [-c class...] [-o order...] [-f family...] [-g genus...] [-s OTU...]
+  mpse_import.R qiime2 <metadatafile> <otuqzafile> <taxaqzafile> <treeqzafile> <mpse_output> <min_abun> <min_prop> [-p phylum...] [-c class...] [-o order...] [-f family...] [-g genus...] [-s OTU...]
+  mpse_import.R metaphlan <metadatafile> <profile> <mpse_output> <min_abun> <min_prop> [-p phylum...] [-c class...] [-o order...] [-f family...] [-g genus...] [-s OTU...]
+
+  -p=phylum     Phylum [default: ""]
+  -c=class      Class  [default: ""]
+  -o=order      Order  [default: ""]
+  -f=family     Family [default: ""]
+  -g=genus      Genus  [default: ""]
+  -s=OTU        OTU    [default: ""]
   mpse_import.R (-h | --help)
   mpse_import.R --version
 
@@ -41,7 +48,7 @@ if (args$dada2) {
       sampleda = args$metadatafile,
       reftree = args$reftreefile
     )
-  }
+ }
   else {
     mpse <- MicrobiotaProcess::mp_import_dada2(
       seqtab = readRDS(args$seqtabfile),
@@ -83,9 +90,27 @@ if (args$dada2) {
   output <- FALSE
 }
 
+
+# filter
+mpse2 <-
+  mpse %>%
+  dplyr::filter(
+    !Phylum %in% args$p &
+    !Class %in% args$c &
+    !Order %in% args$o &
+    !Family %in% args$f &
+    !Genus %in% args$g &
+    !OTU %in% args$s
+  ) %>% 
+  MicrobiotaProcess::mp_filter_taxa(
+    .abundance = Abundance,
+    min.abun = as.numeric(args$min_abun),
+    min.prop = as.numeric(args$min_prop)
+  )
+
 if (output) {
   if (!dir.exists(dirname(args$mpse_output))) {
     dir.create(dirname(args$mpse_output), recursive = TRUE)
   }
-  saveRDS(mpse, args$mpse_output)
+  saveRDS(mpse2, args$mpse_output)
 }
