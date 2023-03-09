@@ -99,7 +99,7 @@ params:
       height: 10
 
   diversity_phylogenetic:
-    do: False
+    do: True
     plot:
       width: 15
       height: 6
@@ -117,6 +117,9 @@ params:
         width: 12
         height: 5
       pcoa:
+        width: 12
+        height: 5
+      nmds:
         width: 12
         height: 5
       clust:
