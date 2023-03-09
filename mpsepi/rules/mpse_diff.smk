@@ -42,16 +42,38 @@ rule mpse_diff_cal:
         '''
 
 
-'''
-rule mpse_diff_plot:
+rule mpse_diff_plot_cladogram:
     input:
-        tree_plot = expand(os.path.join(
-            config["output"]["diff"], "plot/diff_tree.{outformat}"),
-            outformat=["pdf", "svg", "png"]),
+        os.path.join(config["output"]["diff"], "mpse/mpse.rds")
+    output:
         cladogram_plot = expand(os.path.join(
             config["output"]["diff"], "plot/diff_cladogram.{outformat}"),
             outformat=["pdf", "svg", "png"]),
-        box_bar_plot = expand(os.path.join(
+    params:
+        mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
+        group = config["params"]["group"],
+        method = config["params"]["import_from"],
+        plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_cladogram")
+    conda:
+        config["envs"]["mpse"]
+    shell:
+        '''
+        Rscript {params.mpse_diff} \
+        cal \
+        {params.method} \
+        {params.group} \
+        {input} \
+        {params.plot_prefix}
+        '''
+
+
+ 
+
+    output:
+        tree_plot = expand(os.path.join(
+            config["output"]["diff"], "plot/diff_tree.{outformat}"),
+            outformat=["pdf", "svg", "png"]),
+       box_bar_plot = expand(os.path.join(
             config["output"]["diff"], "plot/diff_box_bar.{outformat}"),
             outformat=["pdf", "svg", "png"]),
         #mahattan_plot = expand(os.path.join(
