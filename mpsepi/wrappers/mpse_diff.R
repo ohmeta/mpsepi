@@ -4,7 +4,10 @@
 
 Usage:
   mpse_diff.R cal <method> <group> <mpse> <mpse_output> <lda_tsv> <first_test_method> <first_test_alpha> <filter_p> <strict> <second_test_method> <second_test_alpha> <subcl_min> <subcl_test> <ml_method> <ldascore>
-  mpse_diff.R plot <plot_outdir> <h1> <w1> <h2> <w2> <h3> <w3> <image>
+  mpse_diff.R plot tree <group> <mpse> <plot_prefix> <height> <width>
+  mpse_diff.R plot cladogram <group> <mpse> <plot_prefix> <height> <width>
+  mpse_diff.R plot box_bar <group> <mpse> <plot_prefix> <height> <width>
+  mpse_diff.R plot mahattan <group> <mpse> <plot_prefix> <height> <width>
   mpse_diff.R (-h | --help)
   mpse_diff.R --version
 
@@ -34,6 +37,7 @@ args <- docopt::docopt(doc, version = 'mpse diff v0.1')
 
 mpse <- readRDS(args$mpse)
 
+sign_group <- stringr::str_c("Sign_", args$group)
 
 # cal
 if (args$cal) {
@@ -81,10 +85,11 @@ if (args$cal) {
     mpse %>%
     MicrobiotaProcess::mp_extract_tree(type = "taxatree")
 
-  sign_group <- stringr::str_c("Sign_", args$group)
   taxa_tree_lda <- 
     taxa_tree %>%
-    dplyr::select(label, nodeClass, LDAupper, LDAmean, LDAlower, !!rlang::sym(sign_group), pvalue, fdr) %>%
+    dplyr::select(
+      label, nodeClass, LDAupper, LDAmean, LDAlower,
+      !!rlang::sym(sign_group), pvalue, fdr) %>%
     dplyr::filter(!is.na(fdr)) %>%
     dplyr::filter(!is.na(LDAmean))
 
@@ -103,103 +108,79 @@ if (args$cal) {
 
 # plot
 if (args$plot) {
-library(ggtree)
-library(ggtreeExtra)
-library(ggplot2)
-library(MicrobiotaProcess)
-library(tidytree)
-library(ggstar)
-library(forcats)
+  library(ggtree)
+  library(ggtreeExtra)
+  library(ggplot2)
+  library(MicrobiotaProcess)
+  library(tidytree)
+  library(ggstar)
+  library(forcats)
 
+  if (!dir.exists(dirname(args$plot_prefix))) {
+    dir.create(dirname(args$plot_prefix), recursive = TRUE)
+  }
 
-p <- mpse %>%
-  mp_plot_diff_res(
-    group.abun = TRUE,
-    pwidth.abun = 0.1
-  )
+  height <- as.numeric(args$height)
+  width <- as.numeric(args$width)
 
+  if (args$tree) {
+    plot <- mpse %>%
+      mp_plot_diff_res(
+        group.abun = TRUE,
+        pwidth.abun = 0.1
+      )
+  }
 
-f <- mpse %>%
-  mp_plot_diff_cladogram(
-    label.size = 2.5,
-    hilight.alpha = .3,
-    bg.tree.size = .5,
-    bg.point.size = 2,
-    bg.point.stroke = .25
-  ) +
-  scale_fill_diff_cladogram(values = c('deepskyblue', 'orange')) +
-  scale_size_continuous(range = c(1, 4))
+  if (args$cladogram) {
+    plot <- mpse %>%
+      mp_plot_diff_cladogram(
+        label.size = 2.5,
+        hilight.alpha = .3,
+        bg.tree.size = .5,
+        bg.point.size = 2,
+        bg.point.stroke = .25
+      ) +
+      scale_fill_diff_cladogram(values = c('deepskyblue', 'orange')) +
+      scale_size_continuous(range = c(1, 4))
+  }
 
+  if (args$box_bar) {
+    f_box <- mpse %>%
+      mp_plot_diff_boxplot(.group = !!rlang::sym(args$group)) %>%
+      set_diff_boxplot_color(
+        values = c("deepskyblue", "orange"),
+        guide = guide_legend(title = NULL)
+      )
+    f_bar <- mpse %>%
+      mp_plot_diff_boxplot(
+        taxa.class = c(Genus, OTU),
+        group.abun = TRUE,
+        removeUnknown = TRUE
+      ) %>%
+      set_diff_boxplot_color(
+        values = c("deepskyblue", "orange"),
+        guide = guide_legend(title = NULL)
+      )
+    plot <- aplot::plot_list(f_box, f_bar)
+  }
 
-f_box <- mpse %>%
-  mp_plot_diff_boxplot(.group = !!rlang::sym(args$group)) %>%
-  set_diff_boxplot_color(
-    values = c("deepskyblue", "orange"),
-    guide = guide_legend(title = NULL)
-  )
-f_bar <- mpse %>%
-  mp_plot_diff_boxplot(
-    taxa.class = c(Genus, OTU),
-    group.abun = TRUE,
-    removeUnknown = TRUE
-  ) %>%
-  set_diff_boxplot_color(
-    values = c("deepskyblue", "orange"),
-    guide = guide_legend(title = NULL)
-  )
-#f_box_bar <- f_box + f_bar
-f_box_bar <- aplot::plot_list(f_box, f_bar)
+  if (args$mahattan) {
+    plot <- mpse %>%
+      mp_plot_diff_manhattan(
+        .group = !!rlang::sym(sign_group),
+        .y = fdr,
+        .size = 2.4,
+        taxa.class = c('OTU', 'Genus'),
+        anno.taxa.class = Phylum
+    )
+  }
 
+  ggsave(stringr::str_c(args$plot_prefix, ".pdf"), plot,
+    height=height, width=width, limitsize = FALSE)
 
-#f_mahattan <- mpse %>%
-#  mp_plot_diff_manhattan(
-#    .group = !!rlang::sym(sign_group),
-#    .y = fdr,
-#    .size = 2.4,
-#    taxa.class = c('OTU', 'Genus'),
-#    anno.taxa.class = Phylum
-#)
+  ggsave(stringr::str_c(args$plot_prefix, ".svg"), plot,
+    height=height, width=width, limitsize = FALSE)
 
-
-# save plot
-t_prefix <- args$tree_plot_prefix
-c_prefix <- args$cladogram_plot_prefix
-b_prefix <- args$box_bar_plot_prefix
-#m_prefix <- args$mahattan_plot_prefix
-
-if (!dir.exists(dirname(t_prefix))) {
-  dir.create(dirname(t_prefix), recursive = TRUE)
-}
-if (!dir.exists(dirname(c_prefix))) {
-  dir.create(dirname(c_prefix), recursive = TRUE)
-}
-if (!dir.exists(dirname(b_prefix))) {
-  dir.create(dirname(b_prefix), recursive = TRUE)
-}
-#if (!dir.exists(dirname(m_prefix))) {
-#  dir.create(dirname(m_prefix), recursive = TRUE)
-#}
-
-h1 <- as.numeric(args$h1)
-w1 <- as.numeric(args$w1)
-h2 <- as.numeric(args$h2)
-w2 <- as.numeric(args$w2)
-h3 <- as.numeric(args$h3)
-w3 <- as.numeric(args$w3)
-
-ggsave(stringr::str_c(t_prefix, ".pdf"), p, height=h1, width=w1, limitsize = FALSE)
-ggsave(stringr::str_c(t_prefix, ".svg"), p, height=h1, width=w1, limitsize = FALSE)
-ggsave(stringr::str_c(t_prefix, ".png"), p, height=h1, width=w1, limitsize = FALSE)
-
-ggsave(stringr::str_c(c_prefix, ".pdf"), f, height=h2, width=w2, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".svg"), f, height=h2, width=w2, limitsize = FALSE)
-ggsave(stringr::str_c(c_prefix, ".png"), f, height=h2, width=w2, limitsize = FALSE)
-
-ggsave(stringr::str_c(b_prefix, ".pdf"), f_box_bar, height=h3, width=w3, limitsize = FALSE)
-ggsave(stringr::str_c(b_prefix, ".svg"), f_box_bar, height=h3, width=w3, limitsize = FALSE)
-ggsave(stringr::str_c(b_prefix, ".png"), f_box_bar, height=h3, width=w3, limitsize = FALSE)
-
-#ggsave(stringr::str_c(m_prefix, ".pdf"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
-#ggsave(stringr::str_c(m_prefix, ".svg"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
-#ggsave(stringr::str_c(m_prefix, ".png"), f_mahattan, height=args$h4, width=args$w4, limitsize = FALSE)
+  ggsave(stringr::str_c(args$plot_prefix, ".png"), plot,
+    height=height, width=width, limitsize = FALSE)
 }

@@ -42,6 +42,34 @@ rule mpse_diff_cal:
         '''
 
 
+rule mpse_diff_plot_tree:
+    input:
+        os.path.join(config["output"]["diff"], "mpse/mpse.rds")
+    output:
+        cladogram_plot = expand(os.path.join(
+            config["output"]["diff"], "plot/diff_tree.{outformat}"),
+            outformat=["pdf", "svg", "png"]),
+    params:
+        mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
+        group = config["params"]["group"],
+        plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_tree"),
+        height = config["params"]["diff"]["plot"]["tree"]["height"],
+        width = config["params"]["diff"]["plot"]["tree"]["width"],
+    conda:
+        config["envs"]["mpse"]
+    shell:
+        '''
+        Rscript {params.mpse_diff} \
+        plot \
+        tree \
+        {params.group} \
+        {input} \
+        {params.plot_prefix} \
+        {params.height} \
+        {params.width}
+        '''
+
+
 rule mpse_diff_plot_cladogram:
     input:
         os.path.join(config["output"]["diff"], "mpse/mpse.rds")
@@ -52,52 +80,84 @@ rule mpse_diff_plot_cladogram:
     params:
         mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
         group = config["params"]["group"],
-        method = config["params"]["import_from"],
-        plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_cladogram")
+        plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_cladogram"),
+        height = config["params"]["diff"]["plot"]["cladogram"]["height"],
+        width = config["params"]["diff"]["plot"]["cladogram"]["width"],
     conda:
         config["envs"]["mpse"]
     shell:
         '''
         Rscript {params.mpse_diff} \
-        cal \
-        {params.method} \
+        plot \
+        cladogram \
         {params.group} \
         {input} \
-        {params.plot_prefix}
+        {params.plot_prefix} \
+        {params.height} \
+        {params.width}
         '''
 
 
- 
-
+rule mpse_diff_plot_box_bar:
+    input:
+        os.path.join(config["output"]["diff"], "mpse/mpse.rds")
     output:
-        tree_plot = expand(os.path.join(
-            config["output"]["diff"], "plot/diff_tree.{outformat}"),
-            outformat=["pdf", "svg", "png"]),
-       box_bar_plot = expand(os.path.join(
+        cladogram_plot = expand(os.path.join(
             config["output"]["diff"], "plot/diff_box_bar.{outformat}"),
             outformat=["pdf", "svg", "png"]),
-        #mahattan_plot = expand(os.path.join(
-        #    config["output"]["diff"], "plot/diff_mahattan.{outformat}"),
-        #    outformat=["pdf", "svg", "png"]),
-        image = os.path.join(config["output"]["diff"], "mpse/diff.RData")
- 
-    output:
     params:
-        tree_plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_tree"),
-        cladogram_plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_cladogram"),
-        box_bar_plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_box_bar"),
-        mahattan_plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_mahattan"),
-        h1 = config["params"]["diff"]["plot"]["tree"]["height"],
-        w1 = config["params"]["diff"]["plot"]["tree"]["width"],
-        h2 = config["params"]["diff"]["plot"]["cladogram"]["height"],
-        w2 = config["params"]["diff"]["plot"]["cladogram"]["width"],
-        h3 = config["params"]["diff"]["plot"]["box_bar"]["height"],
-        w3 = config["params"]["diff"]["plot"]["box_bar"]["width"],
-        h4 = config["params"]["diff"]["plot"]["mahattan"]["height"],
-        w4 = config["params"]["diff"]["plot"]["mahattan"]["width"]
-'''
- 
+        mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
+        group = config["params"]["group"],
+        plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_box_bar"),
+        height = config["params"]["diff"]["plot"]["box_bar"]["height"],
+        width = config["params"]["diff"]["plot"]["box_bar"]["width"],
+    conda:
+        config["envs"]["mpse"]
+    shell:
+        '''
+        Rscript {params.mpse_diff} \
+        plot \
+        box_bar \
+        {params.group} \
+        {input} \
+        {params.plot_prefix} \
+        {params.height} \
+        {params.width}
+        '''
+
+
+rule mpse_diff_plot_mahattan:
+    input:
+        os.path.join(config["output"]["diff"], "mpse/mpse.rds")
+    output:
+        cladogram_plot = expand(os.path.join(
+            config["output"]["diff"], "plot/diff_mahattan.{outformat}"),
+            outformat=["pdf", "svg", "png"]),
+    params:
+        mpse_diff = os.path.join(WRAPPERS_DIR, "mpse_diff.R"),
+        group = config["params"]["group"],
+        plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_mahattan"),
+        height = config["params"]["diff"]["plot"]["mahattan"]["height"],
+        width = config["params"]["diff"]["plot"]["mahattan"]["width"],
+    conda:
+        config["envs"]["mpse"]
+    shell:
+        '''
+        Rscript {params.mpse_diff} \
+        plot \
+        mahattan \
+        {params.group} \
+        {input} \
+        {params.plot_prefix} \
+        {params.height} \
+        {params.width}
+        '''
+
 
 rule mpse_diff_all:
     input:
-        rules.mpse_diff_cal.output
+        rules.mpse_diff_cal.output,
+        rules.mpse_diff_plot_tree.output,
+        rules.mpse_diff_plot_cladogram.output,
+        rules.mpse_diff_plot_box_bar.output#,
+        #rules.mpse_diff_plot_mahattan.output
