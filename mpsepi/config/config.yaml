@@ -22,7 +22,7 @@ params:
   filter:
     min_abun: 1
     min_prop: 0.1
-    Phylum: ["p__un_k__Bacteria"]
+    Phylum: ["p__un_k__Bacteria", "p__un_k__d__Bacteria"]
     Class: [""]
     Order: [""]
     Family: [""]
