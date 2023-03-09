@@ -14,6 +14,7 @@ dependencies:
   - r-writexl
   - r-docopt=0.7.1
   - r-corrr
+  - r-coin
   - r-yaml
   - r-ggh4x
   - r-gghalves
