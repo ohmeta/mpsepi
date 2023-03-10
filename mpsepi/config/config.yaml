@@ -140,6 +140,7 @@ params:
     first_test_alpha: 0.05
     filter_p: "pvalue"                 # ["fdr", "pvalue"]
     strict: True
+    fc_method: "generalizedFC"         # ["compare_mean", "generalizedFC"]
     second_test_method: "wilcox_test"  # ["wilcox.test", "wilcox_test", "glm", "glm.nb"]
     second_test_alpha: 0.05
     subcl_min: 3

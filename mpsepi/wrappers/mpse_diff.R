@@ -3,7 +3,7 @@
 'mpse diff script
 
 Usage:
-  mpse_diff.R cal <method> <group> <mpse> <mpse_output> <lda_tsv> <first_test_method> <first_test_alpha> <filter_p> <strict> <second_test_method> <second_test_alpha> <subcl_min> <subcl_test> <ml_method> <ldascore>
+  mpse_diff.R cal <method> <group> <mpse> <mpse_output> <lda_tsv> <first_test_method> <first_test_alpha> <filter_p> <strict> <fc_method> <second_test_method> <second_test_alpha> <subcl_min> <subcl_test> <ml_method> <ldascore>
   mpse_diff.R plot tree <group> <mpse> <plot_prefix> <height> <width>
   mpse_diff.R plot cladogram <group> <mpse> <plot_prefix> <height> <width>
   mpse_diff.R plot box_bar <group> <mpse> <plot_prefix> <height> <width>
@@ -52,6 +52,7 @@ if (args$cal) {
         first.test.alpha = as.numeric(args$first_test_alpha),
         filter.p = args$filter_p,
         strict = as.logical(args$strict),
+        fc.method = args$fc_method,
         second.test.method = args$second_test_method,
         second.test.alpha = as.numeric(args$second_test_alpha),
         subcl.min = as.numeric(args$subcl_min),
@@ -69,6 +70,7 @@ if (args$cal) {
         first.test.alpha = as.numeric(args$first_test_alpha),
         filter.p = args$filter_p,
         strict = as.logical(args$strict),
+        fc.method = args$fc_method,
         second.test.method = args$second_test_method,
         second.test.alpha = as.numeric(args$second_test_alpha),
         subcl.min = as.numeric(args$subcl_min),

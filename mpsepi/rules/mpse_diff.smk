@@ -12,6 +12,7 @@ rule mpse_diff_cal:
         first_test_alpha = config["params"]["diff"]["first_test_alpha"],
         filter_p = config["params"]["diff"]["filter_p"],
         strict = config["params"]["diff"]["strict"],
+        fc_method = config["params"]["diff"]["fc_method"],
         second_test_method = config["params"]["diff"]["second_test_method"],
         second_test_alpha = config["params"]["diff"]["second_test_alpha"],
         subcl_min = config["params"]["diff"]["subcl_min"],
@@ -33,6 +34,7 @@ rule mpse_diff_cal:
         {params.first_test_alpha} \
         {params.filter_p} \
         {params.strict} \
+        {params.fc_method} \
         {params.second_test_method} \
         {params.second_test_alpha} \
         {params.subcl_min} \
