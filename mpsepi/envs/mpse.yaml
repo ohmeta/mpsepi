@@ -3,12 +3,20 @@ channels:
   - bioconda
   - defaults
 dependencies:
-  - r-tidyverse
   - r-ggpubr
   - r-ggplotify
   - r-ggalluvial
   - r-ggstar
+  - r-ggrepel
+  - r-ggupset
+  - r-ggpp
+  - r-ggvenndiagram
+  - r-ggside
+  - r-ggh4x
+  - r-gghalves
+  - r-ggnewscale
   - r-forcats
+  - r-tidyverse
   - r-tidytree
   - r-readxl
   - r-writexl
@@ -16,17 +24,26 @@ dependencies:
   - r-corrr
   - r-coin
   - r-yaml
-  - r-ggh4x
-  - r-gghalves
   - r-svglite
   - r-aplot
-  - r-ggside
   - r-shadowtext
-  - r-ggpp
-  - r-ggvenndiagram
-  - r-ggupset
-  - bioconductor-ggtree
+  - r-gunifrac
+  - r-randomforest
+  - r-matrixstats
+  - r-igraph
+  - r-broom
+  - r-proc
+  - r-patchwork
+  - bioconductor-summarizedexperiment
   - bioconductor-microbiotaprocess=1.10.0
   - bioconductor-ggtree
   - bioconductor-ggtreeextra
+  - bioconductor-clusterprofiler
+  - bioconductor-enrichplot
+  - bioconductor-microbiomeprofiler
   - bioconductor-biomformat
+  - bioconductor-phyloseq
+  - bioconductor-tidybulk
+  - bioconductor-edger
+  - bioconductor-deseq2
+  - bioconductor-curatedmetagenomicdata
