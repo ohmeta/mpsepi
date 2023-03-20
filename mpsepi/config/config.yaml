@@ -164,6 +164,19 @@ params:
   diff_plus:
     methods: ["edgeR_quasi_likelihood", "edgeR_likelihood_ratio", "edger_robust_likelihood_ratio", "deseq2", "limma_voom", "limma_voom_sample_weights"]
     formula: "~donor_status"
+    plot:
+      abundance:
+        do: False
+        height: 10
+        width: 10
+      sample_tree:
+        do: True
+        height: 10
+        width: 10
+      otu_tree:
+        do: True
+        height: 10
+        width: 10
 
 
 output:
