@@ -23,6 +23,7 @@ include: "../rules/mpse_diversity_beta.smk"
 include: "../rules/mpse_permanova.smk"
 include: "../rules/mpse_diff.smk"
 include: "../rules/mpse_diff_plus.smk"
+include: "../rules/mpse_diff_zicoseq.smk"
 
 
 rule all:
@@ -36,4 +37,5 @@ rule all:
         rules.mpse_diversity_beta_all.input,
         rules.mpse_permanova_all.input,
         rules.mpse_diff_all.input,
-        rules.mpse_diff_plus_all.input
+        rules.mpse_diff_plus_all.input,
+        rules.mpse_diff_zicoseq_all.input

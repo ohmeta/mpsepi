@@ -170,11 +170,11 @@ params:
         height: 10
         width: 10
       sample_tree:
-        do: True
+        do: False
         height: 10
         width: 10
       otu_tree:
-        do: True
+        do: False
         height: 10
         width: 10
 
@@ -190,6 +190,7 @@ output:
   permanova: "results/04.permanova"
   diff: "results/05.diff"
   diff_plus: "results/05.diff_plus"
+  diff_zicoseq: "results/05.diff_zicoseq"
 
 
 envs:
