@@ -17,7 +17,7 @@ input:
 
 params:
   import_from: "qiime2" # choose from ["qiime2", "dada2", "metaphlan"]
-  group: "Time" # update it based on the metadata information
+  group: "donor_status" # update it based on the metadata information
 
   filter:
     min_abun: 1
@@ -161,6 +161,10 @@ params:
         width: 20
         height: 20
 
+  diff_plus:
+    methods: ["edgeR_quasi_likelihood", "edgeR_likelihood_ratio", "edger_robust_likelihood_ratio", "deseq2", "limma_voom", "limma_voom_sample_weights"]
+    formula: "~donor_status"
+
 
 output:
   import: "results/00.import"
@@ -172,6 +176,7 @@ output:
   diversity_beta: "results/03.diversity_beta"
   permanova: "results/04.permanova"
   diff: "results/05.diff"
+  diff_plus: "results/05.diff_plus"
 
 
 envs:
