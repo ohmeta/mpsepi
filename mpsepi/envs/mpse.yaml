@@ -46,4 +46,3 @@ dependencies:
   - bioconductor-tidybulk
   - bioconductor-edger
   - bioconductor-deseq2
-  - bioconductor-curatedmetagenomicdata
