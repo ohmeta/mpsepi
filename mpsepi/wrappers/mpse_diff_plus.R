@@ -29,7 +29,6 @@ mpse <- readRDS(args$mpse)
 
 
 if (args$cal) {
-
   one_formula <- as.formula(args$formula)
 
   mpse %<>%
@@ -48,24 +47,6 @@ if (args$cal) {
     dir.create(dirname(args$tsv), recursive = TRUE)
   }
   readr::write_tsv(diff_res, args$tsv)
-
-  if (args$import_method %in% c("dada2", "qiime2")) {
-    mpse %<>%
-      mp_cal_dist(
-        .abundance = RelRareAbundanceBySample,
-        distmethod = args$dist_method,
-        cal.feature.dist = TRUE,
-        .action = "add"
-      )
-  } else if(args$import_method == "metaphlan") {
-    mpse %<>%
-      mp_cal_dist(
-        .abundance = RelAbundanceBySample,
-        distmethod = args$dist_method,
-        cal.feature.dist = TRUE,
-        .action = "add"
-      )
-  }
 
   if (!dir.exists(dirname(args$mpse_output))) {
     dir.create(dirname(args$mpse_output), recursive = TRUE)
@@ -173,14 +154,28 @@ if (args$cal) {
   }
 
   if (args$sample_tree) {
-    plot <-
+    diff_res <-
       mpse %>%
-      mp_extract_feature() %>%
-      dplyr::filter(FDR <= .05 & abs(logFC) >= 2) %>%
-      dplyr::select(-!!rlang::sym(args$dist_method)) %>%
-      mp_cal_clust(
-        .abundance = RelRareAbundanceBySample,
-        distmethod = args$dist_method) %>%
+      dplyr::filter(FDR <= .05 & abs(logFC) >= 2)
+
+    if (args$import_method %in% c("dada2", "qiime2")) {
+      diff_dist <-
+        diff_res %>%
+        mp_cal_dist(
+          .abundance = RelRareAbundanceBySample,
+          distmethod = args$dist_method
+        )
+    } else if(args$import_method == "metaphlan") {
+      diff_dist <-
+        diff_res %>%
+        mp_cal_dist(
+          .abundance = RelAbundanceBySample,
+          distmethod = args$dist_method
+        )
+    }
+
+    plot <-
+      diff_dist %>%
       ggtree(layout = igraph::layout_with_kk, color = "#afb7b8") +
       geom_nodepoint(color = "#afb7b8", size = .5) +
       geom_tippoint(aes(fill = !!rlang::sym(args$group)), shape = 21, size=3) +
@@ -202,8 +197,26 @@ if (args$cal) {
   }
 
   if (args$otu_tree) {
+    if (args$import_method %in% c("dada2", "qiime2")) {
+      mpse_dist <-
+        mpse %>%
+        mp_cal_dist(
+          .abundance = RelRareAbundanceBySample,
+          distmethod = args$dist_method,
+          cal.feature.dist = TRUE,
+        )
+    } else if(args$import_method == "metaphlan") {
+      mpse_dist <-
+        mpse %>%
+        mp_cal_dist(
+          .abundance = RelAbundanceBySample,
+          distmethod = args$dist_method,
+          cal.feature.dist = TRUE
+        )
+    }
+
     plot <-
-      mpse %>%
+      mpse_dist %>%
       hclust() %>%
       ggtree(layout = igraph::layout_with_kk, color = "#bed0d1") +
       geom_nodepoint(color = "#bed0d1", size = .5)

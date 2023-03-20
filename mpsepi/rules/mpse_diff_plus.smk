@@ -1,6 +1,6 @@
 rule mpse_diff_plus_cal:
     input:
-        os.path.join(config["output"]["diversity_alpha"], "mpse/mpse.rds")
+        os.path.join(config["output"]["diff"], "mpse/mpse.rds")
     output:
         mpse = os.path.join(config["output"]["diff_plus"], "mpse/{method}/mpse.rds"),
         tsv = os.path.join(config["output"]["diff_plus"], "mpse/{method}/diff.tsv")
