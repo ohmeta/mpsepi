@@ -178,6 +178,21 @@ params:
         height: 10
         width: 10
 
+  diff_zicoseq:
+    plot:
+      tree:
+        width: 20
+        height: 20
+      cladogram:
+        width: 20
+        height: 20
+      box_bar:
+        width: 20
+        height: 20
+      mahattan:
+        width: 20
+        height: 20
+
 
 output:
   import: "results/00.import"

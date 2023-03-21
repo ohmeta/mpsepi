@@ -56,7 +56,7 @@ rule mpse_diff_plot_tree:
         group = config["params"]["group"],
         plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_tree"),
         height = config["params"]["diff"]["plot"]["tree"]["height"],
-        width = config["params"]["diff"]["plot"]["tree"]["width"],
+        width = config["params"]["diff"]["plot"]["tree"]["width"]
     conda:
         config["envs"]["mpse"]
     shell:
@@ -84,7 +84,7 @@ rule mpse_diff_plot_cladogram:
         group = config["params"]["group"],
         plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_cladogram"),
         height = config["params"]["diff"]["plot"]["cladogram"]["height"],
-        width = config["params"]["diff"]["plot"]["cladogram"]["width"],
+        width = config["params"]["diff"]["plot"]["cladogram"]["width"]
     conda:
         config["envs"]["mpse"]
     shell:
@@ -112,7 +112,7 @@ rule mpse_diff_plot_box_bar:
         group = config["params"]["group"],
         plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_box_bar"),
         height = config["params"]["diff"]["plot"]["box_bar"]["height"],
-        width = config["params"]["diff"]["plot"]["box_bar"]["width"],
+        width = config["params"]["diff"]["plot"]["box_bar"]["width"]
     conda:
         config["envs"]["mpse"]
     shell:
@@ -140,7 +140,7 @@ rule mpse_diff_plot_mahattan:
         group = config["params"]["group"],
         plot_prefix = os.path.join(config["output"]["diff"], "plot/diff_mahattan"),
         height = config["params"]["diff"]["plot"]["mahattan"]["height"],
-        width = config["params"]["diff"]["plot"]["mahattan"]["width"],
+        width = config["params"]["diff"]["plot"]["mahattan"]["width"]
     conda:
         config["envs"]["mpse"]
     shell:

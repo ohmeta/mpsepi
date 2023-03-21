@@ -9,7 +9,7 @@ rule mpse_diff_plus_cal:
         import_method = config["params"]["import_from"],
         diff_method = "{method}",
         dist_method = config["params"]["diversity_beta"]["distmethod"],
-        formula = config["params"]["diff_plus"]["formula"],
+        formula = config["params"]["diff_plus"]["formula"]
     conda:
         config["envs"]["mpse"]
     shell:
