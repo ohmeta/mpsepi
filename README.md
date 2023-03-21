@@ -267,12 +267,45 @@ params:
     first_test_alpha: 0.05
     filter_p: "pvalue"                 # ["fdr", "pvalue"]
     strict: True
+    fc_method: "generalizedFC"         # ["compare_mean", "generalizedFC"]
     second_test_method: "wilcox_test"  # ["wilcox.test", "wilcox_test", "glm", "glm.nb"]
     second_test_alpha: 0.05
     subcl_min: 3
     subcl_test: TRUE
     ml_method: "lda"
     ldascore: 3
+    plot:
+      tree:
+        width: 20
+        height: 20
+      cladogram:
+        width: 20
+        height: 20
+      box_bar:
+        width: 20
+        height: 20
+      mahattan:
+        width: 20
+        height: 20
+
+  diff_plus:
+    methods: ["edgeR_quasi_likelihood", "edgeR_likelihood_ratio", "edger_robust_likelihood_ratio", "deseq2", "limma_voom", "limma_voom_sample_weights"]
+    formula: "~donor_status"
+    plot:
+      abundance:
+        do: False
+        height: 10
+        width: 10
+      sample_tree:
+        do: False
+        height: 10
+        width: 10
+      otu_tree:
+        do: False
+        height: 10
+        width: 10
+
+  diff_zicoseq:
     plot:
       tree:
         width: 20
@@ -298,6 +331,8 @@ output:
   diversity_beta: "results/03.diversity_beta"
   permanova: "results/04.permanova"
   diff: "results/05.diff"
+  diff_plus: "results/05.diff_plus"
+  diff_zicoseq: "results/05.diff_zicoseq"
 
 
 envs:
@@ -317,29 +352,31 @@ snakemake --snakefile /home/jiezhu/toolkit/mpsepi/mpsepi/snakefiles/mpse_wf.smk 
 Building DAG of jobs...
 
 Job stats:
-job                               count    min threads    max threads
-------------------------------  -------  -------------  -------------
-all                                   1              1              1
-mpse_composition                      6              1              1
-mpse_diff_cal                         1              1              1
-mpse_diff_plot_box_bar                1              1              1
-mpse_diff_plot_cladogram              1              1              1
-mpse_diff_plot_tree                   1              1              1
-mpse_diversity_alpha                  1              1              1
-mpse_diversity_beta_cal               1              1              1
-mpse_diversity_beta_plot_clust        1              1              1
-mpse_diversity_beta_plot_dist         1              1              1
-mpse_diversity_beta_plot_nmds         1              1              1
-mpse_diversity_beta_plot_pca          1              1              1
-mpse_diversity_beta_plot_pcoa         1              1              1
-mpse_diversity_phylogenetic           1              1              1
-mpse_import_qiime2                    1              1              1
-mpse_permanova                        1              1              1
-mpse_rarefy                           1              1              1
-mpse_rarefy_plot                      1              1              1
-mpse_venn                             1              1              1
-total                                24              1              1
-
+job                                 count    min threads    max threads
+--------------------------------  -------  -------------  -------------
+all                                     1              1              1
+mpse_composition                        6              1              1
+mpse_diff_cal                           1              1              1
+mpse_diff_plot_box_bar                  1              1              1
+mpse_diff_plot_cladogram                1              1              1
+mpse_diff_plot_tree                     1              1              1
+mpse_diff_plus_cal                      6              1              1
+mpse_diff_zicoseq_cal                   1              1              1
+mpse_diff_zicoseq_plot_cladogram        1              1              1
+mpse_diversity_alpha                    1              1              1
+mpse_diversity_beta_cal                 1              1              1
+mpse_diversity_beta_plot_clust          1              1              1
+mpse_diversity_beta_plot_dist           1              1              1
+mpse_diversity_beta_plot_nmds           1              1              1
+mpse_diversity_beta_plot_pca            1              1              1
+mpse_diversity_beta_plot_pcoa           1              1              1
+mpse_diversity_phylogenetic             1              1              1
+mpse_import_qiime2                      1              1              1
+mpse_permanova                          1              1              1
+mpse_rarefy                             1              1              1
+mpse_rarefy_plot                        1              1              1
+mpse_venn                               1              1              1
+total                                  32              1              1
 ```
 
 #### Run mpse_wf
@@ -479,22 +516,51 @@ results/
 │       └── pcoa.svg
 ├── 04.permanova
 │   └── permanova.tsv
-└── 05.diff
+├── 05.diff
+│   ├── mpse
+│   │   ├── lda.tsv
+│   │   └── mpse.rds
+│   └── plot
+│       ├── diff_box_bar.pdf
+│       ├── diff_box_bar.png
+│       ├── diff_box_bar.svg
+│       ├── diff_cladogram.pdf
+│       ├── diff_cladogram.png
+│       ├── diff_cladogram.svg
+│       ├── diff_tree.pdf
+│       ├── diff_tree.png
+│       └── diff_tree.svg
+├── 05.diff_plus
+│   └── mpse
+│       ├── deseq2
+│       │   ├── diff.tsv
+│       │   └── mpse.rds
+│       ├── edgeR_likelihood_ratio
+│       │   ├── diff.tsv
+│       │   └── mpse.rds
+│       ├── edgeR_quasi_likelihood
+│       │   ├── diff.tsv
+│       │   └── mpse.rds
+│       ├── edger_robust_likelihood_ratio
+│       │   ├── diff.tsv
+│       │   └── mpse.rds
+│       ├── limma_voom
+│       │   ├── diff.tsv
+│       │   └── mpse.rds
+│       └── limma_voom_sample_weights
+│           ├── diff.tsv
+│           └── mpse.rds
+└── 05.diff_zicoseq
     ├── mpse
     │   ├── lda.tsv
-    │   └── mpse.rds
+    │   └── mpse_zicoseq.rds
     └── plot
-        ├── diff_box_bar.pdf
-        ├── diff_box_bar.png
-        ├── diff_box_bar.svg
         ├── diff_cladogram.pdf
         ├── diff_cladogram.png
-        ├── diff_cladogram.svg
-        ├── diff_tree.pdf
-        ├── diff_tree.png
-        └── diff_tree.svg
+        └── diff_cladogram.svg
 
-30 directories, 106 files
+40 directories, 123 files
+
 ```
 
 ### Visualization
