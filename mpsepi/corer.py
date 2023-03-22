@@ -21,6 +21,9 @@ MPSE_WF = [
     "mpse_diversity_phylogenetic_all",
     "mpse_diversity_beta_all",
     "mpse_diff_all",
+    "mpse_diff_plus_all",
+    "mpse_diff_zicoseq_all",
+    "mpse_function_all",
     "all"
 ]
 

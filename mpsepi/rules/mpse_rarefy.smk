@@ -4,6 +4,8 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             os.path.join(config["output"]["import"], "mpse/mpse.rds")
         output:
             os.path.join(config["output"]["rarefied"], "mpse/mpse_rarefied.rds")
+        log:
+            os.path.join(config["output"]["rarefied"], "logs/mpse_rarefy_benchmark.log")
         benchmark:
             os.path.join(config["output"]["rarefied"], "benchmark/mpse_rarefy_benchmark.txt")
         params:
@@ -18,7 +20,8 @@ if config["params"]["import_from"] in ["dada2", "qiime2"]:
             {input} \
             {params.chunks} \
             {output} \
-            {params.filtered_samples}
+            {params.filtered_samples} \
+            >{log} 2>&1
             '''
 
 

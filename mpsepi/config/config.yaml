@@ -14,6 +14,11 @@ input:
   metaphlan:
     profile: /path/to/metaphlan_profile.tsv # all level or species level
 
+  picrust2:
+    ecprofile: /path/to/picrust2/EC_metagenome_out/pred_metagenome_unstrat.tsv.gz
+    koprofile: /path/to/picrust2/KO_metagenome_out/pred_metagenome_unstrat.tsv.gz
+    pathprofile: /path/to/picrust2/pathways_out/path_abun_unstrat.tsv.gz
+
 
 params:
   import_from: "qiime2" # choose from ["qiime2", "dada2", "metaphlan"]
@@ -193,6 +198,9 @@ params:
         width: 20
         height: 20
 
+  function:
+    do: True
+
 
 output:
   import: "results/00.import"
@@ -206,6 +214,7 @@ output:
   diff: "results/05.diff"
   diff_plus: "results/05.diff_plus"
   diff_zicoseq: "results/05.diff_zicoseq"
+  function: "results/06.function"
 
 
 envs:

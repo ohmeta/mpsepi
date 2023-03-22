@@ -24,6 +24,7 @@ include: "../rules/mpse_permanova.smk"
 include: "../rules/mpse_diff.smk"
 include: "../rules/mpse_diff_plus.smk"
 include: "../rules/mpse_diff_zicoseq.smk"
+include: "../rules/mpse_function.smk"
 
 
 rule all:
@@ -38,4 +39,5 @@ rule all:
         rules.mpse_permanova_all.input,
         rules.mpse_diff_all.input,
         rules.mpse_diff_plus_all.input,
-        rules.mpse_diff_zicoseq_all.input
+        rules.mpse_diff_zicoseq_all.input,
+        rules.mpse_function_all.input
