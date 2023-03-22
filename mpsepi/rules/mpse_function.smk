@@ -62,8 +62,8 @@ if config["params"]["function"]["do"]:
             expand(
                 os.path.join(config["output"]["function"], "plot/abundance/{func}_{target}.{outformat}"),
                 func=["ec", "ko", "path"],
-                #target=["abun", "abun_group", "heatmap"],
-                target=["abun", "heatmap"],
+                target=["abun", "abun_group", "heatmap"],
+                #target=["abun", "heatmap"],
                 outformat=["pdf", "svg", "png"]
             )
         params:
@@ -74,20 +74,20 @@ if config["params"]["function"]["do"]:
             plot_prefix_path = os.path.join(config["output"]["function"], "plot/abundance/path"),
             ec_h1 = config["params"]["function"]["abundance"]["plot"]["abundance"]["ec"]["height"],
             ec_w1 = config["params"]["function"]["abundance"]["plot"]["abundance"]["ec"]["width"],
-            #ec_h2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ec"]["height"],
-            #ec_w2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ec"]["width"],
+            ec_h2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ec"]["height"],
+            ec_w2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ec"]["width"],
             ec_h3 = config["params"]["function"]["abundance"]["plot"]["heatmap"]["ec"]["height"],
             ec_w3 = config["params"]["function"]["abundance"]["plot"]["heatmap"]["ec"]["width"],
             ko_h1 = config["params"]["function"]["abundance"]["plot"]["abundance"]["ko"]["height"],
             ko_w1 = config["params"]["function"]["abundance"]["plot"]["abundance"]["ko"]["width"],
-            #ko_h2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ko"]["height"],
-            #ko_w2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ko"]["width"],
+            ko_h2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ko"]["height"],
+            ko_w2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["ko"]["width"],
             ko_h3 = config["params"]["function"]["abundance"]["plot"]["heatmap"]["ko"]["height"],
             ko_w3 = config["params"]["function"]["abundance"]["plot"]["heatmap"]["ko"]["width"],
             path_h1 = config["params"]["function"]["abundance"]["plot"]["abundance"]["path"]["height"],
             path_w1 = config["params"]["function"]["abundance"]["plot"]["abundance"]["path"]["width"],
-            #path_h2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["path"]["height"],
-            #path_w2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["path"]["width"],
+            path_h2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["path"]["height"],
+            path_w2 = config["params"]["function"]["abundance"]["plot"]["abundance_group"]["path"]["width"],
             path_h3 = config["params"]["function"]["abundance"]["plot"]["heatmap"]["path"]["height"],
             path_w3 = config["params"]["function"]["abundance"]["plot"]["heatmap"]["path"]["width"]
         conda:
@@ -101,6 +101,8 @@ if config["params"]["function"]["do"]:
             {params.plot_prefix_ec} \
             {params.ec_h1} \
             {params.ec_w1} \
+            {params.ec_h2} \
+            {params.ec_w2} \
             {params.ec_h3} \
             {params.ec_w3}
 
@@ -111,6 +113,8 @@ if config["params"]["function"]["do"]:
             {params.plot_prefix_ko} \
             {params.ko_h1} \
             {params.ko_w1} \
+            {params.ko_h2} \
+            {params.ko_w2} \
             {params.ko_h3} \
             {params.ko_w3}
 
@@ -121,16 +125,41 @@ if config["params"]["function"]["do"]:
             {params.plot_prefix_path} \
             {params.path_h1} \
             {params.path_w1} \
+            {params.path_h2} \
+            {params.path_w2} \
             {params.path_h3} \
             {params.path_w3}
             '''
  
 
+    rule mpse_function_enrichment_cal:
+        input:
+            mpse_ko = os.path.join(config["output"]["function"], "mpse/mpse_ko_caled.rds")
+        output:
+            mpse_ko = os.path.join(config["output"]["function"], "mpse/mpse_ko_caled_diff.rds"),
+            mpse_enrichment = os.path.join(config["output"]["function"], "mpse/mpse_ko_caled_enrichment.rds")
+        params:
+            mpse_function = os.path.join(WRAPPERS_DIR, "mpse_function.R"),
+            group = config["params"]["group"]
+        conda:
+            config["envs"]["mpse"]
+        shell:
+            '''
+            Rscript {params.mpse_function} \
+            enrichment cal \
+            {params.group} \
+            {input.mpse_ko} \
+            {output.mpse_ko} \
+            {output.mpse_enrichment}
+            '''
+
+
     rule mpse_function_all:
         input:
             rules.mpse_function_import.output,
             rules.mpse_function_abundance_cal.output,
-            rules.mpse_function_abundance_plot.output            
+            rules.mpse_function_abundance_plot.output,
+            rules.mpse_function_enrichment_cal.output
 
 
 else:

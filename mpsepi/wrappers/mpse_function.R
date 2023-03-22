@@ -5,9 +5,9 @@
 Usage:
   mpse_function.R import <metafile> <funcfile> <mpse_output>
   mpse_function.R abundance cal <group> <mpse> <mpse_output>
-  mpse_function.R abundance plot <group> <mpse> <plot_prefix> <h1> <w1> <h2> <w2>
-  mpse_function.R diff cal <group> <mpse> <mpse_output>
-  mpse_function.R diff plot <group> <mpse> <plot_prefix> <height> <width>
+  mpse_function.R abundance plot <group> <mpse> <plot_prefix> <h1> <w1> <h2> <w2> <h3> <w3>
+  mpse_function.R enrichment cal <group> <mpse> <mpse_output> <enrichment_output>
+  mpse_function.R enrichment plot <group> <mpse> <plot_prefix> <height> <width>
   mpse_function.R (-h | --help)
   mpse_function.R --version
 
@@ -87,27 +87,27 @@ if (args$abundance) {
         .group = !!rlang::sym(args$group), 
         #taxa.class = !!rlang::sym(args$taxa), 
         topn = 20,
-        #relative = TRUE,
+        relative = FALSE,
         force = TRUE
       )
 
-    #f_p <- mpse %>%
-    #  MicrobiotaProcess::mp_plot_abundance(
-    #    .abundance = Abundance,
-    #    .group = !!rlang::sym(args$group), 
-    #    #taxa.class = !!rlang::sym(args$taxa), 
-    #    topn = 20,
-    #    #relative = TRUE,
-    #    force = TRUE,
-    #    plot.group = TRUE
-    #  )
+    f_p <- mpse %>%
+      MicrobiotaProcess::mp_plot_abundance(
+        .abundance = Abundance,
+        .group = !!rlang::sym(args$group), 
+        #taxa.class = !!rlang::sym(args$taxa), 
+        topn = 20,
+        relative = FALSE,
+        force = TRUE,
+        plot.group = TRUE
+      )
 
     h_p <- mpse %>%
       MicrobiotaProcess::mp_plot_abundance(
         .abundance = Abundance,
         .group = !!rlang::sym(args$group),
         #taxa.class = !!rlang::sym(args$taxa), 
-        #relative = TRUE,
+        relative = FALSE,
         force = TRUE,
         topn = 20,
         geom = 'heatmap',
@@ -125,8 +125,8 @@ if (args$abundance) {
     w1 <- as.numeric(args$w1)
     h2 <- as.numeric(args$h2)
     w2 <- as.numeric(args$w2)
-    #h3 <- as.numeric(args$h3)
-    #w3 <- as.numeric(args$w3)
+    h3 <- as.numeric(args$h3)
+    w3 <- as.numeric(args$w3)
     
     ## abun plot
     ggsave(stringr::str_c(args$plot_prefix, "_abun.pdf"), p_p, height=h1, width=w1, limitsize = FALSE)
@@ -134,13 +134,55 @@ if (args$abundance) {
     ggsave(stringr::str_c(args$plot_prefix, "_abun.png"), p_p, height=h1, width=w1, limitsize = FALSE)
 
     ## group plot
-    #ggsave(stringr::str_c(args$plot_prefix, "_abun_group.pdf"), f_p, height=h2, width=w2, limitsize = FALSE)
-    #ggsave(stringr::str_c(args$plot_prefix, "_abun_group.svg"), f_p, height=h2, width=w2, limitsize = FALSE)
-    #ggsave(stringr::str_c(args$plot_prefix, "_abun_group.png"), f_p, height=h2, width=w2, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_abun_group.pdf"), f_p, height=h2, width=w2, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_abun_group.svg"), f_p, height=h2, width=w2, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_abun_group.png"), f_p, height=h2, width=w2, limitsize = FALSE)
 
     ## heatmap plot
-    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.pdf"), h_p, height=h2, width=w2, limitsize = FALSE)
-    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.svg"), h_p, height=h2, width=w2, limitsize = FALSE)
-    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.png"), h_p, height=h2, width=w2, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.pdf"), h_p, height=h3, width=w3, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.svg"), h_p, height=h3, width=w3, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.png"), h_p, height=h3, width=w3, limitsize = FALSE)
   }
+}
+
+
+if (args$enrichment) {
+
+  mpse <- readRDS(args$mpse)
+
+  sign_group <- stringr::str_c("Sign_", args$group)
+
+  if (args$cal) {
+    mpse %<>%
+      MicrobiotaProcess::mp_diff_analysis(
+       .abundance = Abundance,
+       force = TRUE,
+       relative = FALSE,
+       .group = !!rlang::sym(args$group),
+       filter.p = "pvalue"
+      )
+
+    # perform KEGG pathway analysis with clusterProfiler and MicrobiomeProfiler
+    one_formula <- as.formula(stringr::str_c("OTU ~ ", sign_group))
+    mpse_enrichment <-
+      mpse %>%
+      MicrobiotaProcess::mp_extract_feature() %>%
+      dplyr::filter(!is.na(!!rlang::sym(sign_group))) %>% 
+      clusterProfiler::compareCluster(
+        one_formula,
+        data = .,
+        fun = MicrobiomeProfiler::enrichKO
+      )
+
+    if (!dir.exists(dirname(args$mpse_output))) {
+      dir.create(dirname(args$mpse_output), recursive = TRUE)
+    }
+    saveRDS(mpse, args$mpse_output)
+
+    if (!dir.exists(dirname(args$enrichment_output))) {
+      dir.create(dirname(args$enrichment_output), recursive = TRUE)
+    }
+    saveRDS(mpse_enrichment, args$enrichment_output)
+  }
+
 }
