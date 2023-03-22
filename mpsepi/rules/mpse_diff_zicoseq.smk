@@ -139,5 +139,5 @@ rule mpse_diff_zicoseq_all:
         rules.mpse_diff_zicoseq_cal.output,
         #rules.mpse_diff_zicoseq_plot_tree.output,
         rules.mpse_diff_zicoseq_plot_cladogram.output,
-        #rules.mpse_diff_zicoseq_plot_box_bar.output#,
-        #rules.mpse_diff_zicoseq_plot_mahattan.output
+        #rules.mpse_diff_zicoseq_plot_box_bar.output,
+        rules.mpse_diff_zicoseq_plot_mahattan.output

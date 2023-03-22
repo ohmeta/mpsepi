@@ -161,5 +161,5 @@ rule mpse_diff_all:
         rules.mpse_diff_cal.output,
         rules.mpse_diff_plot_tree.output,
         rules.mpse_diff_plot_cladogram.output,
-        rules.mpse_diff_plot_box_bar.output#,
-        #rules.mpse_diff_plot_mahattan.output
+        rules.mpse_diff_plot_box_bar.output,
+        rules.mpse_diff_plot_mahattan.output
