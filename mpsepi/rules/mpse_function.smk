@@ -26,9 +26,37 @@ if config["params"]["function"]["do"]:
             '''
 
 
+    rule mpse_function_abundance_cal:
+        input:
+            mpse_ec = os.path.join(config["output"]["function"], "mpse/mpse_ec.rds"),
+            mpse_ko = os.path.join(config["output"]["function"], "mpse/mpse_ko.rds"),
+            mpse_path = os.path.join(config["output"]["function"], "mpse/mpse_path.rds")
+        output:
+            mpse_ec = os.path.join(config["output"]["function"], "mpse/mpse_ec_caled.rds"),
+            mpse_ko = os.path.join(config["output"]["function"], "mpse/mpse_ko_caled.rds"),
+            mpse_path = os.path.join(config["output"]["function"], "mpse/mpse_path_caled.rds")
+        params:
+            mpse_function = os.path.join(WRAPPERS_DIR, "mpse_function.R"),
+            group = config["params"]["group"]
+        conda:
+            config["envs"]["mpse"]
+        shell:
+            '''
+            Rscript {params.mpse_function} \
+            abundance cal {params.group} {input.mpse_ec} {output.mpse_ec}
+            
+            Rscript {params.mpse_function} \
+            abundance cal {params.group} {input.mpse_ko} {output.mpse_ko}
+ 
+            Rscript {params.mpse_function} \
+            abundance cal {params.group} {input.mpse_path} {output.mpse_path}
+            '''
+
+
     rule mpse_function_all:
         input:
-            rules.mpse_function_import.output
+            rules.mpse_function_import.output,
+            rules.mpse_function_abundance_cal.output
 
 
 else:

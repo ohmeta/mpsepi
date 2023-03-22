@@ -4,10 +4,10 @@
 
 Usage:
   mpse_function.R import <metafile> <funcfile> <mpse_output>
-  mpse_function.R plot tree <group> <mpse> <plot_prefix> <height> <width>
-  mpse_function.R plot cladogram <group> <mpse> <plot_prefix> <height> <width>
-  mpse_function.R plot box_bar <group> <mpse> <plot_prefix> <height> <width>
-  mpse_function.R plot mahattan <group> <mpse> <plot_prefix> <height> <width>
+  mpse_function.R abundance cal <group> <mpse> <mpse_output>
+  mpse_function.R abundance plot <group> <mpse> <plot_prefix> <height> <width>
+  mpse_function.R diff cal <group> <mpse> <mpse_output>
+  mpse_function.R diff plot <group> <mpse> <plot_prefix> <height> <width>
   mpse_function.R (-h | --help)
   mpse_function.R --version
 
@@ -51,4 +51,30 @@ if (args$import) {
     dir.create(dirname(args$mpse_output), recursive = TRUE)
   }
   saveRDS(mpse, args$mpse_output)
+}
+
+
+if (args$abundance) {
+
+  mpse <- readRDS(args$mpse)
+
+  if (args$cal) {
+    mpse %<>%
+      MicrobiotaProcess::mp_cal_abundance(
+        .abundance = Abundance,
+        force = TRUE,
+        add = TRUE
+      ) %>%
+      MicrobiotaProcess::mp_cal_abundance(
+        .abundance = Abundance,
+        .group = !!rlang::sym(args$group),
+        force = TRUE,
+        add = TRUE
+      )
+  
+    if (!dir.exists(dirname(args$mpse_output))) {
+      dir.create(dirname(args$mpse_output), recursive = TRUE)
+    }
+    saveRDS(mpse, args$mpse_output)
+  }
 }
