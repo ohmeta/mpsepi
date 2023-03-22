@@ -754,10 +754,70 @@ results/
 
 ##### Cladogram
 
-div align=center><img width="1200" height="600" src="docs/results/05.diff/plot/diff_cladogram.svg"/></div>
+<div align=center><img width="1200" height="600" src="docs/results/05.diff/plot/diff_cladogram.svg"/></div>
 
 ##### Box Bar
 
 <div align=center><img width="1500" height="800" src="docs/results/05.diff/plot/diff_box_bar.svg"/></div>
 
-##### Manhattan (WIP)
+##### Manhattan 
+
+<div align=center><img width="1500" height="420" src="docs/results/05.diff/plot/diff_mahattan.svg"/></div>
+
+#### Diff zicoseq
+
+##### Cladogram
+
+<div align=center><img width="1500" height="800" src="docs/results/05.diff_zicoseq/plot/diff_cladogram.svg"/></div>
+
+##### Manhattan 
+
+<div align=center><img width="1500" height="420" src="docs/results/05.diff_zicoseq/plot/diff_mahattan.svg"/></div>
+
+#### Function
+
+##### Abundance
+
+###### EC
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/ec_abun.svg"/></div>
+
+###### EC group
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/ec_abun_group.svg"/></div>
+
+###### EC heatmap
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/ec_heatmap.svg"/></div>
+
+###### KO
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/ko_abun.svg"/></div>
+
+###### KO group
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/ko_abun_group.svg"/></div>
+
+###### KO heatmap
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/ko_heatmap.svg"/></div>
+
+###### Pathway
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/path_abun.svg"/></div>
+
+###### Pathway group
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/path_abun_group.svg"/></div>
+
+###### Pathway heatmap
+
+<div align=center><img width="1500" height="800" src="docs/results/06.function/plot/abundance/path_heatmap.svg"/></div>
+
+##### Enrichment
+
+###### Dot
+
+<div align=center><img width="1500" height="600" src="docs/results/06.function/plot/enrichment/ko_dot.svg"/></div>
+
+###### Network
+
+<div align=center><img width="1500" height="500" src="docs/results/06.function/plot/enrichment/ko_network.svg"/></div>
