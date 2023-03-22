@@ -63,7 +63,6 @@ if config["params"]["function"]["do"]:
                 os.path.join(config["output"]["function"], "plot/abundance/{func}_{target}.{outformat}"),
                 func=["ec", "ko", "path"],
                 target=["abun", "abun_group", "heatmap"],
-                #target=["abun", "heatmap"],
                 outformat=["pdf", "svg", "png"]
             )
         params:
@@ -154,12 +153,68 @@ if config["params"]["function"]["do"]:
             '''
 
 
+    rule mpse_function_enrichment_plot_dot:
+        input:
+            os.path.join(config["output"]["function"], "mpse/mpse_ko_caled_enrichment.rds")
+        output:
+            expand(
+                os.path.join(config["output"]["function"], "plot/enrichment/ko_dot.{outformat}"),
+                outformat=["pdf", "svg", "png"])
+        params:
+            mpse_function = os.path.join(WRAPPERS_DIR, "mpse_function.R"),
+            group = config["params"]["group"],
+            plot_prefix = os.path.join(config["output"]["function"], "plot/enrichment/ko_dot"),
+            height = config["params"]["function"]["enrichment"]["plot"]["dot"]["height"],
+            width = config["params"]["function"]["enrichment"]["plot"]["dot"]["width"]
+        conda:
+            config["envs"]["mpse"]
+        shell:
+            '''
+            Rscript {params.mpse_function} \
+            enrichment plot dot \
+            {params.group} \
+            {input} \
+            {params.plot_prefix} \
+            {params.height} \
+            {params.width}
+            '''
+
+
+    rule mpse_function_enrichment_plot_network:
+        input:
+            os.path.join(config["output"]["function"], "mpse/mpse_ko_caled_enrichment.rds")
+        output:
+            expand(
+                os.path.join(config["output"]["function"], "plot/enrichment/ko_network.{outformat}"),
+                outformat=["pdf", "svg", "png"])
+        params:
+            mpse_function = os.path.join(WRAPPERS_DIR, "mpse_function.R"),
+            group = config["params"]["group"],
+            plot_prefix = os.path.join(config["output"]["function"], "plot/enrichment/ko_network"),
+            height = config["params"]["function"]["enrichment"]["plot"]["network"]["height"],
+            width = config["params"]["function"]["enrichment"]["plot"]["network"]["width"]
+        conda:
+            config["envs"]["mpse"]
+        shell:
+            '''
+            Rscript {params.mpse_function} \
+            enrichment plot network \
+            {params.group} \
+            {input} \
+            {params.plot_prefix} \
+            {params.height} \
+            {params.width}
+            '''
+
+
     rule mpse_function_all:
         input:
             rules.mpse_function_import.output,
             rules.mpse_function_abundance_cal.output,
             rules.mpse_function_abundance_plot.output,
-            rules.mpse_function_enrichment_cal.output
+            rules.mpse_function_enrichment_cal.output,
+            rules.mpse_function_enrichment_plot_dot.output,
+            rules.mpse_function_enrichment_plot_network.output
 
 
 else:

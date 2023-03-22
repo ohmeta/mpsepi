@@ -7,7 +7,8 @@ Usage:
   mpse_function.R abundance cal <group> <mpse> <mpse_output>
   mpse_function.R abundance plot <group> <mpse> <plot_prefix> <h1> <w1> <h2> <w2> <h3> <w3>
   mpse_function.R enrichment cal <group> <mpse> <mpse_output> <enrichment_output>
-  mpse_function.R enrichment plot <group> <mpse> <plot_prefix> <height> <width>
+  mpse_function.R enrichment plot dot <group> <mpse_enrichment> <plot_prefix> <height> <width>
+  mpse_function.R enrichment plot network <group> <mpse_enrichment> <plot_prefix> <height> <width>
   mpse_function.R (-h | --help)
   mpse_function.R --version
 
@@ -148,11 +149,11 @@ if (args$abundance) {
 
 if (args$enrichment) {
 
-  mpse <- readRDS(args$mpse)
-
   sign_group <- stringr::str_c("Sign_", args$group)
 
   if (args$cal) {
+
+    mpse <- readRDS(args$mpse)
     mpse %<>%
       MicrobiotaProcess::mp_diff_analysis(
        .abundance = Abundance,
@@ -185,4 +186,44 @@ if (args$enrichment) {
     saveRDS(mpse_enrichment, args$enrichment_output)
   }
 
+  if (args$plot) {
+    library(ggplot2)
+    mpse <- readRDS(args$mpse_enrichment)
+
+    if (args$dot) {
+      plot <-
+        clusterProfiler::dotplot(mpse) + 
+         scale_color_gradientn(
+           colours = c("#b3eebe", "#46bac2", "#371ea3"),
+           guide = guide_colorbar(reverse=TRUE, order=1)
+         ) +
+         labs(x = NULL) +
+         guides(size = guide_legend(override.aes=list(shape=1))) +
+         theme(
+           panel.grid.major.y = element_line(linetype='dotted', color='#808080'),
+           panel.grid.major.x = element_blank()
+         )
+    }
+
+    if (args$network) {
+      set.seed(1024)
+      plot <-
+        clusterProfiler::cnetplot(
+          mpse, 
+          layout = "fr",
+          cex_label_category = 1.8
+      )
+    }
+
+    if (!dir.exists(dirname(args$plot_prefix))) {
+      dir.create(dirname(args$plot_prefix), recursive = TRUE)
+    }
+
+    h <- as.numeric(args$height)
+    w <- as.numeric(args$width)
+    
+    ggsave(stringr::str_c(args$plot_prefix, ".pdf"), plot, height=h, width=w, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, ".svg"), plot, height=h, width=w, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, ".png"), plot, height=h, width=w, limitsize = FALSE)
+  }
 }

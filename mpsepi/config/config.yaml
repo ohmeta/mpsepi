@@ -232,6 +232,14 @@ params:
           path:
             height: 10
             width: 10
+    enrichment:
+      plot:
+        dot:
+          height: 6 
+          width: 8
+        network:
+          height: 6 
+          width: 10
  
 
 output:
