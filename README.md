@@ -66,6 +66,11 @@ available subcommands:
 - metadata.tsv file
 - profile
 
+#### PICRUSt2
+- ec_pred_metagenome_unstrat.tsv.gz
+- ko_pred_metagenome_unstrat.tsv.gz
+- path_abun_unstrat.tsv.gz
+
 ### Example (QIIME2-PD-mice)
 
 #### Prepare data
@@ -141,10 +146,15 @@ input:
   metaphlan:
     profile: /path/to/metaphlan_profile.tsv # all level or species level
 
+  picrust2:
+    ecprofile: /path/to/picrust2/EC_metagenome_out/pred_metagenome_unstrat.tsv.gz
+    koprofile: /path/to/picrust2/KO_metagenome_out/pred_metagenome_unstrat.tsv.gz
+    pathprofile: /path/to/picrust2/pathways_out/path_abun_unstrat.tsv.gz
+
 
 params:
   import_from: "qiime2" # choose from ["qiime2", "dada2", "metaphlan"]
-  group: "Time" # update it based on the metadata information
+  group: "donor_status" # update it based on the metadata information
 
   filter:
     min_abun: 1
@@ -285,8 +295,8 @@ params:
         width: 20
         height: 20
       mahattan:
-        width: 20
-        height: 20
+        width: 15
+        height: 8
 
   diff_plus:
     methods: ["edgeR_quasi_likelihood", "edgeR_likelihood_ratio", "edger_robust_likelihood_ratio", "deseq2", "limma_voom", "limma_voom_sample_weights"]
@@ -317,9 +327,52 @@ params:
         width: 20
         height: 20
       mahattan:
-        width: 20
-        height: 20
+        width: 15
+        height: 8
 
+  function:
+    do: True
+    abundance:
+      plot:
+        abundance:
+          ec:
+            height: 10
+            width: 10
+          ko:
+            height: 10
+            width: 10
+          path:
+            height: 10
+            width: 10
+        abundance_group:
+          ec:
+            height: 10
+            width: 10
+          ko:
+            height: 10
+            width: 10
+          path:
+            height: 10
+            width: 10
+        heatmap:
+          ec:
+            height: 10
+            width: 10
+          ko:
+            height: 10
+            width: 10
+          path:
+            height: 10
+            width: 10
+    enrichment:
+      plot:
+        dot:
+          height: 6 
+          width: 8
+        network:
+          height: 6 
+          width: 10
+ 
 
 output:
   import: "results/00.import"
@@ -333,6 +386,7 @@ output:
   diff: "results/05.diff"
   diff_plus: "results/05.diff_plus"
   diff_zicoseq: "results/05.diff_zicoseq"
+  function: "results/06.function"
 
 
 envs:
