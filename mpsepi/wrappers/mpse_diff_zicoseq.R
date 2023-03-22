@@ -25,7 +25,7 @@ library(magrittr)
 library(MicrobiotaProcess)
 
 
-args <- docopt::docopt(doc, version = 'mpse diff v0.1')
+args <- docopt::docopt(doc, version = 'mpse diff zicoseq v0.1')
 
 mpse <- readRDS(args$mpse)
 

@@ -23,7 +23,7 @@ library(MicrobiotaProcess)
 library(ggtree)
 
 
-args <- docopt::docopt(doc, version = 'mpse diff v0.1')
+args <- docopt::docopt(doc, version = 'mpse diff plus v0.1')
 
 mpse <- readRDS(args$mpse)
 
