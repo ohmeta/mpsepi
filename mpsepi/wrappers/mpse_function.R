@@ -5,7 +5,7 @@
 Usage:
   mpse_function.R import <metafile> <funcfile> <mpse_output>
   mpse_function.R abundance cal <group> <mpse> <mpse_output>
-  mpse_function.R abundance plot <group> <mpse> <plot_prefix> <height> <width>
+  mpse_function.R abundance plot <group> <mpse> <plot_prefix> <h1> <w1> <h2> <w2>
   mpse_function.R diff cal <group> <mpse> <mpse_output>
   mpse_function.R diff plot <group> <mpse> <plot_prefix> <height> <width>
   mpse_function.R (-h | --help)
@@ -76,5 +76,71 @@ if (args$abundance) {
       dir.create(dirname(args$mpse_output), recursive = TRUE)
     }
     saveRDS(mpse, args$mpse_output)
+  }
+
+  if (args$plot) {
+    library(ggplot2)
+
+    p_p <- mpse %>%
+      MicrobiotaProcess::mp_plot_abundance(
+        .abundance = Abundance,
+        .group = !!rlang::sym(args$group), 
+        #taxa.class = !!rlang::sym(args$taxa), 
+        topn = 20,
+        #relative = TRUE,
+        force = TRUE
+      )
+
+    #f_p <- mpse %>%
+    #  MicrobiotaProcess::mp_plot_abundance(
+    #    .abundance = Abundance,
+    #    .group = !!rlang::sym(args$group), 
+    #    #taxa.class = !!rlang::sym(args$taxa), 
+    #    topn = 20,
+    #    #relative = TRUE,
+    #    force = TRUE,
+    #    plot.group = TRUE
+    #  )
+
+    h_p <- mpse %>%
+      MicrobiotaProcess::mp_plot_abundance(
+        .abundance = Abundance,
+        .group = !!rlang::sym(args$group),
+        #taxa.class = !!rlang::sym(args$taxa), 
+        #relative = TRUE,
+        force = TRUE,
+        topn = 20,
+        geom = 'heatmap',
+        #features.dist = 'euclidean',
+        #features.hclust = 'average',
+        sample.dist = 'bray',
+        sample.hclust = 'average'
+      )
+
+    if (!dir.exists(dirname(args$plot_prefix))) {
+      dir.create(dirname(args$plot_prefix), recursive = TRUE)
+    }
+
+    h1 <- as.numeric(args$h1)
+    w1 <- as.numeric(args$w1)
+    h2 <- as.numeric(args$h2)
+    w2 <- as.numeric(args$w2)
+    #h3 <- as.numeric(args$h3)
+    #w3 <- as.numeric(args$w3)
+    
+    ## abun plot
+    ggsave(stringr::str_c(args$plot_prefix, "_abun.pdf"), p_p, height=h1, width=w1, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_abun.svg"), p_p, height=h1, width=w1, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_abun.png"), p_p, height=h1, width=w1, limitsize = FALSE)
+
+    ## group plot
+    #ggsave(stringr::str_c(args$plot_prefix, "_abun_group.pdf"), f_p, height=h2, width=w2, limitsize = FALSE)
+    #ggsave(stringr::str_c(args$plot_prefix, "_abun_group.svg"), f_p, height=h2, width=w2, limitsize = FALSE)
+    #ggsave(stringr::str_c(args$plot_prefix, "_abun_group.png"), f_p, height=h2, width=w2, limitsize = FALSE)
+
+    ## heatmap plot
+    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.pdf"), h_p, height=h2, width=w2, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.svg"), h_p, height=h2, width=w2, limitsize = FALSE)
+    ggsave(stringr::str_c(args$plot_prefix, "_heatmap.png"), h_p, height=h2, width=w2, limitsize = FALSE)
   }
 }

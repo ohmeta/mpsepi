@@ -200,7 +200,39 @@ params:
 
   function:
     do: True
-
+    abundance:
+      plot:
+        abundance:
+          ec:
+            height: 10
+            width: 10
+          ko:
+            height: 10
+            width: 10
+          path:
+            height: 10
+            width: 10
+        abundance_group:
+          ec:
+            height: 10
+            width: 10
+          ko:
+            height: 10
+            width: 10
+          path:
+            height: 10
+            width: 10
+        heatmap:
+          ec:
+            height: 10
+            width: 10
+          ko:
+            height: 10
+            width: 10
+          path:
+            height: 10
+            width: 10
+ 
 
 output:
   import: "results/00.import"
