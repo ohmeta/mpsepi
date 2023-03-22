@@ -406,31 +406,39 @@ snakemake --snakefile /home/jiezhu/toolkit/mpsepi/mpsepi/snakefiles/mpse_wf.smk 
 Building DAG of jobs...
 
 Job stats:
-job                                 count    min threads    max threads
---------------------------------  -------  -------------  -------------
-all                                     1              1              1
-mpse_composition                        6              1              1
-mpse_diff_cal                           1              1              1
-mpse_diff_plot_box_bar                  1              1              1
-mpse_diff_plot_cladogram                1              1              1
-mpse_diff_plot_tree                     1              1              1
-mpse_diff_plus_cal                      6              1              1
-mpse_diff_zicoseq_cal                   1              1              1
-mpse_diff_zicoseq_plot_cladogram        1              1              1
-mpse_diversity_alpha                    1              1              1
-mpse_diversity_beta_cal                 1              1              1
-mpse_diversity_beta_plot_clust          1              1              1
-mpse_diversity_beta_plot_dist           1              1              1
-mpse_diversity_beta_plot_nmds           1              1              1
-mpse_diversity_beta_plot_pca            1              1              1
-mpse_diversity_beta_plot_pcoa           1              1              1
-mpse_diversity_phylogenetic             1              1              1
-mpse_import_qiime2                      1              1              1
-mpse_permanova                          1              1              1
-mpse_rarefy                             1              1              1
-mpse_rarefy_plot                        1              1              1
-mpse_venn                               1              1              1
-total                                  32              1              1
+job                                      count    min threads    max threads
+-------------------------------------  -------  -------------  -------------
+all                                          1              1              1
+mpse_composition                             6              1              1
+mpse_diff_cal                                1              1              1
+mpse_diff_plot_box_bar                       1              1              1
+mpse_diff_plot_cladogram                     1              1              1
+mpse_diff_plot_mahattan                      1              1              1
+mpse_diff_plot_tree                          1              1              1
+mpse_diff_plus_cal                           6              1              1
+mpse_diff_zicoseq_cal                        1              1              1
+mpse_diff_zicoseq_plot_cladogram             1              1              1
+mpse_diff_zicoseq_plot_mahattan              1              1              1
+mpse_diversity_alpha                         1              1              1
+mpse_diversity_beta_cal                      1              1              1
+mpse_diversity_beta_plot_clust               1              1              1
+mpse_diversity_beta_plot_dist                1              1              1
+mpse_diversity_beta_plot_nmds                1              1              1
+mpse_diversity_beta_plot_pca                 1              1              1
+mpse_diversity_beta_plot_pcoa                1              1              1
+mpse_diversity_phylogenetic                  1              1              1
+mpse_function_abundance_cal                  1              1              1
+mpse_function_abundance_plot                 1              1              1
+mpse_function_enrichment_cal                 1              1              1
+mpse_function_enrichment_plot_dot            1              1              1
+mpse_function_enrichment_plot_network        1              1              1
+mpse_function_import                         1              1              1
+mpse_import_qiime2                           1              1              1
+mpse_permanova                               1              1              1
+mpse_rarefy                                  1              1              1
+mpse_rarefy_plot                             1              1              1
+mpse_venn                                    1              1              1
+total                                       40              1              1
 ```
 
 #### Run mpse_wf
@@ -458,6 +466,8 @@ results/
 │   ├── benchmark
 │   │   ├── mpse_rarefy_benchmark.txt
 │   │   └── mpse_rarefy_plot_benchmark.txt
+│   ├── logs
+│   │   └── mpse_rarefy_benchmark.log
 │   ├── mpse
 │   │   └── mpse_rarefied.rds
 │   └── plot
@@ -581,6 +591,9 @@ results/
 │       ├── diff_cladogram.pdf
 │       ├── diff_cladogram.png
 │       ├── diff_cladogram.svg
+│       ├── diff_mahattan.pdf
+│       ├── diff_mahattan.png
+│       ├── diff_mahattan.svg
 │       ├── diff_tree.pdf
 │       ├── diff_tree.png
 │       └── diff_tree.svg
@@ -604,16 +617,65 @@ results/
 │       └── limma_voom_sample_weights
 │           ├── diff.tsv
 │           └── mpse.rds
-└── 05.diff_zicoseq
+├── 05.diff_zicoseq
+│   ├── mpse
+│   │   ├── lda.tsv
+│   │   └── mpse_zicoseq.rds
+│   └── plot
+│       ├── diff_cladogram.pdf
+│       ├── diff_cladogram.png
+│       ├── diff_cladogram.svg
+│       ├── diff_mahattan.pdf
+│       ├── diff_mahattan.png
+│       └── diff_mahattan.svg
+└── 06.function
     ├── mpse
-    │   ├── lda.tsv
-    │   └── mpse_zicoseq.rds
+    │   ├── mpse_ec_caled.rds
+    │   ├── mpse_ec.rds
+    │   ├── mpse_ko_caled_diff.rds
+    │   ├── mpse_ko_caled_enrichment.rds
+    │   ├── mpse_ko_caled.rds
+    │   ├── mpse_ko.rds
+    │   ├── mpse_path_caled.rds
+    │   └── mpse_path.rds
     └── plot
-        ├── diff_cladogram.pdf
-        ├── diff_cladogram.png
-        └── diff_cladogram.svg
+        ├── abundance
+        │   ├── ec_abun_group.pdf
+        │   ├── ec_abun_group.png
+        │   ├── ec_abun_group.svg
+        │   ├── ec_abun.pdf
+        │   ├── ec_abun.png
+        │   ├── ec_abun.svg
+        │   ├── ec_heatmap.pdf
+        │   ├── ec_heatmap.png
+        │   ├── ec_heatmap.svg
+        │   ├── ko_abun_group.pdf
+        │   ├── ko_abun_group.png
+        │   ├── ko_abun_group.svg
+        │   ├── ko_abun.pdf
+        │   ├── ko_abun.png
+        │   ├── ko_abun.svg
+        │   ├── ko_heatmap.pdf
+        │   ├── ko_heatmap.png
+        │   ├── ko_heatmap.svg
+        │   ├── path_abun_group.pdf
+        │   ├── path_abun_group.png
+        │   ├── path_abun_group.svg
+        │   ├── path_abun.pdf
+        │   ├── path_abun.png
+        │   ├── path_abun.svg
+        │   ├── path_heatmap.pdf
+        │   ├── path_heatmap.png
+        │   └── path_heatmap.svg
+        └── enrichment
+            ├── ko_dot.pdf
+            ├── ko_dot.png
+            ├── ko_dot.svg
+            ├── ko_network.pdf
+            ├── ko_network.png
+            └── ko_network.svg
 
-40 directories, 123 files
+46 directories, 171 files
 
 ```
 
